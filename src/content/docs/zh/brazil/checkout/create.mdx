@@ -24,7 +24,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 |---|---|---|---:|---|
 | `merchantOrderNo` | String | 是 | 32 | 商户订单号 |
 | `transactionAmount` | String | 是 | 20 | 收款金额，整数（保留 2 位小数） |
-| `paymentType` | String | 是 | 32 | [支付方式](#payment-methods) |
+| `paymentType` | String | 否 | 32 | [支付方式](#payment-methods) |
 | `idType` | String | 否 | 50 | 证件类型：`CPF` 或 `CNPJ` |
 | `userIdCard` | String | 否 | 32 | CPF 为 11 位数字；CNPJ 为 14 位数字，仅传数字 |
 | `userName` | String | 否 | 64 | 用户姓名 |

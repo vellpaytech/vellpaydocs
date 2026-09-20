@@ -40,6 +40,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `bankAccountNo` | String | 否 | 64 | 银行账户号 |
 | `merchantName` | String | 否 | 64 | 商户名称 |
 | `description` | String | 否 | 100 | 说明 |
+| `channel` | String | 条件必填 | 24 | `paymentType` 为 `VA_DIRECT` 时必填；其他支付方式是否支持该字段请参照渠道要求 |
 | `expireTime` | String | 否 | - | 订单过期时间（国家当地时间，格式 `yyyy-MM-dd HH:mm:ss`） |
 | `paymentCallbackUrl` | String | 否 | 200 | 代收回调地址 |
 

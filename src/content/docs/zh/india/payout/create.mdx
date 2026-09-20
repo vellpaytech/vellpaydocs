@@ -31,7 +31,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `userName` | String | 是 | 64 | 用户姓名 |
 | `userPhone` | String | 是 | 20 | 用户手机号 |
 | `userEmail` | String | 否 | 50 | 用户邮箱 |
-| `bankCode` | String | 否 | 20 | [银行编码](../banks/) |
+| `bankCode` | String | 条件必填 | 20 | `payoutType` 为 `BANK_TRANSFER` 时必填，填写收款银行 IFSC；[银行编码说明](../banks/) |
 | `bankAccountNo` | String | 是 | 50 | 收款账户 |
 | `description` | String | 否 | 100 | 说明 |
 | `payoutCallbackUrl` | String | 否 | 200 | 代付回调地址 |
