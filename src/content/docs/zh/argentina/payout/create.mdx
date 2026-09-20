@@ -4,7 +4,7 @@ description: 创建一笔 VellPay 代付订单。
 ---
 import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 
-<ApiExplorer country="AR" path="/trade/payout/create" body={{merchantOrderNo:"PAYOUT202609170001",transactionAmount:"1000",payoutType:"CVU",idType:"DNI",userIdCard:"12345678",userName:"TEST USER",bankAccountNo:"1234567890123456789012"}} />
+<ApiExplorer country="AR" path="/trade/payout/create" body={{merchantOrderNo:"PAYOUT202609170001",transactionAmount:"1000",payoutType:"CVU",idType:"DNI",userIdCard:"12345678",userName:"TEST USER",bankName:"Banco de Galicia y Buenos Aires S.A.U.",bankAccountNo:"1234567890123456789012"}} />
 
 <p class="endpoint-lead"></p>
 
@@ -32,6 +32,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `userPhone` | String | 否 | 20 | 用户手机号 |
 | `userEmail` | String | 否 | 50 | 用户邮箱 |
 | `bankCode` | String | 否 | 20 | [银行编码](../banks/) |
+| `bankName` | String | 否 | - | 银行名称 |
 | `bankAccountNo` | String | 是 | 50 | CVU 或 CBU，均为 22 位数字 |
 | `description` | String | 否 | 100 | 说明 |
 | `payoutCallbackUrl` | String | 否 | 200 | 代付回调地址 |
@@ -46,6 +47,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
   "idType": "DNI",
   "userIdCard": "12345678",
   "userName": "TEST USER",
+  "bankName": "Banco de Galicia y Buenos Aires S.A.U.",
   "bankAccountNo": "1234567890123456789012"
 }
 ```
