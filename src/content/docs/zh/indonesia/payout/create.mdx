@@ -4,7 +4,7 @@ description: 创建一笔 VellPay 代付订单。
 ---
 import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 
-<ApiExplorer country="ID" path="/trade/payout/create" body={{merchantOrderNo:"PAYOUT202609170001",transactionAmount:"60000",payoutType:"BANK_TRANSFER",userName:"TEST USER",bankCode:"0007",bankAccountNo:"1234567890",description:"Test payout"}} />
+<ApiExplorer country="ID" path="/trade/payout/create" body={{merchantOrderNo:"PAYOUT202609170001",transactionAmount:"60000",payoutType:"BANK_TRANSFER",userName:"TEST USER",userPhone:"081234567890",userEmail:"user@example.com",bankCode:"0007",bankAccountNo:"1234567890"}} />
 
 <p class="endpoint-lead"></p>
 
@@ -28,11 +28,11 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `idType` | String | 否 | 50 | 用户证件类型 |
 | `userIdCard` | String | 否 | 32 | 用户证件号码 |
 | `userName` | String | 是 | 64 | 用户姓名 |
-| `userPhone` | String | 否 | 20 | 用户手机号 |
-| `userEmail` | String | 否 | 50 | 用户邮箱 |
+| `userPhone` | String | 是 | 20 | 用户手机号 |
+| `userEmail` | String | 是 | 50 | 用户邮箱 |
 | `bankCode` | String | 是 | 20 | [银行编码](../banks/) |
 | `bankAccountNo` | String | 是 | 50 | 收款账户 |
-| `description` | String | 是 | 100 | 说明 |
+| `description` | String | 否 | 100 | 说明 |
 | `payoutCallbackUrl` | String | 否 | 200 | 代付回调地址 |
 
 
@@ -45,9 +45,10 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
   "transactionAmount": "100.00",
   "payoutType": "BANK_TRANSFER",
   "userName": "TEST USER",
+  "userPhone": "081234567890",
+  "userEmail": "user@example.com",
   "bankCode": "0007",
-  "bankAccountNo": "1234567890",
-  "description": "Test payout"
+  "bankAccountNo": "1234567890"
 }
 ```
 

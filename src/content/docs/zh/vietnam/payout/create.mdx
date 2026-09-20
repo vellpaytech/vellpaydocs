@@ -23,12 +23,12 @@ description: 创建一笔 VellPay 代付订单。
 | `payoutType` | String | 是 | 20 | [代付方式](#payment-methods) |
 | `idType` | String | 否 | 50 | 用户证件类型 |
 | `userIdCard` | String | 否 | 32 | 用户证件号码 |
-| `userName` | String | 是 | 64 | 用户姓名 |
+| `userName` | String | 否 | 64 | 用户姓名 |
 | `userPhone` | String | 否 | 20 | 用户手机号 |
 | `userEmail` | String | 否 | 50 | 用户邮箱 |
-| `bankCode` | String | 是 | 20 | [银行编码](../banks/) |
+| `bankCode` | String | 否 | 20 | [银行编码](../banks/) |
 | `bankAccountNo` | String | 是 | 50 | 收款账户 |
-| `description` | String | 是 | 100 | 说明 |
+| `description` | String | 否 | 100 | 说明 |
 | `payoutCallbackUrl` | String | 否 | 200 | 代付回调地址 |
 
 

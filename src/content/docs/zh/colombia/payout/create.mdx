@@ -4,7 +4,7 @@ description: 创建一笔 VellPay 代付订单。
 ---
 import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 
-<ApiExplorer country="CO" path="/trade/payout/create" body={{merchantOrderNo:"PAYOUT202609170001",transactionAmount:"10000",payoutType:"AHORRO",userName:"TEST USER",bankCode:"1007",bankAccountNo:"1234567890",description:"Test payout"}} />
+<ApiExplorer country="CO" path="/trade/payout/create" body={{merchantOrderNo:"PAYOUT202609170001",transactionAmount:"10000",payoutType:"AHORRO",idType:"CC",userIdCard:"1234567890",userName:"TEST USER",userPhone:"3001234567",userEmail:"user@example.com",bankCode:"1007",bankAccountNo:"1234567890"}} />
 
 <p class="endpoint-lead"></p>
 
@@ -28,14 +28,14 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `merchantOrderNo` | String | 是 | 32 | 商户订单号 |
 | `transactionAmount` | String | 是 | 20 | 付款金额，整数（保留 2 位小数） |
 | `payoutType` | String | 是 | 20 | [代付方式](#payment-methods) |
-| `idType` | String | 否 | 50 | 证件类型：`CC`、`CE`、`NIT`、`PA` |
-| `userIdCard` | String | 否 | 32 | `CC`、`CE` 为 6–10 位数字；`NIT` 为 9 位数字；`PA` 可包含数字和字母 |
+| `idType` | String | 是 | 50 | 证件类型：`CC`、`CE`、`NIT`、`PA` |
+| `userIdCard` | String | 是 | 32 | `CC`、`CE` 为 6–10 位数字；`NIT` 为 9 位数字；`PA` 可包含数字和字母 |
 | `userName` | String | 是 | 64 | 用户姓名 |
-| `userPhone` | String | 否 | 20 | 用户手机号 |
-| `userEmail` | String | 否 | 50 | 用户邮箱 |
+| `userPhone` | String | 是 | 20 | 用户手机号 |
+| `userEmail` | String | 是 | 50 | 用户邮箱 |
 | `bankCode` | String | 是 | 20 | [银行编码](../banks/) |
 | `bankAccountNo` | String | 是 | 50 | 收款账户 |
-| `description` | String | 是 | 100 | 说明 |
+| `description` | String | 否 | 100 | 说明 |
 | `payoutCallbackUrl` | String | 否 | 200 | 代付回调地址 |
 
 
@@ -47,10 +47,13 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
   "merchantOrderNo": "PAYOUT202609170001",
   "transactionAmount": "100.00",
   "payoutType": "AHORRO",
+  "idType": "CC",
+  "userIdCard": "1234567890",
   "userName": "TEST USER",
+  "userPhone": "3001234567",
+  "userEmail": "user@example.com",
   "bankCode": "1007",
-  "bankAccountNo": "1234567890",
-  "description": "Test payout"
+  "bankAccountNo": "1234567890"
 }
 ```
 

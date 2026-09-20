@@ -4,7 +4,7 @@ description: 创建一笔 VellPay 代付订单。
 ---
 import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 
-<ApiExplorer country="AR" path="/trade/payout/create" body={{merchantOrderNo:"PAYOUT202609170001",transactionAmount:"1000",payoutType:"CVU",userName:"TEST USER",bankCode:"007",bankAccountNo:"1234567890123456789012",description:"Test payout"}} />
+<ApiExplorer country="AR" path="/trade/payout/create" body={{merchantOrderNo:"PAYOUT202609170001",transactionAmount:"1000",payoutType:"CVU",idType:"DNI",userIdCard:"12345678",userName:"TEST USER",bankAccountNo:"1234567890123456789012"}} />
 
 <p class="endpoint-lead"></p>
 
@@ -26,14 +26,14 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `merchantOrderNo` | String | 是 | 32 | 商户订单号 |
 | `transactionAmount` | String | 是 | 20 | 付款金额，整数（保留 2 位小数） |
 | `payoutType` | String | 是 | 20 | [代付方式](#payment-methods) |
-| `idType` | String | 否 | 50 | 证件类型：`DNI`、`CUIL`、`CUIT`、`PA` |
-| `userIdCard` | String | 否 | 32 | `DNI` 为 8 位数字；`CUIL`、`CUIT` 为 11 位数字；`PA` 最长 15 位 |
+| `idType` | String | 是 | 50 | 证件类型：`DNI`、`CUIL`、`CUIT`、`PA` |
+| `userIdCard` | String | 是 | 32 | `DNI` 为 8 位数字；`CUIL`、`CUIT` 为 11 位数字；`PA` 最长 15 位 |
 | `userName` | String | 是 | 64 | 用户姓名 |
 | `userPhone` | String | 否 | 20 | 用户手机号 |
 | `userEmail` | String | 否 | 50 | 用户邮箱 |
-| `bankCode` | String | 是 | 20 | [银行编码](../banks/) |
+| `bankCode` | String | 否 | 20 | [银行编码](../banks/) |
 | `bankAccountNo` | String | 是 | 50 | CVU 或 CBU，均为 22 位数字 |
-| `description` | String | 是 | 100 | 说明 |
+| `description` | String | 否 | 100 | 说明 |
 | `payoutCallbackUrl` | String | 否 | 200 | 代付回调地址 |
 
 ## 请求示例
@@ -43,10 +43,10 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
   "merchantOrderNo": "PAYOUT202609170001",
   "transactionAmount": "100.00",
   "payoutType": "CVU",
+  "idType": "DNI",
+  "userIdCard": "12345678",
   "userName": "TEST USER",
-  "bankCode": "007",
-  "bankAccountNo": "1234567890123456789012",
-  "description": "Test payout"
+  "bankAccountNo": "1234567890123456789012"
 }
 ```
 
