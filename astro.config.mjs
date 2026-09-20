@@ -6,6 +6,7 @@ const country = (label, slug, extraItems = []) => ({
   label,
   collapsed: true,
   items: [
+    ...(["argentina", "colombia"].includes(slug) ? [{ label: "收银台创建", link: `/${slug}/checkout/create` }] : []),
     { label: "代收创建", link: `/${slug}/payin/create` },
     { label: "代收查询", link: `/${slug}/payin/query` },
     { label: "代收回调", link: `/${slug}/payin/callback` },
@@ -13,7 +14,6 @@ const country = (label, slug, extraItems = []) => ({
     { label: "银行编码", link: `/${slug}/payout/banks` },
     { label: "代付查询", link: `/${slug}/payout/query` },
     { label: "代付回调", link: `/${slug}/payout/callback` },
-    { label: "收银台创建", link: `/${slug}/checkout/create` },
     { label: "余额查询", link: `/${slug}/inquire/balance` },
     ...extraItems,
   ],

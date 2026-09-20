@@ -42,7 +42,7 @@ const guideSections = [
 ];
 
 const countryLinks = (country: (typeof countryGroups)[number]["countries"][number]) => [
-  { label: "创建收银台", icon: CreditCard, path: `/${country.slug}/checkout/create` },
+  ...(["argentina", "colombia"].includes(country.slug) ? [{ label: "创建收银台", icon: CreditCard, path: `/${country.slug}/checkout/create` }] : []),
   { label: "创建代收", icon: ArrowDownLeft, path: `/${country.slug}/payin/create` },
   { label: "查询代收", icon: Search, path: `/${country.slug}/payin/query` },
   { label: "代收回调", icon: BellRing, path: `/${country.slug}/payin/callback` },

@@ -20,22 +20,22 @@ export interface CountryConfig {
   notices: Array<{ label: string; description: string }>;
 }
 
-const capabilities = (slug: string): CountryCapability[] => [
+const capabilities = (slug: string, supportsCheckout = false): CountryCapability[] => [
   { label: "代收 Pay-in", description: "创建本地代收订单并查询订单状态。", href: `/${slug}/payin/create`, tone: "payin" },
   { label: "代付 Payout", description: "向本地银行账户或钱包发起资金付款。", href: `/${slug}/payout/create`, tone: "payout" },
-  { label: "收银台 Checkout", description: "创建托管支付页面并获取支付链接。", href: `/${slug}/checkout/create`, tone: "checkout" },
+  ...(supportsCheckout ? [{ label: "收银台 Checkout", description: "创建托管支付页面并获取支付链接。", href: `/${slug}/checkout/create`, tone: "checkout" as const }] : []),
 ];
 
 export const countries: Record<string, CountryConfig> = {
   indonesia: {
     slug: "indonesia", name: "印度尼西亚", flag: "🇮🇩", code: "ID", currency: "IDR", currencyName: "印度尼西亚盾",
-    timezone: "Asia/Jakarta (UTC+7)", region: "asia", summary: "接入印度尼西亚本地代收、代付与收银台能力。",
+    timezone: "Asia/Jakarta (UTC+7)", region: "asia", summary: "接入印度尼西亚本地代收与代付能力。",
     capabilities: capabilities("indonesia"), paymentMethods: ["PaymentLink", "E-Wallet", "VA", "QRIS", "QRIS-Direct", "VA-Direct"],
     notices: [{ label: "金额", description: "交易金额使用 IDR，按接口字段规则传递。" }, { label: "手机号", description: "用户手机号应符合印度尼西亚本地号码格式。" }, { label: "渠道", description: "部分支付方式需要同时传递 channel。" }],
   },
   vietnam: {
     slug: "vietnam", name: "越南", flag: "🇻🇳", code: "VN", currency: "VND", currencyName: "越南盾",
-    timezone: "Asia/Ho_Chi_Minh (UTC+7)", region: "asia", summary: "接入越南本地代收、代付与收银台能力。",
+    timezone: "Asia/Ho_Chi_Minh (UTC+7)", region: "asia", summary: "接入越南本地代收与代付能力。",
     capabilities: capabilities("vietnam"), paymentMethods: ["以商户已开通的 paymentType 为准"],
     notices: [{ label: "测试环境", description: "越南测试域名确认后开放在线请求。" }, { label: "时间", description: "业务时间使用越南当地时间。" }],
   },
@@ -60,18 +60,18 @@ export const countries: Record<string, CountryConfig> = {
   colombia: {
     slug: "colombia", name: "哥伦比亚", flag: "🇨🇴", code: "CO", currency: "COP", currencyName: "哥伦比亚比索",
     timezone: "America/Bogota (UTC-5)", region: "latin-america", summary: "接入哥伦比亚 PSE、钱包、BRE-B 与本地付款能力。",
-    capabilities: capabilities("colombia"), paymentMethods: ["PSE", "NEQUI_PSE", "EFECTY", "DAVIPLATA_PSE", "TRANSFIYA", "MOVIL_PSE", "DALE_PSE", "BREB_KEY", "NEQUI_PUSH", "BREB_QR", "DAVIPLATA_PUSH", "AHORRO", "CORRIENTE", "PHONE", "BREB"],
+    capabilities: capabilities("colombia", true), paymentMethods: ["PSE", "NEQUI_PSE", "EFECTY", "DAVIPLATA_PSE", "TRANSFIYA", "MOVIL_PSE", "DALE_PSE", "BREB_KEY", "NEQUI_PUSH", "BREB_QR", "DAVIPLATA_PUSH", "AHORRO", "CORRIENTE", "PHONE", "BREB"],
     notices: [{ label: "币种", description: "交易使用 COP，金额规则以接口字段说明为准。" }, { label: "BRE-B", description: "实际到账金额可能由付款人在银行 App 中输入，应以最终通知为准。" }, { label: "账户类型", description: "代付方式需与实际收款账户类型匹配。" }],
   },
   argentina: {
     slug: "argentina", name: "阿根廷", flag: "🇦🇷", code: "AR", currency: "ARS", currencyName: "阿根廷比索",
     timezone: "America/Argentina/Buenos_Aires (UTC-3)", region: "latin-america", summary: "接入阿根廷二维码、CVU、现金支付及悬账管理能力。",
-    capabilities: capabilities("argentina"), paymentMethods: ["QR", "CVU", "RAPIPAGO", "PAGOFACIL"],
+    capabilities: capabilities("argentina", true), paymentMethods: ["QR", "CVU", "RAPIPAGO", "PAGOFACIL"],
     notices: [{ label: "金额", description: "交易使用 ARS，部分场景要求金额为 10 的倍数。" }, { label: "CVU", description: "实际支付金额可能与订单期望金额不同，应正确处理不足额和超额。" }, { label: "悬账", description: "提供悬账列表、凭证查询和补单接口。" }],
   },
   brazil: {
     slug: "brazil", name: "巴西", flag: "🇧🇷", code: "BR", currency: "BRL", currencyName: "巴西雷亚尔",
-    timezone: "America/Sao_Paulo (UTC-3)", region: "latin-america", summary: "接入巴西 PIX 代收、本地代付与收银台能力。",
+    timezone: "America/Sao_Paulo (UTC-3)", region: "latin-america", summary: "接入巴西 PIX 代收与本地代付能力。",
     capabilities: capabilities("brazil"), paymentMethods: ["PIX"],
     notices: [{ label: "支付方式", description: "当前代收支付方式为 PIX。" }, { label: "金额", description: "交易使用 BRL，最多保留两位小数。" }, { label: "本地信息", description: "用户身份和银行信息按具体接口字段要求传递。" }],
   },
