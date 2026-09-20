@@ -11,6 +11,7 @@ description: 生成并配置 VellPay 接口使用的 RSA 密钥对。
 
 # 第一步：生成商户密钥对
 
+#### 方式一：使用命令行创建
 VellPay 使用 RSA 密钥完成请求签名和响应验签。请在可信设备上使用 OpenSSL 生成 PKCS8 私钥及对应公钥。
 
 ```bash
@@ -22,8 +23,20 @@ Windows 用户可在 CMD 或 PowerShell 中执行相同命令；macOS 用户如�
 
 生成后将得到：
 
-- `merchant_private_key.pem`：商户私钥，只能保存在商户服务端。
-- `merchant_public_key.pem`：商户公钥，用于配置到 VellPay 应用。
+- `merchant_private_key`：商户私钥，只能保存在商户服务端。
+- `merchant_public_key`：商户公钥，用于配置到 VellPay 应用。
+
+#### 方式二：使用密钥生成工具创建（建议使用此方法）
+
+访问网址：[公私钥生成在线工具](https://uutool.cn/rsa-generate/)
+
+密钥长度选择：1024
+
+格式选择：PKCS8
+
+![公私钥生成在线工具](https://image.xiwu.me/2024/812b469da11fd34b0ccc5357893a4917.png)
+
+此时我们得到：公钥和私钥（使用时不要有空格和换行，请妥善保管私钥，公钥将在本文第二步中使用）
 
 :::caution
 不要把私钥发送给 VellPay，也不要把私钥提交到 Git、前端代码、文档站或日志系统。

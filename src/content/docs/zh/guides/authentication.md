@@ -55,15 +55,104 @@ description=test order&merchantOrderNo=ORDER202609170001&paymentType=QR&transact
 ## Java 签名示例
 
 ```java
-public static String sign(String content, String privateKey) throws Exception {
-    byte[] keyBytes = Base64.getDecoder().decode(privateKey);
-    PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyBytes);
-    PrivateKey key = KeyFactory.getInstance("RSA").generatePrivate(keySpec);
+import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
-    Signature signature = Signature.getInstance("SHA1WithRSA");
-    signature.initSign(key);
-    signature.update(content.getBytes(StandardCharsets.UTF_8));
-    return Base64.getEncoder().encodeToString(signature.sign());
+import java.security.KeyFactory;
+import java.security.PrivateKey;
+import java.security.Signature;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.util.*;
+
+@Slf4j
+public class SignUtils {
+
+    public static void main(String[] args) throws Exception {
+        // 替换成商户私钥
+        String privateKey = "privateKey";
+        String nonce = UUID.randomUUID().toString().replace("-", "");
+
+        // 构建请求参数
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("merchantOrderNo", "TEST" + 1234567890);
+        jsonObject.put("idCardNumber", "1234567890");
+        jsonObject.put("realName", "TeemoPay");
+        jsonObject.put("amount", "1000");
+        jsonObject.put("callbackUrl", "https://www.teemopay.com");
+        jsonObject.put("paymentType", 1);
+        jsonObject.put("email", "test@gmail.com");
+        jsonObject.put("phone", "3000000000");
+
+        // 计算签名
+        String sign = signature(jsonObject, nonce, privateKey);
+        jsonObject.put("sign", sign);
+
+        log.info("nonce={},timestamp={},requestBody={}", nonce, System.currentTimeMillis(), jsonObject.toJSONString());
+    }
+
+    public static String signature(Map<String, Object> param, String nonce, String privateKey) throws Exception {
+        // 计算SHA-1
+        String signatureStr = paramHandler(param, nonce);
+        log.debug("signatureStr = {}", signatureStr);
+        return sign(signatureStr.getBytes(), privateKey, "SHA1WithRSA");
+    }
+
+
+    public static String sign(byte[] data, String privateKey, String arithmetic) throws Exception {
+        byte[] keyBytes = Base64.getDecoder().decode(privateKey);
+        PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        PrivateKey privateK = keyFactory.generatePrivate(pkcs8KeySpec);
+        Signature signature = Signature.getInstance(arithmetic);
+        signature.initSign(privateK);
+        signature.update(data);
+        return Base64.getEncoder().encodeToString(signature.sign());
+    }
+
+    private static String paramHandler(Map<String, Object> param, String nonce) {
+        Map<String, Object> sortedParameters = new TreeMap<>(param);
+        // 构建参数字符串
+        StringBuilder paramStringBuilder = new StringBuilder();
+        for (Map.Entry<String, Object> entry : sortedParameters.entrySet()) {
+            if ("sign".equals(entry.getKey())) {
+                continue;
+            }
+            Object value = entry.getValue();
+            if (Objects.isNull(value) || (value instanceof String && StringUtils.isBlank((String) value))) {
+                continue;
+            }
+            paramStringBuilder.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
+        }
+        // 添加API密钥
+        paramStringBuilder.append("nonce").append("=").append(nonce);
+        return paramStringBuilder.toString();
+    }
+
+    // 验签
+    public static boolean verifySign(Map<String, Object> param, String nonce, String publicKey) {
+        String sign = (String) param.get("sign");
+        if (StringUtils.isBlank(sign)) {
+            log.error("请求参数缺少sign: {}", JSON.toJSONString(param));
+            return false;
+        }
+        try {
+            return verifySha1(paramHandler(param, nonce).getBytes(), publicKey, sign);
+        } catch (Exception e) {
+            log.error("RSA验签异常: {}", JSON.toJSONString(param), e);
+            return false;
+        }
+    }
+
+    public static boolean verifySha1(byte[] data, String publicKey, String sign) throws Exception {
+        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(org.apache.commons.codec.binary.Base64.decodeBase64(publicKey));
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        PublicKey publicK = keyFactory.generatePublic(keySpec);
+        Signature signature = Signature.getInstance("SHA1WithRSA");
+        signature.initVerify(publicK);
+        signature.update(data);
+        return signature.verify(Base64.decodeBase64(sign));
+    }
 }
 ```
 
@@ -84,9 +173,8 @@ authorization: BASE64_RSA_SIGNATURE
 
 - 使用 VellPay 平台公钥验证回调签名。
 - 验签规则与请求签名规则保持一致。
-- 回调处理必须以商户订单号或平台订单号实现幂等。
+- 考虑到平台需要接入多个国家的商户，我们会在订单回调的请求头中添加 country 字段，用于标识具体国家。
 - 回调验签成功并完成业务处理后，按照对应回调协议返回成功结果。
-- 不应仅依赖回调；未收到回调时应通过查询接口确认最终状态。
 
 ## 常见验签失败原因
 

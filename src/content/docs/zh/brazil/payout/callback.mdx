@@ -54,6 +54,6 @@ description: VellPay 向商户推送巴西代付订单状态及退款通知。
 }
 ```
 
-商户应对同一 `tradeNo` 的重复通知做幂等处理。
+
 
 <div class="country-note">只有巴西代付回调包含退款相关字段；其他国家不会返回 <code>refundNo</code>、<code>refundAmount</code> 或 <code>refundTime</code>。</div>
