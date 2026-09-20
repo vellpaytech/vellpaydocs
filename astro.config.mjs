@@ -48,6 +48,7 @@ export default defineConfig({
             { label: "KYC 创建", link: "/cambodia/kyc/create" },
             { label: "KYC 查询", link: "/cambodia/kyc/query" },
             { label: "KYC 回调", link: "/cambodia/kyc/callback" },
+            { label: "额度说明", link: "/cambodia/limits" },
           ]),
           country("🇮🇳 印度", "india"),
         ]},

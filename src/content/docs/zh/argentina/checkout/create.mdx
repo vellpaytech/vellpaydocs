@@ -4,7 +4,7 @@ description: 创建 VellPay 收银台订单并取得支付链接。
 ---
 import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 
-<ApiExplorer country="AR" path="/trade/checkout/create" body={{merchantOrderNo:"CHECKOUT202609170001",transactionAmount:"100",paymentType:"QR",idType:"DNI",userIdCard:"12345678",userName:"TEST USER",paymentCallbackUrl:"https://merchant.example/callback"}} />
+<ApiExplorer country="AR" path="/trade/checkout/create" body={{merchantOrderNo:"CHECKOUT202609170001",transactionAmount:"100",paymentType:"QR",idType:"DNI",userIdCard:"12345678",userName:"TEST USER",description:"Test checkout",paymentCallbackUrl:"https://merchant.example/callback"}} />
 
 <div class="method-path"><strong>POST</strong><code>/trade/checkout/create</code></div>
 
@@ -31,6 +31,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `userPhone` | String | 否 | 20 | 用户手机号 |
 | `userEmail` | String | 否 | 50 | 用户邮箱 |
 | `expireTime` | String | 否 | - | 订单过期时间（国家当地时间） |
+| `description` | String | 否 | 100 | 说明 |
 | `paymentCallbackUrl` | String | 否 | 200 | 代收回调地址 |
 
 ## 请求示例
@@ -43,6 +44,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
   "idType": "DNI",
   "userIdCard": "12345678",
   "userName": "TEST USER",
+  "description": "Test checkout",
   "paymentCallbackUrl": "https://merchant.example/callback"
 }
 ```

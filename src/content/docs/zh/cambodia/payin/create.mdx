@@ -19,13 +19,15 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 |---|
 | `KHQR` |
 | `KHQR_USD` |
+| `VA_USD` |
+| `VA_KHR` |
 
 ## 请求参数
 
 | 字段 | 类型 | 必填 | 最大长度 | 说明 |
 |---|---|---|---:|---|
 | `merchantOrderNo` | String | 是 | 32 | 商户订单号 |
-| `transactionAmount` | String | 是 | 20 | 收款金额 |
+| `transactionAmount` | String | 是 | 20 | 收款金额，参见[额度说明](/zh/cambodia/limits/) |
 | `paymentType` | String | 是 | 24 | [支付方式](#payment-methods) |
 | `idType` | String | 否 | 32 | 身份识别类型：`NONE_KYC` 或 `KYC` |
 | `userIdCard` | String | 是 | 50 | 平台身份识别码，最长 50 位；使用 `KYC` 时填写已认证用户的证件号 |

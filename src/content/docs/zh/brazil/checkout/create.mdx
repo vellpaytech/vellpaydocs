@@ -4,7 +4,7 @@ description: 创建 VellPay 收银台订单并取得支付链接。
 ---
 import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 
-<ApiExplorer country="BR" path="/trade/checkout/create" body={{merchantOrderNo:"CHECKOUT202609170001",transactionAmount:"100",paymentType:"PIX",paymentCallbackUrl:"https://merchant.example/callback"}} />
+<ApiExplorer country="BR" path="/trade/checkout/create" body={{merchantOrderNo:"CHECKOUT202609170001",transactionAmount:"100",paymentType:"PIX",description:"Test checkout",paymentCallbackUrl:"https://merchant.example/callback"}} />
 
 
 
@@ -31,6 +31,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `userPhone` | String | 否 | 20 | 用户手机号 |
 | `userEmail` | String | 否 | 50 | 用户邮箱 |
 | `expireTime` | String | 否 | - | 订单过期时间（国家当地时间） |
+| `description` | String | 否 | 100 | 说明 |
 | `paymentCallbackUrl` | String | 否 | 200 | 代收回调地址 |
 
 ## 请求示例
@@ -40,6 +41,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
   "merchantOrderNo": "CHECKOUT202609170001",
   "transactionAmount": "100.00",
   "paymentType": "PIX",
+  "description": "Test checkout",
   "paymentCallbackUrl": "https://merchant.example/callback"
 }
 ```
