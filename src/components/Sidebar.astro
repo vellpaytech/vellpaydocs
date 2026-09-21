@@ -139,8 +139,8 @@ const countryLinks = (country: (typeof countryGroups)[number]["countries"][numbe
   .countries-heading { align-items:center; background:var(--color-selected); border:1px solid color-mix(in srgb,var(--color-primary) 16%,var(--color-border)); border-radius:8px; color:var(--color-primary); display:flex; font-size:.82rem; font-weight:750; gap:10px; letter-spacing:.02em; margin:1rem .2rem .55rem; padding:.6rem .55rem; }
   .region { border-left:2px solid transparent; margin:.25rem 0 .7rem; }
   .region.active { border-left-color:transparent; }
-  .region-label { align-items:center; color:var(--sl-color-gray-2); display:flex; gap:10px; min-height:2.2rem; padding:.35rem .55rem; }
-  .region.active .region-label :global(svg) { color:var(--color-primary); }.region-label b { color:var(--color-text); font-weight:680; }.region-label small { color:var(--sl-color-gray-3); font-size:.68rem; margin-left:auto; }.region-label .chevrons{margin-left:0}
+  .region-label { align-items:center; color:var(--sl-color-gray-2); display:flex; gap:8px; min-height:2.2rem; padding:.35rem .55rem; }
+  .region.active .region-label :global(svg) { color:var(--color-primary); }.region-label b { color:var(--color-text); flex:1 1 auto; font-weight:680; min-width:0; white-space:nowrap; }.region-label small { color:var(--sl-color-gray-3); flex:0 0 auto; font-size:.68rem; margin-left:auto; white-space:nowrap; }.region-label .chevrons{flex:0 0 18px;margin-left:0}
   .country-list { margin-left:.45rem; }
   .vp-country>summary { position:relative; }
   .vp-country>summary.active { background:var(--color-selected); color:var(--color-primary); font-weight:720; }
