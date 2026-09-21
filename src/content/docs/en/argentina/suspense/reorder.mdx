@@ -1,0 +1,56 @@
+---
+title: Reconcile Argentina suspense order
+description: Reconcile an Argentine pay-in order using the bank receipt ID.
+---
+import ApiExplorer from '../../../../../components/ApiExplorer.astro';
+
+<ApiExplorer country="AR" path="/trade/suspenseAccount/reorder" body={{bankId:"BANK_ID",merchantOrderNo:"ORDER202609170001"}} />
+
+<div class="method-path"><strong>POST</strong><code>/trade/suspenseAccount/reorder</code></div>
+
+## Request parameters
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `bankId` | String | Yes | bank receipt ID |
+| `merchantOrderNo` | String | Yes | Merchant order number |
+
+## Request example
+
+```json
+{
+  "bankId": "BANK_ID",
+  "merchantOrderNo": "ORDER202609170001"
+}
+```
+
+## Response parameters
+| Field | Type | Required | Maximum length | Description |
+|---|---|---|---:|---|
+| `code` | int | Yes | - | Status code; a value other than 200 indicates an error |
+| `data` | Object | Yes | - | Response body |
+| `data.amount` | String | Yes | - | Reconciliation amount |
+| `data.tradeNo` | String | Yes | - | Platform order number |
+| `data.bankId` | String | Yes | - | bank receipt ID |
+| `data.merchantOrderNo` | String | Yes | - | Merchant order number |
+| `data.callbackTime` | String | No | - | callback time (Argentinalocal time) |
+| `data.status` | String | Yes | - | Reconciliation result status |
+| `msg` | String | No | - | Error message |
+| `tid` | String | Yes | - | Trace ID |
+
+## Response example
+
+```json
+{
+  "code": 200,
+  "data": {
+    "amount": "100.00",
+    "tradeNo": "TS2608270002AR0000000000040059",
+    "bankId": "BANK_ID",
+    "merchantOrderNo": "ORDER202609170001",
+    "callbackTime": "2026-09-17 12:00:00",
+    "status": "SUCCESS"
+  },
+  "msg": "success",
+  "tid": "747bbf80261844ed85b809212aab0d81"
+}
+```

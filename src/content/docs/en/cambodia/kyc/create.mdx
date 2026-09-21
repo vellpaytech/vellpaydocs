@@ -1,0 +1,57 @@
+---
+title: Cambodia Create KYC
+description: Create a KYC verification application for a Cambodian user.
+---
+import ApiExplorer from '../../../../../components/ApiExplorer.astro';
+
+<ApiExplorer country="KH" path="/trade/kyc/create" body={{userIdCard:"K12345678",userName:"TEST USER",userPhone:"12345678",kycCallbackUrl:"https://merchant.example/kyc-callback"}} />
+
+<p class="endpoint-lead">This endpoint is available only in Cambodia.</p>
+
+<div class="method-path"><strong>POST</strong><code>/trade/kyc/create</code></div>
+
+## Request parameters
+| Field | Type | Required | Maximum length | Description |
+|---|---|---|---:|---|
+| `userIdCard` | String | Yes | 50 | Merchant-side user identifier containing 1–50 letters or digits; it must remain consistent across KYC, pay-in, and payout endpoints. |
+| `userName` | String | Yes | 64 | User name |
+| `userPhone` | String | Yes | 8–9 | User mobile number, 8–9 digits |
+| `kycCallbackUrl` | String | Yes | 200 | KYC status callback URL |
+
+## Request example
+
+```json
+{
+  "userIdCard": "K12345678",
+  "userName": "TEST USER",
+  "userPhone": "12345678",
+  "kycCallbackUrl": "https://merchant.example/kyc-callback"
+}
+```
+
+## Response parameters
+| Field | Type | Required | Maximum length | Description |
+|---|---|---|---:|---|
+| `code` | int | Yes | - | Status code; a value other than 200 indicates an error |
+| `data` | Object | Yes | - | Response body |
+| `data.userPhone` | String | Yes | 8–9 | User mobile number |
+| `data.authenticationStatus` | String | Yes | 32 | [KYC Status](/en/guides/order-status/#kyc-Status) |
+| `data.authenticationUrl` | String | Yes | 20 | verification URL |
+| `data.failMsg` | String | No | 20 | Failure reason |
+| `msg` | String | No | - | Error message |
+| `tid` | String | Yes | - | Trace ID |
+
+## Response example
+
+```json
+{
+  "code": 200,
+  "data": {
+    "userPhone": "12345678",
+    "authenticationStatus": "PENDING",
+    "authenticationUrl": "https://kyc.example/verify"
+  },
+  "msg": "success",
+  "tid": "747bbf80261844ed85b809212aab0d81"
+}
+```

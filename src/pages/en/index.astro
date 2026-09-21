@@ -1,0 +1,113 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const docsUrl = `${base}/en/guides/quick-start/`;
+const authUrl = `${base}/en/guides/authentication/`;
+const paymentUrl = `${base}/en/brazil/payin/create/`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="VellPay unified multi-country payment API documentation" />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <title>VellPay Developer Documentation</title>
+  </head>
+  <body>
+    <header>
+      <a class="brand" href={`${base}/en/`} aria-label="VellPay Developer Documentation home">
+        <b><i>V</i>ELLPAY</b><span>Developer Docs</span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href={docsUrl}>Developer guides</a><a href={paymentUrl}>API reference</a><a class="language-switch" href={`${base}/zh/`} lang="zh-CN">中文</a>
+        <a class="nav-button" href={docsUrl}>Get started <span>→</span></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow"><span></span> VELLPAY DEVELOPER PLATFORM</p>
+          <h1>Connect to global payments<br /><em>with a single API</em></h1>
+          <p class="hero-text">A unified payment API for Asian and Latin American markets. Use one consistent integration for local pay-ins, payouts, hosted checkout, and order management.</p>
+          <div class="hero-actions">
+            <a class="primary" href={docsUrl}>Get started <span>→</span></a>
+            <a class="secondary" href={paymentUrl}>Browse APIs</a>
+          </div>
+          <div class="trust-row">
+            <span><b>8</b> countries and regions</span><i></i><span><b>Unified</b> API specification</span><i></i><span><b>24/7</b> reliable service</span>
+          </div>
+        </div>
+
+        <div class="code-card" aria-label="API request example">
+          <div class="code-header"><div><span></span><span></span><span></span></div><small>Create pay-in order</small></div>
+          <div class="endpoint"><b>POST</b><code>/trade/payment/create</code></div>
+          <pre><code><span class="muted">&#123;</span>
+  <span class="key">"merchantOrderNo"</span>: <span class="value">"ORDER_20260917"</span>,
+  <span class="key">"transactionAmount"</span>: <span class="value">"100.00"</span>,
+  <span class="key">"paymentType"</span>: <span class="value">"PIX"</span>
+<span class="muted">&#125;</span></code></pre>
+          <div class="response-line"><span><i></i> 200 Success</span><small>238 ms</small></div>
+        </div>
+      </section>
+
+      <section class="capabilities">
+        <div class="section-title">
+          <p>CORE CAPABILITIES</p><h2>One API for the complete payment journey</h2>
+          <span>From transaction initiation to status queries, give your business a clear, stable, and consistent integration experience.</span>
+        </div>
+        <div class="cards">
+          <a href={`${base}/en/brazil/payin/create/`}><div class="icon">↙</div><h3>Local pay-ins</h3><p>Accept major local payment methods and create or query orders through one API.</p><strong>View API →</strong></a>
+          <a href={`${base}/en/brazil/payout/create/`}><div class="icon">↗</div><h3>Local payouts</h3><p>Send funds to bank accounts and local wallets through a consistent API.</p><strong>View API →</strong></a>
+          <a href={`${base}/en/colombia/checkout/create/`}><div class="icon">▣</div><h3>Hosted checkout</h3><p>Generate secure payment pages quickly and shorten integration and launch time.</p><strong>View API →</strong></a>
+          <a href={authUrl}><div class="icon">◇</div><h3>Secure authentication</h3><p>Protect every API call with request signatures, timestamps, and nonces.</p><strong>Learn more →</strong></a>
+        </div>
+      </section>
+
+      <section class="coverage">
+        <div><p>GLOBAL COVERAGE</p><h2>Coverage across key payment<br />markets in Asia and Latin America</h2></div>
+        <div class="countries">
+          <span>🇮🇩 Indonesia</span><span>🇻🇳 Vietnam</span><span>🇰🇷 South Korea</span><span>🇰🇭 Cambodia</span>
+          <span>🇮🇳 India</span><span>🇨🇴 Colombia</span><span>🇦🇷 Argentina</span><span>🇧🇷 Brazil</span>
+        </div>
+      </section>
+    </main>
+
+    <footer><span>© 2026 VellPay</span><span>Global payment infrastructure built for developers</span></footer>
+  </body>
+</html>
+
+<style>
+  :root { color-scheme:light; font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+  * { box-sizing:border-box; } body { background:#f7faf8; color:#11231b; margin:0; min-width:320px; } a { color:inherit; text-decoration:none; }
+  header { align-items:center; backdrop-filter:blur(18px); background:rgba(247,250,248,.9); border-bottom:1px solid #dfe9e3; display:flex; height:76px; justify-content:space-between; padding:0 max(5vw,24px); position:sticky; top:0; z-index:20; }
+  .brand { align-items:center; display:flex; gap:16px; } .brand b { color:#11231b; font-size:20px; font-weight:900; letter-spacing:.08em; } .brand b i { background:#087a48; border-radius:7px; color:#fff; display:inline-grid; font-style:normal; height:30px; margin-right:2px; place-items:center; width:30px; } .brand span { border-left:1px solid #cbd8d0; color:#60746a; font-size:14px; padding-left:16px; }
+  nav { align-items:center; display:flex; gap:30px; } nav>a:not(.nav-button) { color:#455c51; font-size:14px; font-weight:600; }.language-switch { border:1px solid #cbd8d0; border-radius:999px; padding:7px 12px; }
+  .nav-button,.primary { align-items:center; background:#087a48; border-radius:8px; color:#fff; display:inline-flex; font-size:14px; font-weight:750; gap:18px; padding:12px 18px; }
+  .hero { display:grid; gap:7vw; grid-template-columns:minmax(0,1.05fr) minmax(380px,.95fr); margin:0 auto; max-width:1280px; min-height:650px; overflow:hidden; padding:112px 40px 92px; position:relative; }
+  .hero::before { background:radial-gradient(circle,rgba(19,160,96,.15),transparent 68%); content:""; height:520px; position:absolute; right:-180px; top:-150px; width:520px; }
+  .hero-copy { position:relative; z-index:1; } .eyebrow,.section-title>p,.coverage>div>p { color:#087a48; font-size:12px; font-weight:800; letter-spacing:.17em; }
+  .eyebrow span { background:#16a366; border-radius:50%; display:inline-block; height:7px; margin-right:8px; width:7px; }
+  h1 { font-size:clamp(48px,5.5vw,76px); letter-spacing:-.058em; line-height:1.06; margin:24px 0 28px; } h1 em { color:#0b9658; font-style:normal; }
+  .hero-text { color:#60746a; font-size:18px; line-height:1.8; margin:0; max-width:630px; } .hero-actions { display:flex; gap:12px; margin-top:38px; } .hero-actions a { padding:15px 22px; }
+  .secondary { border:1px solid #cbd8d0; border-radius:8px; color:#294337; font-size:14px; font-weight:700; }
+  .trust-row { align-items:center; color:#6d8177; display:flex; font-size:12px; gap:16px; margin-top:48px; } .trust-row b { color:#18382a; font-size:14px; } .trust-row i { background:#cad8d0; height:15px; width:1px; }
+  .code-card { align-self:center; background:#07150f; border:1px solid #274438; border-radius:18px; box-shadow:0 34px 90px rgba(24,70,48,.23); color:#dce9e2; overflow:hidden; position:relative; transform:rotate(1.2deg); }
+  .code-header { align-items:center; border-bottom:1px solid #20372e; display:flex; justify-content:space-between; padding:17px 20px; } .code-header div { display:flex; gap:7px; }
+  .code-header div span { background:#315044; border-radius:50%; height:8px; width:8px; } .code-header div span:first-child { background:#16a366; } .code-header small { color:#6f8d80; }
+  .endpoint { align-items:center; background:#0b1d15; border:1px solid #244237; border-radius:8px; display:flex; gap:12px; margin:24px 24px 8px; padding:12px; }
+  .endpoint b { background:#16a366; border-radius:4px; color:#04140d; font-size:10px; letter-spacing:.08em; padding:5px 7px; } .endpoint code { color:#cde5d9; font-size:12px; }
+  pre { font-size:13px; line-height:2; margin:0; overflow:auto; padding:16px 28px 24px; } .key { color:#7dd3a8; }.value { color:#d9b77d; }.number { color:#88bdf2; }.muted { color:#7b9589; }
+  .response-line { align-items:center; border-top:1px solid #20372e; color:#7e9c8e; display:flex; font-size:11px; justify-content:space-between; padding:15px 22px; } .response-line span i { background:#2bd27f; border-radius:50%; display:inline-block; height:7px; margin-right:7px; width:7px; }
+  .capabilities { background:#fff; border-bottom:1px solid #e0e9e4; border-top:1px solid #e0e9e4; padding:92px max(5vw,24px); }
+  .section-title { margin:0 auto 42px; max-width:1200px; text-align:center; } .section-title h2,.coverage h2 { font-size:clamp(32px,4vw,48px); letter-spacing:-.04em; margin:14px 0 16px; } .section-title>span { color:#6b7e74; font-size:16px; }
+  .cards { display:grid; gap:16px; grid-template-columns:repeat(4,1fr); margin:0 auto; max-width:1200px; } .cards>a { border:1px solid #dde8e1; border-radius:14px; padding:26px; transition:.2s ease; }
+  .cards>a:hover { border-color:#6fc79a; box-shadow:0 18px 45px rgba(15,90,54,.1); transform:translateY(-4px); } .icon { align-items:center; background:#e7f7ed; border-radius:10px; color:#087a48; display:flex; font-size:22px; height:44px; justify-content:center; width:44px; }
+  .cards h3 { font-size:19px; margin:24px 0 10px; } .cards p { color:#718178; font-size:14px; line-height:1.75; min-height:74px; } .cards strong { color:#087a48; font-size:13px; }
+  .coverage { align-items:center; display:grid; gap:70px; grid-template-columns:.8fr 1.2fr; margin:0 auto; max-width:1200px; padding:92px 24px; } .countries { display:grid; gap:12px; grid-template-columns:repeat(2,1fr); }
+  .countries span { background:#fff; border:1px solid #dde8e1; border-radius:10px; color:#3e584b; font-size:14px; font-weight:650; padding:17px 19px; }
+  footer { border-top:1px solid #dfe9e3; color:#7a8d83; display:flex; font-size:12px; justify-content:space-between; margin:0 auto; max-width:1200px; padding:28px 24px; }
+  @media(max-width:900px) { nav>a:not(.nav-button):not(.language-switch){display:none}.hero{grid-template-columns:1fr;padding-top:72px}.code-card{max-width:620px;transform:none}.cards{grid-template-columns:repeat(2,1fr)}.coverage{grid-template-columns:1fr;gap:32px} }
+  @media(max-width:560px) { header{height:66px}.brand b{font-size:16px}.brand b i{height:26px;width:26px}.brand span{display:none}.nav-button{padding:10px 13px}.hero{padding:62px 20px}.hero-text{font-size:16px}.trust-row{align-items:flex-start;flex-direction:column;gap:9px}.trust-row i{display:none}.cards{grid-template-columns:1fr}.capabilities{padding:70px 20px}.countries{grid-template-columns:1fr}.hero-actions{align-items:stretch;flex-direction:column}.hero-actions a{justify-content:center}footer{gap:8px;flex-direction:column} }
+</style>

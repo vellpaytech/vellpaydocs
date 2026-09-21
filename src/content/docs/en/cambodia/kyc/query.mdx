@@ -1,0 +1,48 @@
+---
+title: Cambodia Query KYC
+description: Query a Cambodian user’s KYC status.
+---
+import ApiExplorer from '../../../../../components/ApiExplorer.astro';
+
+<ApiExplorer country="KH" path="/trade/kyc/query" body={{userPhone:"12345678"}} />
+
+<p class="endpoint-lead">This endpoint is available only in Cambodia.</p>
+
+<div class="method-path"><strong>POST</strong><code>/trade/kyc/query</code></div>
+
+## Request parameters
+| Field | Type | Required | Length | Description |
+|---|---|---|---:|---|
+| `userPhone` | String | Yes | 8–9 | User mobile number, 8–9 digits |
+
+## Request example
+
+```json
+{
+  "userPhone": "12345678"
+}
+```
+
+## Response parameters
+| Field | Type | Required | Maximum length | Description |
+|---|---|---|---:|---|
+| `code` | int | Yes | - | Status code; a value other than 200 indicates an error |
+| `data` | Object | Yes | - | Response body |
+| `data.authenticationStatus` | String | Yes | 32 | [KYC Status](/en/guides/order-status/#kyc-Status) |
+| `data.failMsg` | String | No | 20 | Failure reason |
+| `msg` | String | No | - | Error message |
+| `tid` | String | Yes | - | Trace ID |
+
+## Response example
+
+```json
+{
+  "code": 200,
+  "data": {
+    "authenticationStatus": "APPROVED",
+    "failMsg": null
+  },
+  "msg": "success",
+  "tid": "747bbf80261844ed85b809212aab0d81"
+}
+```

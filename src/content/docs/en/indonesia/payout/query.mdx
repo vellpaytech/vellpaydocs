@@ -1,0 +1,72 @@
+---
+title: Query payout
+description: Query a payout order by merchant order number.
+---
+import ApiExplorer from '../../../../../components/ApiExplorer.astro';
+
+<ApiExplorer country="ID" path="/trade/payout/query" body={{merchantOrderNo:"PAYOUT202609170001"}} />
+
+
+
+<div class="method-path"><strong>POST</strong><code>/trade/payout/query</code></div>
+
+## Request parameters
+| Field | Type | Required | Maximum length | Description |
+|---|---|---|---:|---|
+| `merchantOrderNo` | String | Yes | 32 | Merchant order number |
+
+## Request example
+
+```json
+{
+  "merchantOrderNo": "PAYOUT202609170001"
+}
+```
+
+## Response parameters
+| Field | Type | Required | Maximum length | Description |
+|---|---|---|---:|---|
+| `code` | int | Yes | - | Status code; a value other than 200 indicates an error |
+| `data` | Object | Yes | - | Response body |
+| `data.merchantOrderNo` | String | Yes | 32 | Merchant order number |
+| `data.tradeNo` | String | Yes | 32 | Platform order number |
+| `data.transactionAmount` | String | Yes | - | Payout amount |
+| `data.payoutType` | String | Yes | 24 | [Payout method](/en/indonesia/payout/create/#payment-methods) |
+| `data.status` | String | Yes | 20 | [Order status](/en/guides/order-status/) |
+| `data.failMsg` | String | No | 24 | Order failure reason |
+| `data.serviceAmount` | String | No | - | Service fee |
+| `data.serviceRate` | String | No | - | Service fee rate |
+| `data.immService` | String | No | - | Fixed fee |
+| `data.completeTime` | String | No | - | Completion time (local time) |
+| `msg` | String | No | - | Error message |
+| `tid` | String | Yes | - | Trace ID |
+
+## Order status
+
+| Status | Description |
+|---|---|
+| `INIT` | Accepted |
+| `PAYING` | Processing |
+| `SUCCESS` | Completed |
+| `FAIL` | Failed |
+| `REFUND` | Refunded |
+| `PART_REFUND` | Partially refunded |
+
+## Response example
+
+```json
+{
+  "code": 200,
+  "data": {
+    "merchantOrderNo": "PAYOUT202609170001",
+    "tradeNo": "TF2405220001ID0000508467743993",
+    "transactionAmount": "100.00",
+    "payoutType": "BANK_TRANSFER",
+    "status": "SUCCESS",
+    "serviceAmount": "1.00",
+    "completeTime": "2026-09-17 15:30:00"
+  },
+  "msg": "success",
+  "tid": "747bbf80261844ed85b809212aab0d81"
+}
+```

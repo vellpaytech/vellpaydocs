@@ -1,0 +1,90 @@
+---
+title: Create payout
+description: Create a VellPay payout order.
+---
+import ApiExplorer from '../../../../../components/ApiExplorer.astro';
+
+<ApiExplorer country="KR" path="/trade/payout/create" body={{merchantOrderNo:"PAYOUT202609170001",transactionAmount:"1000",payoutType:"BANK_TRANSFER",idType:"RRN",userIdCard:"9001011234567",userName:"TEST USER",userPhone:"01012345678",userEmail:"user@example.com",bankCode:"088",bankName:"Shinhan Bank",bankAccountNo:"1234567890",description:"Payout order",payoutCallbackUrl:"https://merchant.example/payout-callback"}} />
+
+<p class="endpoint-lead"></p>
+
+<div class="method-path"><strong>POST</strong><code>/trade/payout/create</code></div>
+
+## Request headers
+[Common request headers](/en/guides/request-headers/).
+
+<h2 id="payment-methods">Payment method values</h2>
+
+| `payoutType` |
+|---|
+| `BANK_TRANSFER` |
+| `BANKTRANSFER_KYC` |
+
+## Request parameters
+| Field | Type | Required | Maximum length | Description |
+|---|---|---|---:|---|
+| `merchantOrderNo` | String | Yes | 32 | Merchant order number |
+| `transactionAmount` | String | Yes | 20 | Payout amount, an integer or up to two decimal places |
+| `payoutType` | String | Yes | 20 | [Payout method](#payment-methods) |
+| `idType` | String | Yes | 50 | Beneficiary type: `RRN` (individual)or `CO` (business) |
+| `userIdCard` | String | No | 50 | ID number. An individual `RRN` contains 13 digits; a business `CO` contains the 10-digit business registration number. This field is optional for this endpoint. |
+| `userName` | String | Yes | 64 | User name |
+| `userPhone` | String | No | 11 | User mobile number, 11 digits; starts with `010`  |
+| `userEmail` | String | No | 50 | User email |
+| `bankCode` | String | Yes | 20 | [Bank codes](../banks/) |
+| `bankName` | String | Yes | 50 | [Bank name](../banks/) |
+| `bankAccountNo` | String | Yes | 50 | Beneficiary account |
+| `description` | String | No | 100 | Description |
+| `payoutCallbackUrl` | String | No | 200 | Payout callback URL |
+
+
+
+## Request example
+
+```json
+{
+  "merchantOrderNo": "PAYOUT202609170001",
+  "transactionAmount": "100.00",
+  "payoutType": "BANK_TRANSFER",
+  "idType": "RRN",
+  "userIdCard": "9001011234567",
+  "userName": "TEST USER",
+  "userPhone": "01012345678",
+  "userEmail": "user@example.com",
+  "bankCode": "088",
+  "bankName": "Shinhan Bank",
+  "bankAccountNo": "1234567890",
+  "description": "Payout order",
+  "payoutCallbackUrl": "https://merchant.example/payout-callback"
+}
+```
+
+## Response parameters
+| Field | Type | Required | Maximum length | Description |
+|---|---|---|---:|---|
+| `code` | int | Yes | - | Status code; a value other than 200 indicates an error |
+| `data` | Object | Yes | - | Response body |
+| `data.merchantOrderNo` | String | Yes | 32 | Merchant order number |
+| `data.tradeNo` | String | Yes | 32 | Platform order number |
+| `data.transactionAmount` | String | Yes | - | Payout amount |
+| `data.status` | String | Yes | 24 | [Order status](/en/guides/order-status/) |
+| `data.payoutType` | String | Yes | 24 | [Payout method](#payment-methods) |
+| `msg` | String | No | - | Error message |
+| `tid` | String | Yes | - | Trace ID |
+
+## Response example
+
+```json
+{
+  "code": 200,
+  "data": {
+    "merchantOrderNo": "PAYOUT202609170001",
+    "tradeNo": "TF2405220001KR0000508467743993",
+    "transactionAmount": "100.00",
+    "status": "PAYING",
+    "payoutType": "BANK_TRANSFER"
+  },
+  "msg": "success",
+  "tid": "747bbf80261844ed85b809212aab0d81"
+}
+```

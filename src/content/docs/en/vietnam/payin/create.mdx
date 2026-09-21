@@ -1,0 +1,93 @@
+---
+title: Create pay-in
+description: Create a VellPay pay-in order.
+---
+<div class="country-note">No VellPay pay-in method is currently configured for Vietnam, so an executable sample request is not yet available. After activation, use the actual value confirmed by your VellPay representative for <code>paymentType</code>.</div>
+
+
+
+<div class="method-path"><strong>POST</strong><code>/trade/payment/create</code></div>
+
+## Request headers
+[Common request headers](/en/guides/request-headers/).
+
+<h2 id="payment-methods">Payment method values</h2>
+
+No payment method is currently configured.
+
+## Request parameters
+
+| Field | Type | Required | Maximum length | Description |
+|---|---|---|---:|---|
+| `merchantOrderNo` | String | Yes | 32 | Merchant order number |
+| `transactionAmount` | String | Yes | 20 | Pay-in amount |
+| `paymentType` | String | Yes | 24 | [Payment method](#payment-methods) |
+| `idType` | String | No | 32 | Optional ID type. This endpoint has no fixed enum; omit this field unless required by your business or payment channel. |
+| `userIdCard` | String | No | 50 | ID number. No fixed format; omit this field unless required by your business or payment channel. |
+| `userName` | String | No | 64 | User name |
+| `userPhone` | String | No | 10 | User mobile number, 10 digits; starts with `03`, `05`, `07`, `08` or `09`  |
+| `userEmail` | String | No | 50 | User email |
+| `bankCode` | String | No | 64 | Bank codes |
+| `bankAccountNo` | String | No | 64 | Bank account number |
+| `merchantName` | String | No | 64 | Merchant name |
+| `description` | String | No | 100 | Description |
+| `expireTime` | String | No | - | Order expiration time (local time, format `yyyy-MM-dd HH:mm:ss`) |
+| `paymentCallbackUrl` | String | No | 200 | Pay-in callback URL |
+
+## Request example
+
+The following example shows the field structure. Before submitting, replace `paymentType` with the value confirmed by your VellPay representative.
+
+```json
+{
+  "merchantOrderNo": "ORDER202609170001",
+  "transactionAmount": "100000.00",
+  "paymentType": "PAYMENT_TYPE",
+  "idType": "NATIONAL_ID",
+  "userIdCard": "012345678901",
+  "userName": "TEST USER",
+  "userPhone": "0912345678",
+  "userEmail": "user@example.com",
+  "bankCode": "970436",
+  "bankAccountNo": "1234567890",
+  "merchantName": "TEST MERCHANT",
+  "description": "Payment order",
+  "expireTime": "2026-09-21 18:00:00",
+  "paymentCallbackUrl": "https://merchant.example/callback"
+}
+```
+
+## Response parameters
+
+| Field | Type | Required | Maximum length | Description |
+|---|---|---|---:|---|
+| `code` | int | Yes | - | Status code; a value other than 200 indicates an error |
+| `data` | Object | Yes | - | Response body |
+| `data.merchantOrderNo` | String | Yes | 24 | Merchant order number |
+| `data.tradeNo` | String | Yes | 32 | Platform order number |
+| `data.transactionAmount` | String | Yes | - | Pay-in amount, an integer or up to two decimal places |
+| `data.status` | String | Yes | 24 | [Order status](/en/guides/order-status/) |
+| `data.paymentType` | String | Yes | 24 | [Payment method](#payment-methods) |
+| `data.failMsg` | String | No | 200 | Order failure reason |
+| `data.paymentInfo` | String | No | 200 | Payment information |
+| `data.additional` | Object | No | - | Additional information |
+| `msg` | String | No | - | Error message |
+| `tid` | String | Yes | - | Trace ID |
+
+## Response example
+
+```json
+{
+  "code": 200,
+  "data": {
+    "merchantOrderNo": "ORDER202609170001",
+    "tradeNo": "TS2608270002VN0000000000040059",
+    "transactionAmount": "100.00",
+    "status": "PAYING",
+    "paymentType": "PAYMENT_TYPE",
+    "paymentInfo": "PAYMENT_INFORMATION"
+  },
+  "msg": "success",
+  "tid": "747bbf80261844ed85b809212aab0d81"
+}
+```

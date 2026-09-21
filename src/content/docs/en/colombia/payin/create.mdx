@@ -1,0 +1,100 @@
+---
+title: Create pay-in
+description: Create a VellPay pay-in order.
+---
+import ApiExplorer from '../../../../../components/ApiExplorer.astro';
+
+<ApiExplorer country="CO" path="/trade/payment/create" body={{merchantOrderNo:"ORDER202609170001",transactionAmount:"10000",paymentType:"PSE",idType:"CC",userIdCard:"1234567890",userName:"TEST USER",userPhone:"3001234567",userEmail:"user@example.com",paymentCallbackUrl:"https://merchant.example/callback"}} />
+
+
+
+<div class="method-path"><strong>POST</strong><code>/trade/payment/create</code></div>
+
+## Request headers
+[Common request headers](/en/guides/request-headers/).
+
+<h2 id="payment-methods">Payment method values</h2>
+
+| `paymentType` |
+|---|
+| `PSE` |
+| `NEQUI_PSE` |
+| `EFECTY` |
+| `DAVIPLATA_PSE` |
+| `TRANSFIYA` |
+| `MOVIL_PSE` |
+| `DALE_PSE` |
+| `BREB_KEY` |
+| `NEQUI_PUSH` |
+| `BREB_QR` |
+| `DAVIPLATA_PUSH` |
+
+## Request parameters
+
+| Field | Type | Required | Maximum length | Description |
+|---|---|---|---:|---|
+| `merchantOrderNo` | String | Yes | 32 | Merchant order number |
+| `transactionAmount` | String | Yes | 20 | Pay-in amount |
+| `paymentType` | String | Yes | 24 | [Payment method](#payment-methods) |
+| `idType` | String | Conditionally required | 32 | Required when `paymentType` is `PSE` or `NEQUI_PSE`. Allowed values: `CC`, `CE`, `NIT`, `PA` |
+| `userIdCard` | String | Conditionally required | 50 | ID number. Required when `paymentType` is `PSE` or `NEQUI_PSE`. `CC` and `CE` contain 6–10 digits; `NIT` contains 9 digits; `PA` contains 9 letters or digits. |
+| `userName` | String | Yes | 64 | User name |
+| `userPhone` | String | Yes | 10 | User mobile number, 10 digits; starts with `3`  |
+| `userEmail` | String | Yes | 50 | User email |
+| `bankCode` | String | No | 64 | Bank codes |
+| `bankAccountNo` | String | No | 64 | Bank account number |
+| `merchantName` | String | No | 64 | Merchant name |
+| `description` | String | No | 100 | Description |
+| `expireTime` | String | No | - | Order expiration time (local time, format `yyyy-MM-dd HH:mm:ss`) |
+| `paymentCallbackUrl` | String | No | 200 | Pay-in callback URL |
+
+## Request example
+
+```json
+{
+  "merchantOrderNo": "ORDER202609170001",
+  "transactionAmount": "100.00",
+  "paymentType": "PSE",
+  "idType": "CC",
+  "userIdCard": "1234567890",
+  "userName": "TEST USER",
+  "userPhone": "3001234567",
+  "userEmail": "user@example.com",
+  "paymentCallbackUrl": "https://merchant.example/callback"
+}
+```
+
+## Response parameters
+
+| Field | Type | Required | Maximum length | Description |
+|---|---|---|---:|---|
+| `code` | int | Yes | - | Status code; a value other than 200 indicates an error |
+| `data` | Object | Yes | - | Response body |
+| `data.merchantOrderNo` | String | Yes | 24 | Merchant order number |
+| `data.tradeNo` | String | Yes | 32 | Platform order number |
+| `data.transactionAmount` | String | Yes | - | Pay-in amount, an integer or up to two decimal places |
+| `data.status` | String | Yes | 24 | [Order status](/en/guides/order-status/) |
+| `data.paymentType` | String | Yes | 24 | [Payment method](#payment-methods) |
+| `data.failMsg` | String | No | 200 | Order failure reason |
+| `data.paymentInfo` | String | No | 200 | Payment information |
+| `data.additional` | Object | No | - | Additional information |
+| `msg` | String | No | - | Error message |
+| `tid` | String | Yes | - | Trace ID |
+
+## Response example
+
+```json
+{
+  "code": 200,
+  "data": {
+    "merchantOrderNo": "ORDER202609170001",
+    "tradeNo": "TS2608270002CO0000000000040059",
+    "transactionAmount": "100.00",
+    "status": "PAYING",
+    "paymentType": "PSE",
+    "paymentInfo": "PAYMENT_INFORMATION"
+  },
+  "msg": "success",
+  "tid": "747bbf80261844ed85b809212aab0d81"
+}
+```

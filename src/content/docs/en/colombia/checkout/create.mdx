@@ -1,0 +1,91 @@
+---
+title: Create checkout
+description: Create a VellPay checkout order and obtain a payment link.
+---
+import ApiExplorer from '../../../../../components/ApiExplorer.astro';
+
+<ApiExplorer country="CO" path="/trade/checkout/create" body={{merchantOrderNo:"CHECKOUT202609170001",transactionAmount:"100",paymentType:"PSE",userPhone:"3000000000",description:"Test checkout",paymentCallbackUrl:"https://merchant.example/callback"}} />
+
+
+
+<div class="method-path"><strong>POST</strong><code>/trade/checkout/create</code></div>
+
+## Request headers
+[Common request headers](/en/guides/request-headers/).
+
+<h2 id="payment-methods">Payment method values</h2>
+
+| `paymentType` |
+|---|
+| `PSE` |
+| `NEQUI_PSE` |
+| `EFECTY` |
+| `DAVIPLATA_PSE` |
+| `TRANSFIYA` |
+| `MOVIL_PSE` |
+| `DALE_PSE` |
+| `BREB_KEY` |
+| `NEQUI_PUSH` |
+| `BREB_QR` |
+| `DAVIPLATA_PUSH` |
+
+## Request parameters
+| Field | Type | Required | Maximum length | Description |
+|---|---|---|---:|---|
+| `merchantOrderNo` | String | Yes | 32 | Merchant order number |
+| `transactionAmount` | String | Yes | 20 | Pay-in amount, an integer or up to two decimal places |
+| `paymentType` | String | No | 32 | [Payment method](#payment-methods) |
+| `idType` | String | No | 32 | ID type: `CC`, `CE`, `NIT`, `PA` |
+| `userIdCard` | String | No | 50 | ID number. `CC` and `CE` contain 6–10 digits; `NIT` contains 9 digits; `PA` contains 9 letters or digits. |
+| `userName` | String | No | 64 | User name |
+| `userPhone` | String | No | 10 | User mobile number, 10 digits; starts with `3`  |
+| `userEmail` | String | No | 50 | User email |
+| `expireTime` | String | No | - | Order expiration time (local time) |
+| `description` | String | No | 100 | Description |
+| `paymentCallbackUrl` | String | No | 200 | Pay-in callback URL |
+
+## Request example
+
+```json
+{
+  "merchantOrderNo": "CHECKOUT202609170001",
+  "transactionAmount": "100.00",
+  "paymentType": "PSE",
+  "userPhone": "3000000000",
+  "description": "Test checkout",
+  "paymentCallbackUrl": "https://merchant.example/callback"
+}
+```
+
+## Response parameters
+| Field | Type | Required | Maximum length | Description |
+|---|---|---|---:|---|
+| `code` | int | Yes | - | Status code; a value other than 200 indicates an error |
+| `data` | Object | Yes | - | Response body |
+| `data.merchantOrderNo` | String | Yes | 32 | Merchant order number |
+| `data.tradeNo` | String | Yes | 32 | Platform order number |
+| `data.transactionAmount` | String | Yes | 20 | Pay-in amount |
+| `data.status` | String | Yes | 20 | [Order status](/en/guides/order-status/) |
+| `data.expireTime` | String | Yes | - | Expiration time (local time) |
+| `data.paymentLink` | String | Yes | 24 | Payment link |
+| `data.failMsg` | String | No | 200 | Order failure reason |
+| `msg` | String | No | - | Error message |
+| `tid` | String | Yes | - | Trace ID |
+
+## Response example
+
+```json
+{
+  "code": 200,
+  "data": {
+    "merchantOrderNo": "CHECKOUT202609170001",
+    "tradeNo": "TS2608270002CO0000000000040059",
+    "transactionAmount": "100.00",
+    "status": "PAYING",
+    "expireTime": "2026-09-17 16:30:00",
+    "paymentLink": "https://checkout.example/pay/TS2608270002CO0000000000040059"
+  },
+  "msg": "success",
+  "tid": "747bbf80261844ed85b809212aab0d81"
+}
+```

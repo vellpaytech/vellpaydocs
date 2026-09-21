@@ -1,0 +1,88 @@
+---
+title: Create payout
+description: Create a VellPay payout order.
+---
+import ApiExplorer from '../../../../../components/ApiExplorer.astro';
+
+<ApiExplorer country="KH" path="/trade/payout/create" body={{merchantOrderNo:"PAYOUT202609170001",transactionAmount:"10000",payoutType:"BANK_TRANSFER",idType:"NONE_KYC",userIdCard:"USER123456",userName:"TEST USER",userPhone:"12345678",userEmail:"user@example.com",bankCode:"0001",bankName:"ABA Bank",bankAccountNo:"1234567890"}} />
+
+<p class="endpoint-lead"></p>
+
+<div class="method-path"><strong>POST</strong><code>/trade/payout/create</code></div>
+
+## Request headers
+[Common request headers](/en/guides/request-headers/).
+
+<h2 id="payment-methods">Payment method values</h2>
+
+| `payoutType` |
+|---|
+| `BANK_TRANSFER` |
+| `BANK_TRANSFER_USD` |
+
+## Request parameters
+| Field | Type | Required | Maximum length | Description |
+|---|---|---|---:|---|
+| `merchantOrderNo` | String | Yes | 32 | Merchant order number |
+| `transactionAmount` | String | Yes | 20 | Payout amount, an integer or up to two decimal places; [Limits](/en/cambodia/limits/) |
+| `payoutType` | String | Yes | 20 | [Payout method](#payment-methods) |
+| `idType` | String | No | 50 | Identity type: `NONE_KYC` (unverified user)or `KYC` (KYC-approved user) |
+| `userIdCard` | String | Yes | 50 | Merchant-side user identifier containing 1–50 letters or digits. When `idType` is `KYC`, it must match the approved KYC record. |
+| `userName` | String | Yes | 64 | User name |
+| `userPhone` | String | Yes | 8–9 | User mobile number, 8–9 digits |
+| `userEmail` | String | Yes | 50 | User email |
+| `bankCode` | String | Yes | 20 | [Bank codes](../banks/) |
+| `bankName` | String | Yes | 50 | [Bank name](../banks/) |
+| `bankAccountNo` | String | Yes | 50 | Beneficiary account |
+| `description` | String | No | 100 | Description |
+| `payoutCallbackUrl` | String | No | 200 | Payout callback URL |
+
+
+
+## Request example
+
+```json
+{
+  "merchantOrderNo": "PAYOUT202609170001",
+  "transactionAmount": "100.00",
+  "payoutType": "BANK_TRANSFER",
+  "idType": "NONE_KYC",
+  "userIdCard": "USER123456",
+  "userName": "TEST USER",
+  "userPhone": "12345678",
+  "userEmail": "user@example.com",
+  "bankCode": "0001",
+  "bankName": "ABA Bank",
+  "bankAccountNo": "1234567890"
+}
+```
+
+## Response parameters
+| Field | Type | Required | Maximum length | Description |
+|---|---|---|---:|---|
+| `code` | int | Yes | - | Status code; a value other than 200 indicates an error |
+| `data` | Object | Yes | - | Response body |
+| `data.merchantOrderNo` | String | Yes | 32 | Merchant order number |
+| `data.tradeNo` | String | Yes | 32 | Platform order number |
+| `data.transactionAmount` | String | Yes | - | Payout amount |
+| `data.status` | String | Yes | 24 | [Order status](/en/guides/order-status/) |
+| `data.payoutType` | String | Yes | 24 | [Payout method](#payment-methods) |
+| `msg` | String | No | - | Error message |
+| `tid` | String | Yes | - | Trace ID |
+
+## Response example
+
+```json
+{
+  "code": 200,
+  "data": {
+    "merchantOrderNo": "PAYOUT202609170001",
+    "tradeNo": "TF2405220001KH0000508467743993",
+    "transactionAmount": "100.00",
+    "status": "PAYING",
+    "payoutType": "BANK_TRANSFER"
+  },
+  "msg": "success",
+  "tid": "747bbf80261844ed85b809212aab0d81"
+}
+```

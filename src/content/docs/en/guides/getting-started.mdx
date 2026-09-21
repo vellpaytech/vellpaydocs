@@ -1,0 +1,70 @@
+---
+title: Integration guide
+description: VellPay API calls, order processing, and launch checks.
+---
+
+## API conventions
+
+- allendpointuses `POST`, request bodyformatis `application/json`.
+- Every request must include[Common request headers](/en/guides/request-headers/).
+- `merchantOrderNo` must be unique within the merchant.
+- Request parameters, payment methods, and amount rules are defined on each country-specific endpoint page.
+- An endpoint returning `code=200` means only that the request was processed successfully; it does not mean that the transaction succeeded.
+- Confirm the transaction result using `data.status`, query endpoints and callback notifications.
+
+## Test environment
+
+The documentation console connects only to the test environments below and never sends requests to production. The platform identifies the order country from the domain.
+
+| Country | Test environment |
+|---|---|
+| Indonesia | `https://id-test-gateway.vellpay.com` |
+| South Korea | `https://kr-test-gateway.vellpay.com` |
+| Cambodia | `https://kh-test-gateway.vellpay.com` |
+| India | `https://in-test-gateway.vellpay.com` |
+| Colombia | `https://co-test-gateway.vellpay.com` |
+| Argentina | `https://ar-test-gateway.vellpay.com` |
+| Brazil | `https://br-test-gateway.vellpay.com` |
+
+The Vietnam test domain will be added after configuration.
+
+## Create an order
+
+1. The merchant generates a unique `merchantOrderNo`.
+2. Select according to the country and business scenario `paymentType` or `payoutType`.
+3. Complete required parameters according to the endpoint documentation and generate `authorization`.
+4. Store the returned `tradeNo`, for troubleshooting and order tracking.
+5. If a create request times out or the response is uncertain, query using the original merchant order number before creating another order.
+
+## Queries and callbacks
+
+- Use the `merchantOrderNo` supplied when creating the order to query the endpoint.
+- Callback services must implement signature verification and idempotency handling.
+- An order may receive multiple callbacks because of network retries.
+- If callback and query results differ, use the platform final order status and contact technical support to investigate the reversal.
+- Merchants must store the complete status history, not only the latest callback.
+
+## Time and time zones
+
+Business time uses the local time of the order country; the text format is `yyyy-MM-dd HH:mm:ss`.`timestamp` is the 13-digit millisecond timestamp used for authentication and does not use this text format.
+
+| Country | Time zone |
+|---|---|
+| Indonesia | See the country service configuration |
+| Vietnam | `Asia/Ho_Chi_Minh` (GMT+7) |
+| South Korea | `Asia/Seoul` |
+| Cambodia | `Asia/Phnom_Penh` |
+| India | `Asia/Kolkata` |
+| Colombia | `America/Bogota` |
+| Argentina | `America/Argentina/Buenos_Aires` |
+| Brazil | See the country service configuration |
+
+## Error handling
+
+- Use response `msg` to identify the field causing a parameter error.
+- Query the order after a network timeout to avoid duplicate creation.
+- Server errors may be retried a limited number of times with exponential backoff.
+- Insufficient balance, unconfigured payment methods, and merchant configuration errors must not be retried automatically.
+- If the issue cannot be resolved, provide request time, environment, country, `appId`, merchant order number, platform order number, and `tid`.
+
+See full error descriptions in[Common error codes](/en/guides/error-codes/).

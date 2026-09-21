@@ -1,0 +1,54 @@
+---
+title: Pay-in callback
+description: VellPay sends pay-in order status notifications to the merchant.
+---
+
+<p class="endpoint-lead">VellPay sends this callback to the pay-in callback URL supplied when the order was created or configured in the merchant console. You do not need to call the VellPay API.</p>
+
+## Request parameters
+
+| Field | Type | Required | Maximum length | Description |
+|---|---|---|---:|---|
+| `merchantOrderNo` | String | Yes | 32 | Merchant order number |
+| `tradeNo` | String | Yes | 32 | Platform order number |
+| `paymentSingleOrderNo` | String | Yes | 32 | Single payment transaction number |
+| `paymentAmount` | String | Yes | - | Actual received amount, an integer or up to two decimal places |
+| `paymentType` | String | Yes | 24 | [Payment method](../create/#payment-methods) |
+| `paymentStatus` | String | Yes | 24 | [Order status](/en/guides/order-status/) |
+| `failMsg` | String | No | 200 | Order failure reason |
+| `paymentInfo` | String | No | 200 | Payment information |
+| `serviceAmount` | String | No | - | Service fee |
+| `completeTime` | String | Yes | - | Completion time (local time, format `yyyy-MM-dd HH:mm:ss`) |
+
+## Request example
+
+```json
+{
+  "merchantOrderNo": "ORDER202609170001",
+  "tradeNo": "TS2608270002IN0000000000040059",
+  "paymentSingleOrderNo": "PS20260917000001",
+  "paymentAmount": "100.00",
+  "paymentType": "CHECKOUT",
+  "paymentStatus": "SUCCESS",
+  "serviceAmount": "1.00",
+  "completeTime": "2026-09-17 15:30:00"
+}
+```
+
+## Response parameters
+
+| Field | Type | Required | Example | Description |
+|---|---|---|---|---|
+| `result` | String | Yes | `SUCCESS` | Return `SUCCESS` means the callback was received successfully; treat any other value as a failure |
+| `msg` | String | No | `OK` | Processing result description |
+
+## Response example
+
+```json
+{
+  "result": "SUCCESS",
+  "msg": "OK"
+}
+```
+
+

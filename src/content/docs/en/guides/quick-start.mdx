@@ -1,0 +1,55 @@
+---
+title: Quick Start
+description: Steps from test merchant setup to your first VellPay order.
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+## Introduction
+
+VellPay provides local pay-in, payout, order query, balance query, checkout, and country-specific payment capabilities for cross-border merchants. A consistent field model is used across countries, while payment methods and validation rules remain country-specific.
+
+Current coverage includes Indonesia, Vietnam, South Korea, Cambodia, India, Colombia, Argentina, and Brazil.
+
+## Integration steps
+
+<Steps>
+
+1. **Enable test access**
+
+   Confirm the countries, business types, pricing, settlement cycle, and launch plan. VellPay will create a test merchant and application, enable the requested countries, and provide a test `appId`, merchant console account, and integration contact.
+
+2. **Prepare application keys**
+
+   Generate the merchant RSA key pair by following [Create keys](/en/guides/create-keys/). Configure the merchant public key in the console and securely store the merchant private key and VellPay platform public key.
+
+3. **Implement authentication**
+
+   Include the [common request headers](/en/guides/request-headers/) and generate `authorization` according to [API authentication](/en/guides/authentication/).
+
+4. **Select a country API**
+
+   Select the target country in the sidebar. Confirm its payment method, field formats, amount limits, and local-time rules, then integrate pay-in, payout, query, balance, or checkout endpoints as required.
+
+5. **Complete integration testing**
+
+   Select **Try it** on an endpoint page to review the request headers, JSON body, and response. Test valid and invalid parameters, order queries, callback signature verification, duplicate callbacks, and idempotency handling.
+
+6. **Launch in production**
+
+   Confirm that the production merchant, application, public-key exchange, IP allowlist, and callback URLs are configured. Start with a small amount of traffic and monitor order creation, payment success, and callback processing before scaling up.
+
+</Steps>
+
+:::note
+The documentation console can access only VellPay test environments. It never sends requests to production.
+:::
+
+## Pre-integration checklist
+
+- The merchant application and target-country permissions are enabled.
+- The required payment methods and pricing are configured.
+- The merchant public key is uploaded and the platform public key is stored securely.
+- The server's outbound IP address is allowlisted.
+- Test callback URLs are publicly accessible over HTTPS.
+- Server time is synchronized through NTP.

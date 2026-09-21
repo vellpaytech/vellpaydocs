@@ -1,0 +1,85 @@
+---
+title: Create payout
+description: Create a VellPay payout order.
+---
+import ApiExplorer from '../../../../../components/ApiExplorer.astro';
+
+<ApiExplorer country="IN" path="/trade/payout/create" body={{merchantOrderNo:"PAYOUT202609170001",transactionAmount:"1000",payoutType:"BANK_TRANSFER",userName:"TEST USER",userPhone:"6123456789",bankCode:"HDFC0000001",bankName:"HDFC Bank",bankAccountNo:"1234567890"}} />
+
+<p class="endpoint-lead"></p>
+
+<div class="method-path"><strong>POST</strong><code>/trade/payout/create</code></div>
+
+## Request headers
+[Common request headers](/en/guides/request-headers/).
+
+<h2 id="payment-methods">Payment method values</h2>
+
+| `payoutType` |
+|---|
+| `BANK_TRANSFER` |
+| `UPI` |
+
+## Request parameters
+| Field | Type | Required | Maximum length | Description |
+|---|---|---|---:|---|
+| `merchantOrderNo` | String | Yes | 32 | Merchant order number |
+| `transactionAmount` | String | Yes | 20 | Payout amount, an integer or up to two decimal places |
+| `payoutType` | String | Yes | 20 | [Payout method](#payment-methods) |
+| `idType` | String | No | 32 | Optional ID type. This endpoint has no fixed enum; omit this field unless required by your business or payment channel. |
+| `userIdCard` | String | No | 50 | ID number. No fixed format; omit this field unless required by your business or payment channel. |
+| `userName` | String | Yes | 64 | User name |
+| `userPhone` | String | Yes | 10 | User mobile number, 10 digits; starts with `6`, `7`, `8` or `9`  |
+| `userEmail` | String | No | 50 | User email |
+| `bankCode` | String | Conditionally required | 20 | Required when `payoutType` is `BANK_TRANSFER`. Enter the beneficiary bank’s IFSC; see [Bank codes](../banks/). |
+| `bankName` | String | No | - | Bank name, see [Bank code description](../banks/) |
+| `bankAccountNo` | String | Yes | 50 | Beneficiary account |
+| `description` | String | No | 100 | Description |
+| `payoutCallbackUrl` | String | No | 200 | Payout callback URL |
+
+
+
+## Request example
+
+```json
+{
+  "merchantOrderNo": "PAYOUT202609170001",
+  "transactionAmount": "100.00",
+  "payoutType": "BANK_TRANSFER",
+  "userName": "TEST USER",
+  "userPhone": "6123456789",
+  "bankCode": "HDFC0000001",
+  "bankName": "HDFC Bank",
+  "bankAccountNo": "1234567890"
+}
+```
+
+## Response parameters
+| Field | Type | Required | Maximum length | Description |
+|---|---|---|---:|---|
+| `code` | int | Yes | - | Status code; a value other than 200 indicates an error |
+| `data` | Object | Yes | - | Response body |
+| `data.merchantOrderNo` | String | Yes | 32 | Merchant order number |
+| `data.tradeNo` | String | Yes | 32 | Platform order number |
+| `data.transactionAmount` | String | Yes | - | Payout amount |
+| `data.status` | String | Yes | 24 | [Order status](/en/guides/order-status/) |
+| `data.payoutType` | String | Yes | 24 | [Payout method](#payment-methods) |
+| `msg` | String | No | - | Error message |
+| `tid` | String | Yes | - | Trace ID |
+
+## Response example
+
+```json
+{
+  "code": 200,
+  "data": {
+    "merchantOrderNo": "PAYOUT202609170001",
+    "tradeNo": "TF2405220001IN0000508467743993",
+    "transactionAmount": "100.00",
+    "status": "PAYING",
+    "payoutType": "BANK_TRANSFER"
+  },
+  "msg": "success",
+  "tid": "747bbf80261844ed85b809212aab0d81"
+}
+```

@@ -1,0 +1,108 @@
+---
+title: Create pay-in
+description: Create a VellPay pay-in order.
+---
+import ApiExplorer from '../../../../../components/ApiExplorer.astro';
+
+<ApiExplorer country="ID" path="/trade/payment/create" body={{merchantOrderNo:"ORDER202609170001",transactionAmount:"60000",paymentType:"WALLET",userName:"TEST USER",userPhone:"081234567890",userEmail:"user@example.com",channel:"DANA",paymentCallbackUrl:"https://merchant.example/callback"}} />
+
+
+
+<div class="method-path"><strong>POST</strong><code>/trade/payment/create</code></div>
+
+## Request headers
+[Common request headers](/en/guides/request-headers/).
+
+<h2 id="payment-methods">Payment method values</h2>
+
+| `paymentType` |
+|---|
+| `PAYMENTLINK` |
+| `WALLET` |
+| `VA` |
+| `QRIS` |
+| `QRIS_DIRECT` |
+| `VA_DIRECT` |
+
+<h2 id="channels">Payment channel values</h2>
+
+`channel` must be combined with `paymentType` as shown in the table below, values are case-sensitive.
+
+| `paymentType` | `channel` Allowed values | Whether `channel` is required |
+|---|---|---|
+| `PAYMENTLINK` | Not supported | No, must be left empty |
+| `WALLET` | `DANA`, `LINKAJA`, `OVO` | No, when neededprovide |
+| `VA` | `BRI`, `BNI`, `MANDIRI`, `PERMATA`, `CIMB`, `BCA` | No, when neededprovide |
+| `QRIS` | Not supported | No, must be left empty |
+| `QRIS_DIRECT` | Not supported | No, must be left empty |
+| `VA_DIRECT` | `BRI`, `BNI`, `MANDIRI`, `PERMATA`, `CIMB`, `BCA` | **Yes** |
+
+## Request parameters
+
+| Field | Type | Required | Maximum length | Description |
+|---|---|---|---:|---|
+| `merchantOrderNo` | String | Yes | 32 | Merchant order number |
+| `transactionAmount` | String | Yes | 20 | Pay-in amount |
+| `paymentType` | String | Yes | 24 | [Payment method](#payment-methods) |
+| `idType` | String | No | 32 | Optional ID type. This endpoint has no fixed enum; omit this field unless required by your business or payment channel. |
+| `userIdCard` | String | No | 50 | ID number. No fixed format; omit this field unless required by your business or payment channel. |
+| `userName` | String | Yes | 64 | User name |
+| `userPhone` | String | Yes | 10–13 | User mobile number, 10–13 digits; starts with `08`  |
+| `userEmail` | String | Yes | 50 | User email |
+| `bankCode` | String | No | 64 | Bank codes |
+| `bankAccountNo` | String | No | 64 | Bank account number |
+| `merchantName` | String | No | 64 | Merchant name |
+| `description` | String | No | 100 | Description |
+| `channel` | String | Conditionally required | 24 | [Payment channel](#channels); Required when `paymentType` is `VA_DIRECT`. For other payment methods, provide it only when specified above. |
+| `expireTime` | String | No | - | Order expiration time (local time, format `yyyy-MM-dd HH:mm:ss`) |
+| `paymentCallbackUrl` | String | No | 200 | Pay-in callback URL |
+
+## Request example
+
+```json
+{
+  "merchantOrderNo": "ORDER202609170001",
+  "transactionAmount": "100.00",
+  "paymentType": "WALLET",
+  "userName": "TEST USER",
+  "userPhone": "081234567890",
+  "userEmail": "user@example.com",
+  "channel": "DANA",
+  "paymentCallbackUrl": "https://merchant.example/callback"
+}
+```
+
+## Response parameters
+
+| Field | Type | Required | Maximum length | Description |
+|---|---|---|---:|---|
+| `code` | int | Yes | - | Status code; a value other than 200 indicates an error |
+| `data` | Object | Yes | - | Response body |
+| `data.merchantOrderNo` | String | Yes | 24 | Merchant order number |
+| `data.tradeNo` | String | Yes | 32 | Platform order number |
+| `data.transactionAmount` | String | Yes | - | Pay-in amount, an integer or up to two decimal places |
+| `data.status` | String | Yes | 24 | [Order status](/en/guides/order-status/) |
+| `data.paymentType` | String | Yes | 24 | [Payment method](#payment-methods) |
+| `data.failMsg` | String | No | 200 | Order failure reason |
+| `data.paymentInfo` | String | No | 200 | Payment information |
+| `data.additional` | Object | No | - | Additional information |
+| `msg` | String | No | - | Error message |
+| `tid` | String | Yes | - | Trace ID |
+
+## Response example
+
+```json
+{
+  "code": 200,
+  "data": {
+    "merchantOrderNo": "ORDER202609170001",
+    "tradeNo": "TS2608270002ID0000000000040059",
+    "transactionAmount": "100.00",
+    "status": "PAYING",
+    "paymentType": "WALLET",
+    "paymentInfo": "PAYMENT_INFORMATION"
+  },
+  "msg": "success",
+  "tid": "747bbf80261844ed85b809212aab0d81"
+}
+```

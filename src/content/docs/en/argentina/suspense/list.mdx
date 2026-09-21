@@ -1,0 +1,68 @@
+---
+title: Argentina suspense-order list
+description: Query a merchant’s unprocessed Argentine suspense transactions from the last 30 days.
+---
+import ApiExplorer from '../../../../../components/ApiExplorer.astro';
+
+<ApiExplorer country="AR" path="/trade/query/suspenseAccount/orderList" body={{pageSize:500,beginTime:"2026-09-01 00:00:00",endTime:"2026-09-17 23:59:59"}} />
+
+<div class="method-path"><strong>POST</strong><code>/trade/query/suspenseAccount/orderList</code></div>
+
+## Request parameters
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `pageIndex` | String | No | next-page cursor, not required on the first pageprovide |
+| `pageSize` | Integer | No | default 500, maximum 1000 |
+| `beginTime` | String | Yes | start time, format `yyyy-MM-dd HH:mm:ss` |
+| `endTime` | String | Yes | end time, format `yyyy-MM-dd HH:mm:ss` |
+
+## Request example
+
+```json
+{
+  "pageSize": 500,
+  "beginTime": "2026-09-01 00:00:00",
+  "endTime": "2026-09-17 23:59:59"
+}
+```
+
+## Response parameters
+| Field | Type | Required | Maximum length | Description |
+|---|---|---|---:|---|
+| `code` | int | Yes | - | Status code; a value other than 200 indicates an error |
+| `data` | Object | Yes | - | Response body |
+| `data.pageIndex` | String | No | - | next-page query cursor |
+| `data.records` | List | Yes | - | Suspense-transaction list |
+| `data.records.bankId` | String | Yes | - | bank receipt ID |
+| `data.records.suspenseAmount` | String | Yes | - | Suspense amount |
+| `data.records.theoreticalAmount` | String | Yes | - | Expected credited amount |
+| `data.records.userIdCard` | String | No | - | user ID number |
+| `data.records.userName` | String | No | - | User name |
+| `data.records.suspenseCallbackTime` | String | No | - | Suspense callback time (Argentina local time) |
+| `data.records.cvu` | String | No | - | CVU |
+| `msg` | String | No | - | Error message |
+| `tid` | String | Yes | - | Trace ID |
+
+## Response example
+
+```json
+{
+  "code": 200,
+  "data": {
+    "pageIndex": null,
+    "records": [
+      {
+        "bankId": "BANK_ID",
+        "suspenseAmount": "100.00",
+        "theoreticalAmount": "100.00",
+        "userIdCard": "ID_NUMBER",
+        "userName": "TEST USER",
+        "suspenseCallbackTime": "2026-09-17 12:00:00",
+        "cvu": "CVU_NUMBER"
+      }
+    ]
+  },
+  "msg": "success",
+  "tid": "747bbf80261844ed85b809212aab0d81"
+}
+```

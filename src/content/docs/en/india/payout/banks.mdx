@@ -1,0 +1,16 @@
+---
+title: Bank codes
+description: IFSC entry rules for Indian payout APIs.
+---
+
+# Bank codes
+
+Indian bank transfers do not use a fixed short bank list. `bankCode` must contain the beneficiary branch IFSC.
+
+- An IFSC contains exactly 11 characters.
+- The first four characters are the bank code, the fifth is usually `0`, and the final six are the branch code.
+- Examples: `HDFC0000001`, `SBIN0000001`, `ICIC0000001`.
+- Use the actual IFSC supplied by the beneficiary and confirmed by the bank; do not construct it from the bank name.
+
+UPI payoutmust follow the enabled channel requirements; if no bank code is required, confirm the expected value with VellPay.
+

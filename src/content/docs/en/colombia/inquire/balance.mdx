@@ -1,0 +1,47 @@
+---
+title: Balance query
+description: Query the current application merchant account balance.
+---
+import ApiExplorer from '../../../../../components/ApiExplorer.astro';
+
+<ApiExplorer country="CO" path="/trade/merchant/balance" body={{}} />
+
+
+
+<div class="method-path"><strong>POST</strong><code>/trade/merchant/balance</code></div>
+
+## Request parameters
+
+This endpoint has no business request parameters. Send only the [Common request headers](/en/guides/request-headers/).
+
+## Request example
+
+```json
+{}
+```
+
+## Response parameters
+| Field | Type | Required | Maximum length | Description |
+|---|---|---|---:|---|
+| `code` | int | Yes | - | Status code; a value other than 200 indicates an error |
+| `data` | Object | Yes | - | Response body |
+| `data.totalAmount` | String | Yes | 20 | Total amount |
+| `data.frozenAmount` | String | Yes | 20 | Frozen amount |
+| `data.availAmount` | String | Yes | 20 | Available balance |
+| `msg` | String | No | - | Error message |
+| `tid` | String | Yes | - | Trace ID |
+
+## Response example
+
+```json
+{
+  "code": 200,
+  "data": {
+    "totalAmount": "10000.00",
+    "frozenAmount": "100.00",
+    "availAmount": "9900.00"
+  },
+  "msg": "success",
+  "tid": "747bbf80261844ed85b809212aab0d81"
+}
+```

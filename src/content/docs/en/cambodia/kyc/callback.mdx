@@ -1,0 +1,38 @@
+---
+title: Cambodia KYC callback
+description: VellPay sends a notification to `kycCallbackUrl` when KYC status changes.
+---
+
+<p class="endpoint-lead">VellPay sends this callback to the URL provided when KYC was created (`kycCallbackUrl`). You do not need to call the VellPay API.</p>
+
+## Request parameters
+
+| Field | Type | Required | Maximum length | Description |
+|---|---|---|---:|---|
+| `userPhone` | String | Yes | 8–9 | User mobile number, 8–9 digits |
+| `authenticationStatus` | String | Yes | 32 | [KYC Status](/en/guides/order-status/#kyc-Status) |
+
+## Request example
+
+```json
+{
+  "userPhone": "12345678",
+  "authenticationStatus": "APPROVED"
+}
+```
+
+## Response parameters
+
+| Field | Type | Required | Example | Description |
+|---|---|---|---|---|
+| `result` | String | Yes | `SUCCESS` | `SUCCESS` / `FAIL`; `SUCCESS` means the merchant received the notification successfully |
+| `msg` | String | No | `OK` | error reason |
+
+## Response example
+
+```json
+{
+  "result": "SUCCESS",
+  "msg": "OK"
+}
+```

@@ -1,0 +1,56 @@
+---
+title: Argentina receipt query
+description: Query an Argentine suspense transaction by bank receipt ID.
+---
+import ApiExplorer from '../../../../../components/ApiExplorer.astro';
+
+<ApiExplorer country="AR" path="/trade/query/suspenseAccount/order" body={{bankId:"BANK_ID"}} />
+
+
+
+<div class="method-path"><strong>POST</strong><code>/trade/query/suspenseAccount/order</code></div>
+
+## Request parameters
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `bankId` | String | Yes | bank receipt ID |
+
+## Request example
+
+```json
+{
+  "bankId": "BANK_ID"
+}
+```
+
+## Response parameters
+| Field | Type | Required | Maximum length | Description |
+|---|---|---|---:|---|
+| `code` | int | Yes | - | Status code; a value other than 200 indicates an error |
+| `data` | Object | Yes | - | Response body |
+| `data.suspenseAmount` | String | Yes | - | Suspense amount |
+| `data.theoreticalAmount` | String | Yes | - | Expected credited amount |
+| `data.suspenseStatus` | String | Yes | - | Suspense status |
+| `data.suspenseIdCardNumber` | String | No | - | suspenseuser ID number |
+| `data.suspenseRealName` | String | No | - | User name associated with the suspense transaction |
+| `data.suspenseCallbackTime` | String | No | - | Suspense callback time (Argentina local time) |
+| `msg` | String | No | - | Error message |
+| `tid` | String | Yes | - | Trace ID |
+
+## Response example
+
+```json
+{
+  "code": 200,
+  "data": {
+    "suspenseAmount": "100.00",
+    "theoreticalAmount": "100.00",
+    "suspenseStatus": "PENDING",
+    "suspenseIdCardNumber": "ID_NUMBER",
+    "suspenseRealName": "TEST USER",
+    "suspenseCallbackTime": "2026-09-17 12:00:00"
+  },
+  "msg": "success",
+  "tid": "747bbf80261844ed85b809212aab0d81"
+}
+```

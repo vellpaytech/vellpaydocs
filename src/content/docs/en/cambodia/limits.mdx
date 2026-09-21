@@ -1,0 +1,63 @@
+---
+title: Limits
+description: Cambodian pay-in and payout limits, including how KYC status affects pay-in limits.
+---
+import { Aside } from '@astrojs/starlight/components';
+
+This page describes Cambodia pay-in and payout limits and how they change after payer KYC approval.
+
+<Aside type="note" title="Core rule">
+  KYC affects only the daily cumulative pay-in limit by mobile number. After KYC approval, the daily cumulative pay-in limit is no longer checked for that payer mobile number, but per-transaction limits still apply. Payout limits are never affected by KYC status.
+</Aside>
+
+## Applicable endpoints
+
+| Transaction type | endpoint |
+|---|---|
+| pay-in Payin | [Create pay-in](./payin/create/) |
+| payout Payout | [Create payout](./payout/create/) |
+
+## pay-in Payin
+
+### Daily cumulative limit
+
+The payer mobile number is the unique aggregation key for the daily credited pay-in amount.
+
+| Currency | Non-KYC user | KYC-approved user |
+|---|---|---|
+| USD | Maximum daily total `20,000 USD` | No daily cumulative check |
+| KHR | Maximum daily total `80,000,000 KHR` | No daily cumulative check |
+
+### Per-transaction limits
+
+Per-transaction limits apply to all payers. KYC approval does not raise or remove per-transaction minimums or maximums.
+
+| `paymentType` | Currency | Minimum amount | Maximum amount |
+|---|---|---:|---:|
+| `KHQR_USD` | USD | `0.01 USD` | `20,000 USD` |
+| `VA_USD` | USD | `0.01 USD` | `50,000 USD` |
+| `KHQR` | KHR | `100 KHR` | `80,000,000 KHR` |
+| `VA_KHR` | KHR | `100 KHR` | `200,000,000 KHR` |
+
+### Pay-in validation rules
+
+| User status | Checks | On limit violation |
+|---|---|---|
+| Non-KYC user | Per-transaction limit + Daily cumulative payer-mobile limit | The transaction is rejected if either limit is exceeded |
+| KYC-approved user | Per-transaction limit | The transaction is rejected if the amount exceeds the per-transaction limit |
+
+## payout Payout
+
+Payout checks only fixed per-transaction limits and is not affected by beneficiary KYC status.
+
+| Currency | Minimum amount | Maximum amount |
+|---|---:|---:|
+| USD | `0.01 USD` | `50,000 USD` |
+| KHR | `100 KHR` | `200,000,000 KHR` |
+
+## Additional notes
+
+1. Daily cumulative pay-in limits are calculated by payer mobile number, not merchant order number or user ID.
+2. After KYC approval, the system automatically removes the daily cumulative limit for that mobile number; no additional merchant application is required.
+3. KYC status does not change the per-transaction pay-in limit for any payment method.
+4. KYC status does not change payout per-transaction limits.
