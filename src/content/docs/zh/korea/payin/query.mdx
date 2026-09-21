@@ -27,7 +27,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `code` | int | 是 | - | 状态码，非 200 代表异常 |
 | `data` | Object | 是 | - | 响应体 |
 | `data.merchantOrderNo` | String | 是 | 24 | 商户订单号 |
-| `data.tradeNo` | String | 是 | 24 | 平台单号 |
+| `data.tradeNo` | String | 是 | 32 | 平台单号 |
 | `data.transactionAmount` | String | 是 | - | 收款金额 |
 | `data.status` | String | 是 | 24 | [订单状态](/zh/guides/order-status/) |
 | `data.paymentType` | String | 是 | 24 | [支付方式](/zh/korea/payin/create/#payment-methods) |
@@ -62,7 +62,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
   "code": 200,
   "data": {
     "merchantOrderNo": "ORDER202609170001",
-    "tradeNo": "VP20260917000001",
+    "tradeNo": "TS2608270002KR0000000000040059",
     "transactionAmount": "100.00",
     "status": "SUCCESS",
     "paymentType": "VA",

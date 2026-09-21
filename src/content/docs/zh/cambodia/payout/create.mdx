@@ -4,7 +4,7 @@ description: 创建一笔 VellPay 代付订单。
 ---
 import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 
-<ApiExplorer country="KH" path="/trade/payout/create" body={{merchantOrderNo:"PAYOUT202609170001",transactionAmount:"10000",payoutType:"BANK_TRANSFER",idType:"NONE_KYC",userIdCard:"USER123456",userName:"TEST USER",userPhone:"12345678",userEmail:"user@example.com",bankCode:"0001",bankName:"ABA Bank",bankAccountNo:"1234567890"}} />
+<ApiExplorer country="KH" path="/trade/payout/create" body={{merchantOrderNo:"PAYOUT202609170001",transactionAmount:"10000",payoutType:"BANK_TRANSFER",idType:"NONE_KYC",userIdCard:"USER123456",userName:"TEST USER",userPhone:"010123456",userEmail:"user@example.com",bankCode:"0001",bankName:"ABA Bank",bankAccountNo:"1234567890"}} />
 
 <p class="endpoint-lead"></p>
 
@@ -49,7 +49,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
   "idType": "NONE_KYC",
   "userIdCard": "USER123456",
   "userName": "TEST USER",
-  "userPhone": "12345678",
+  "userPhone": "010123456",
   "userEmail": "user@example.com",
   "bankCode": "0001",
   "bankName": "ABA Bank",
@@ -77,7 +77,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
   "code": 200,
   "data": {
     "merchantOrderNo": "PAYOUT202609170001",
-    "tradeNo": "VP20260917000002",
+    "tradeNo": "TF2405220001KH0000508467743993",
     "transactionAmount": "100.00",
     "status": "PAYING",
     "payoutType": "BANK_TRANSFER"

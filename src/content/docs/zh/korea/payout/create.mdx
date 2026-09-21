@@ -4,7 +4,7 @@ description: 创建一笔 VellPay 代付订单。
 ---
 import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 
-<ApiExplorer country="KR" path="/trade/payout/create" body={{merchantOrderNo:"PAYOUT202609170001",transactionAmount:"1000",payoutType:"BANK_TRANSFER",idType:"RRN",userName:"TEST USER",bankCode:"088",bankName:"Shinhan Bank",bankAccountNo:"1234567890"}} />
+<ApiExplorer country="KR" path="/trade/payout/create" body={{merchantOrderNo:"PAYOUT202609170001",transactionAmount:"1000",payoutType:"BANK_TRANSFER",idType:"RRN",userIdCard:"9001011234567",userName:"TEST USER",userPhone:"01012345678",userEmail:"user@example.com",bankCode:"088",bankName:"Shinhan Bank",bankAccountNo:"1234567890",description:"Payout order",payoutCallbackUrl:"https://merchant.example/payout-callback"}} />
 
 <p class="endpoint-lead"></p>
 
@@ -47,10 +47,15 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
   "transactionAmount": "100.00",
   "payoutType": "BANK_TRANSFER",
   "idType": "RRN",
+  "userIdCard": "9001011234567",
   "userName": "TEST USER",
+  "userPhone": "01012345678",
+  "userEmail": "user@example.com",
   "bankCode": "088",
   "bankName": "Shinhan Bank",
-  "bankAccountNo": "1234567890"
+  "bankAccountNo": "1234567890",
+  "description": "Payout order",
+  "payoutCallbackUrl": "https://merchant.example/payout-callback"
 }
 ```
 
@@ -74,7 +79,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
   "code": 200,
   "data": {
     "merchantOrderNo": "PAYOUT202609170001",
-    "tradeNo": "VP20260917000002",
+    "tradeNo": "TF2405220001KR0000508467743993",
     "transactionAmount": "100.00",
     "status": "PAYING",
     "payoutType": "BANK_TRANSFER"

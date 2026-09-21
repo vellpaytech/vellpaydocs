@@ -36,7 +36,26 @@ description: 创建一笔 VellPay 代收订单。
 
 ## 请求示例
 
-当前没有可用于提交的已配置支付方式，请在开通后使用实际 `paymentType` 生成请求。
+以下示例用于展示字段结构；提交前请将 `paymentType` 替换为商务确认的实际值。
+
+```json
+{
+  "merchantOrderNo": "ORDER202609170001",
+  "transactionAmount": "100000.00",
+  "paymentType": "PAYMENT_TYPE",
+  "idType": "NATIONAL_ID",
+  "userIdCard": "012345678901",
+  "userName": "TEST USER",
+  "userPhone": "0912345678",
+  "userEmail": "user@example.com",
+  "bankCode": "970436",
+  "bankAccountNo": "1234567890",
+  "merchantName": "TEST MERCHANT",
+  "description": "Payment order",
+  "expireTime": "2026-09-21 18:00:00",
+  "paymentCallbackUrl": "https://merchant.example/callback"
+}
+```
 
 ## 响应参数
 
@@ -45,7 +64,7 @@ description: 创建一笔 VellPay 代收订单。
 | `code` | int | 是 | - | 状态码，非 200 代表异常 |
 | `data` | Object | 是 | - | 响应体 |
 | `data.merchantOrderNo` | String | 是 | 24 | 商户订单号 |
-| `data.tradeNo` | String | 是 | 24 | 平台单号 |
+| `data.tradeNo` | String | 是 | 32 | 平台单号 |
 | `data.transactionAmount` | String | 是 | - | 收款金额，整数或保留 2 位小数 |
 | `data.status` | String | 是 | 24 | [订单状态](/zh/guides/order-status/) |
 | `data.paymentType` | String | 是 | 24 | [支付方式](#payment-methods) |
@@ -62,10 +81,10 @@ description: 创建一笔 VellPay 代收订单。
   "code": 200,
   "data": {
     "merchantOrderNo": "ORDER202609170001",
-    "tradeNo": "VP20260917000001",
+    "tradeNo": "TS2608270002VN0000000000040059",
     "transactionAmount": "100.00",
     "status": "PAYING",
-    "paymentType": "已开通的支付方式",
+    "paymentType": "PAYMENT_TYPE",
     "paymentInfo": "PAYMENT_INFORMATION"
   },
   "msg": "success",

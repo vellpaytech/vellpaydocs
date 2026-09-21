@@ -4,7 +4,7 @@ description: 创建一笔 VellPay 代付订单。
 ---
 import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 
-<ApiExplorer country="IN" path="/trade/payout/create" body={{merchantOrderNo:"PAYOUT202609170001",transactionAmount:"1000",payoutType:"BANK_TRANSFER",userName:"TEST USER",userPhone:"6123456789",bankCode:"HDFC0000001",bankName:"HDFC Bank",bankAccountNo:"1234567890"}} />
+<ApiExplorer country="IN" path="/trade/payout/create" body={{merchantOrderNo:"PAYOUT202609170001",transactionAmount:"1000",payoutType:"BANK_TRANSFER",userName:"TEST USER",userPhone:"9876543210",bankCode:"HDFC0000001",bankName:"HDFC Bank",bankAccountNo:"1234567890"}} />
 
 <p class="endpoint-lead"></p>
 
@@ -47,7 +47,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
   "transactionAmount": "100.00",
   "payoutType": "BANK_TRANSFER",
   "userName": "TEST USER",
-  "userPhone": "6123456789",
+  "userPhone": "9876543210",
   "bankCode": "HDFC0000001",
   "bankName": "HDFC Bank",
   "bankAccountNo": "1234567890"
@@ -74,7 +74,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
   "code": 200,
   "data": {
     "merchantOrderNo": "PAYOUT202609170001",
-    "tradeNo": "VP20260917000002",
+    "tradeNo": "TF2405220001IN0000508467743993",
     "transactionAmount": "100.00",
     "status": "PAYING",
     "payoutType": "BANK_TRANSFER"

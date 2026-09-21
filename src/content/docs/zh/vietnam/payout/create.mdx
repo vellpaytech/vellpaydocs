@@ -36,7 +36,25 @@ description: 创建一笔 VellPay 代付订单。
 
 ## 请求示例
 
-当前没有可用于提交的已配置代付方式和银行编码，请在开通后使用实际配置生成请求。
+以下示例用于展示字段结构；提交前请将 `payoutType` 和银行信息替换为商务确认的实际值。
+
+```json
+{
+  "merchantOrderNo": "PAYOUT202609170001",
+  "transactionAmount": "100000.00",
+  "payoutType": "PAYOUT_TYPE",
+  "idType": "NATIONAL_ID",
+  "userIdCard": "012345678901",
+  "userName": "TEST USER",
+  "userPhone": "0912345678",
+  "userEmail": "user@example.com",
+  "bankCode": "970436",
+  "bankName": "Vietcombank",
+  "bankAccountNo": "1234567890",
+  "description": "Payout order",
+  "payoutCallbackUrl": "https://merchant.example/payout-callback"
+}
+```
 
 ## 响应参数
 | 字段 | 类型 | 必填 | 最大长度 | 说明 |
@@ -58,10 +76,10 @@ description: 创建一笔 VellPay 代付订单。
   "code": 200,
   "data": {
     "merchantOrderNo": "PAYOUT202609170001",
-    "tradeNo": "VP20260917000002",
+    "tradeNo": "TF2405220001VN0000508467743993",
     "transactionAmount": "100.00",
     "status": "PAYING",
-    "payoutType": "已开通的代付方式"
+    "payoutType": "PAYOUT_TYPE"
   },
   "msg": "success",
   "tid": "747bbf80261844ed85b809212aab0d81"
