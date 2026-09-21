@@ -4,7 +4,7 @@ description: 创建一笔 VellPay 代付订单。
 ---
 import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 
-<ApiExplorer country="AR" path="/trade/payout/create" body={{merchantOrderNo:"PAYOUT202609170001",transactionAmount:"1000",payoutType:"CVU",idType:"DNI",userIdCard:"12345678",userName:"TEST USER",bankName:"Banco de Galicia y Buenos Aires S.A.U.",bankAccountNo:"1234567890123456789012"}} />
+<ApiExplorer country="AR" path="/trade/payout/create" body={{merchantOrderNo:"PAYOUT202609170001",transactionAmount:"1000",payoutType:"CVU",idType:"DNI",userIdCard:"12345678",userName:"TEST USER",userPhone:"1123456789",bankName:"Banco de Galicia y Buenos Aires S.A.U.",bankAccountNo:"1234567890123456789012"}} />
 
 <p class="endpoint-lead"></p>
 
@@ -29,7 +29,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `idType` | String | 是 | 50 | 证件类型：`DNI`、`CUIL`、`CUIT`、`PA` |
 | `userIdCard` | String | 是 | 50 | 证件号码。`DNI` 为 7～8 位数字；`CUIL` 为 11 位数字；`CUIT` 为 11 位且首位为 2 或 3；`PA` 最长 15 位 |
 | `userName` | String | 是 | 64 | 用户姓名 |
-| `userPhone` | String | 否 | 20 | 用户手机号 |
+| `userPhone` | String | 否 | 10 | 用户手机号码，10 位数字 |
 | `userEmail` | String | 否 | 50 | 用户邮箱 |
 | `bankCode` | String | 否 | 20 | [银行编码](../banks/) |
 | `bankName` | String | 否 | - | [银行名称](../banks/) |
@@ -47,6 +47,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
   "idType": "DNI",
   "userIdCard": "12345678",
   "userName": "TEST USER",
+  "userPhone": "1123456789",
   "bankName": "Banco de Galicia y Buenos Aires S.A.U.",
   "bankAccountNo": "1234567890123456789012"
 }

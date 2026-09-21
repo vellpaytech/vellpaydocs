@@ -47,7 +47,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `idType` | String | 否 | 32 | 可选的证件类型；当前接口没有固定枚举，无业务或渠道要求时可不传 |
 | `userIdCard` | String | 否 | 50 | 证件号码。无固定格式，无业务或渠道要求时可不传 |
 | `userName` | String | 是 | 64 | 用户姓名 |
-| `userPhone` | String | 是 | 50 | 用户手机号 |
+| `userPhone` | String | 是 | 10～13 | 用户手机号码，10～13 位数字，以 `08` 开头 |
 | `userEmail` | String | 是 | 50 | 用户邮箱 |
 | `bankCode` | String | 否 | 64 | 银行编码 |
 | `bankAccountNo` | String | 否 | 64 | 银行账户号 |

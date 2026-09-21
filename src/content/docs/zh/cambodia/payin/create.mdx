@@ -4,7 +4,7 @@ description: 创建一笔 VellPay 代收订单。
 ---
 import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 
-<ApiExplorer country="KH" path="/trade/payment/create" body={{merchantOrderNo:"ORDER202609170001",transactionAmount:"10000",paymentType:"KHQR",idType:"NONE_KYC",userIdCard:"USER123456",userName:"TEST USER",userPhone:"010123456",userEmail:"user@example.com",paymentCallbackUrl:"https://merchant.example/callback"}} />
+<ApiExplorer country="KH" path="/trade/payment/create" body={{merchantOrderNo:"ORDER202609170001",transactionAmount:"10000",paymentType:"KHQR",idType:"NONE_KYC",userIdCard:"USER123456",userName:"TEST USER",userPhone:"12345678",userEmail:"user@example.com",paymentCallbackUrl:"https://merchant.example/callback"}} />
 
 
 
@@ -32,7 +32,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `idType` | String | 否 | 32 | 身份识别类型：`NONE_KYC` 或 `KYC` |
 | `userIdCard` | String | 是 | 50 | 证件号码（商户侧用户标识）。传 1～50 位字母或数字；`idType` 为 `KYC` 时，必须与 KYC 审核通过记录中的值一致 |
 | `userName` | String | 是 | 64 | 用户姓名 |
-| `userPhone` | String | 是 | 50 | 用户手机号 |
+| `userPhone` | String | 是 | 8～9 | 用户手机号码，8～9 位数字 |
 | `userEmail` | String | 是 | 50 | 用户邮箱 |
 | `bankCode` | String | 否 | 64 | 银行编码 |
 | `bankAccountNo` | String | 否 | 64 | 银行账户号 |
@@ -51,7 +51,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
   "idType": "NONE_KYC",
   "userIdCard": "USER123456",
   "userName": "TEST USER",
-  "userPhone": "010123456",
+  "userPhone": "12345678",
   "userEmail": "user@example.com",
   "paymentCallbackUrl": "https://merchant.example/callback"
 }

@@ -4,7 +4,7 @@ description: 为柬埔寨用户创建 KYC 认证申请。
 ---
 import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 
-<ApiExplorer country="KH" path="/trade/kyc/create" body={{userIdCard:"K12345678",userName:"TEST USER",userPhone:"010123456",kycCallbackUrl:"https://merchant.example/kyc-callback"}} />
+<ApiExplorer country="KH" path="/trade/kyc/create" body={{userIdCard:"K12345678",userName:"TEST USER",userPhone:"12345678",kycCallbackUrl:"https://merchant.example/kyc-callback"}} />
 
 <p class="endpoint-lead">本接口仅对柬埔寨开放。</p>
 
@@ -15,7 +15,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 |---|---|---|---:|---|
 | `userIdCard` | String | 是 | 50 | 证件号码（商户侧用户标识）。传 1～50 位字母或数字；同一用户在 KYC、代收和代付接口中必须保持一致 |
 | `userName` | String | 是 | 64 | 用户姓名 |
-| `userPhone` | String | 是 | 8～9 | 柬埔寨本地手机号，不含国家区号 |
+| `userPhone` | String | 是 | 8～9 | 用户手机号码，8～9 位数字 |
 | `kycCallbackUrl` | String | 是 | 200 | KYC 状态回调地址 |
 
 ## 请求示例
@@ -24,7 +24,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 {
   "userIdCard": "K12345678",
   "userName": "TEST USER",
-  "userPhone": "010123456",
+  "userPhone": "12345678",
   "kycCallbackUrl": "https://merchant.example/kyc-callback"
 }
 ```
@@ -47,7 +47,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 {
   "code": 200,
   "data": {
-    "userPhone": "010123456",
+    "userPhone": "12345678",
     "authenticationStatus": "PENDING",
     "authenticationUrl": "https://kyc.example/verify"
   },

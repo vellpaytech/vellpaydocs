@@ -4,7 +4,7 @@ description: 创建一笔 VellPay 代付订单。
 ---
 import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 
-<ApiExplorer country="BR" path="/trade/payout/create" body={{merchantOrderNo:"PAYOUT202609170001",transactionAmount:"100",payoutType:"CPF",idType:"CPF",userIdCard:"12345678901",userName:"TEST USER",bankName:"Banco do Brasil",bankAccountNo:"12345678901"}} />
+<ApiExplorer country="BR" path="/trade/payout/create" body={{merchantOrderNo:"PAYOUT202609170001",transactionAmount:"100",payoutType:"CPF",idType:"CPF",userIdCard:"12345678901",userName:"TEST USER",userPhone:"11987654321",bankName:"Banco do Brasil",bankAccountNo:"12345678901"}} />
 
 <p class="endpoint-lead"></p>
 
@@ -32,7 +32,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `idType` | String | 是 | 50 | 证件类型：个人使用 `CPF`，企业使用 `CNPJ` |
 | `userIdCard` | String | 是 | 50 | 证件号码。`CPF` 为 11 位数字；`CNPJ` 为 14 位数字；仅传数字 |
 | `userName` | String | 是 | 64 | 用户姓名 |
-| `userPhone` | String | 否 | 20 | 用户手机号 |
+| `userPhone` | String | 否 | 11 | 用户手机号码，11 位数字（2 位地区码 + 9 位号码） |
 | `userEmail` | String | 否 | 50 | 用户邮箱 |
 | `bankCode` | String | 否 | 20 | [银行编码](../banks/) |
 | `bankName` | String | 否 | - | [银行名称](../banks/) |
@@ -52,6 +52,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
   "idType": "CPF",
   "userIdCard": "12345678901",
   "userName": "TEST USER",
+  "userPhone": "11987654321",
   "bankName": "Banco do Brasil",
   "bankAccountNo": "12345678901"
 }

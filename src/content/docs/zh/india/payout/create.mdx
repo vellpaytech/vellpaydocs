@@ -4,7 +4,7 @@ description: 创建一笔 VellPay 代付订单。
 ---
 import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 
-<ApiExplorer country="IN" path="/trade/payout/create" body={{merchantOrderNo:"PAYOUT202609170001",transactionAmount:"1000",payoutType:"BANK_TRANSFER",userName:"TEST USER",userPhone:"9876543210",bankCode:"HDFC0000001",bankName:"HDFC Bank",bankAccountNo:"1234567890"}} />
+<ApiExplorer country="IN" path="/trade/payout/create" body={{merchantOrderNo:"PAYOUT202609170001",transactionAmount:"1000",payoutType:"BANK_TRANSFER",userName:"TEST USER",userPhone:"6123456789",bankCode:"HDFC0000001",bankName:"HDFC Bank",bankAccountNo:"1234567890"}} />
 
 <p class="endpoint-lead"></p>
 
@@ -29,7 +29,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `idType` | String | 否 | 32 | 可选的证件类型；当前接口没有固定枚举，无业务或渠道要求时可不传 |
 | `userIdCard` | String | 否 | 50 | 证件号码。无固定格式，无业务或渠道要求时可不传 |
 | `userName` | String | 是 | 64 | 用户姓名 |
-| `userPhone` | String | 是 | 20 | 用户手机号 |
+| `userPhone` | String | 是 | 10 | 用户手机号码，10 位数字，以 `6`、`7`、`8` 或 `9` 开头 |
 | `userEmail` | String | 否 | 50 | 用户邮箱 |
 | `bankCode` | String | 条件必填 | 20 | `payoutType` 为 `BANK_TRANSFER` 时必填，填写收款银行 IFSC；[银行编码说明](../banks/) |
 | `bankName` | String | 否 | - | 银行名称，参见[银行编码说明](../banks/) |
@@ -47,7 +47,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
   "transactionAmount": "100.00",
   "payoutType": "BANK_TRANSFER",
   "userName": "TEST USER",
-  "userPhone": "9876543210",
+  "userPhone": "6123456789",
   "bankCode": "HDFC0000001",
   "bankName": "HDFC Bank",
   "bankAccountNo": "1234567890"

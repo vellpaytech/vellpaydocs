@@ -4,7 +4,7 @@ description: 查询柬埔寨用户的 KYC 状态。
 ---
 import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 
-<ApiExplorer country="KH" path="/trade/kyc/query" body={{userPhone:"010123456"}} />
+<ApiExplorer country="KH" path="/trade/kyc/query" body={{userPhone:"12345678"}} />
 
 <p class="endpoint-lead">本接口仅对柬埔寨开放。</p>
 
@@ -13,13 +13,13 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 ## 请求参数
 | 字段 | 类型 | 必填 | 长度 | 说明 |
 |---|---|---|---:|---|
-| `userPhone` | String | 是 | 8～9 | 柬埔寨本地手机号，不含国家区号 |
+| `userPhone` | String | 是 | 8～9 | 用户手机号码，8～9 位数字 |
 
 ## 请求示例
 
 ```json
 {
-  "userPhone": "010123456"
+  "userPhone": "12345678"
 }
 ```
 

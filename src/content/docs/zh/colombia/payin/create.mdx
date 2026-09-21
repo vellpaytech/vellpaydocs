@@ -39,7 +39,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `idType` | String | 条件必填 | 32 | `paymentType` 为 `PSE` 或 `NEQUI_PSE` 时必填；可选值：`CC`、`CE`、`NIT`、`PA` |
 | `userIdCard` | String | 条件必填 | 50 | 证件号码。`paymentType` 为 `PSE` 或 `NEQUI_PSE` 时必填；`CC`、`CE` 为 6～10 位数字；`NIT` 为 9 位数字；`PA` 为 9 位字母或数字 |
 | `userName` | String | 是 | 64 | 用户姓名 |
-| `userPhone` | String | 是 | 50 | 用户手机号 |
+| `userPhone` | String | 是 | 10 | 用户手机号码，10 位数字，以 `3` 开头 |
 | `userEmail` | String | 是 | 50 | 用户邮箱 |
 | `bankCode` | String | 否 | 64 | 银行编码 |
 | `bankAccountNo` | String | 否 | 64 | 银行账户号 |

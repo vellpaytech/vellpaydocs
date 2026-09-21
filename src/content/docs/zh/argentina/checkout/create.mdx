@@ -4,7 +4,7 @@ description: 创建 VellPay 收银台订单并取得支付链接。
 ---
 import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 
-<ApiExplorer country="AR" path="/trade/checkout/create" body={{merchantOrderNo:"CHECKOUT202609170001",transactionAmount:"100",paymentType:"QR",idType:"DNI",userIdCard:"12345678",userName:"TEST USER",description:"Test checkout",paymentCallbackUrl:"https://merchant.example/callback"}} />
+<ApiExplorer country="AR" path="/trade/checkout/create" body={{merchantOrderNo:"CHECKOUT202609170001",transactionAmount:"100",paymentType:"QR",idType:"DNI",userIdCard:"12345678",userName:"TEST USER",userPhone:"1123456789",description:"Test checkout",paymentCallbackUrl:"https://merchant.example/callback"}} />
 
 <div class="method-path"><strong>POST</strong><code>/trade/checkout/create</code></div>
 
@@ -23,12 +23,12 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | 字段 | 类型 | 必填 | 最大长度 | 说明 |
 |---|---|---|---:|---|
 | `merchantOrderNo` | String | 是 | 32 | 商户订单号 |
-| `transactionAmount` | String | 是 | 20 | 收款金额，整数（保留 2 位小数） |
+| `transactionAmount` | String | 是 | 20 | 收款金额 金额必须为 10 的倍数。 |
 | `paymentType` | String | 否 | 32 | [支付方式](#payment-methods) |
 | `idType` | String | 是 | 50 | 证件类型：`DNI`、`CUIT`、`CUIL`、`USER_REF` |
 | `userIdCard` | String | 是 | 50 | 证件号码。`DNI` 为 7～8 位数字；`CUIT` 为 11 位且首位为 2 或 3；`CUIL` 为 11 位数字；`USER_REF` 为 1～50 位字母或数字 |
 | `userName` | String | 是 | 64 | 用户姓名 |
-| `userPhone` | String | 否 | 20 | 用户手机号 |
+| `userPhone` | String | 否 | 10 | 用户手机号码，10 位数字 |
 | `userEmail` | String | 否 | 50 | 用户邮箱 |
 | `expireTime` | String | 否 | - | 订单过期时间（国家当地时间） |
 | `description` | String | 否 | 100 | 说明 |
@@ -44,6 +44,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
   "idType": "DNI",
   "userIdCard": "12345678",
   "userName": "TEST USER",
+  "userPhone": "1123456789",
   "description": "Test checkout",
   "paymentCallbackUrl": "https://merchant.example/callback"
 }

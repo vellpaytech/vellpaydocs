@@ -4,7 +4,7 @@ description: 创建 VellPay 收银台订单并取得支付链接。
 ---
 import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 
-<ApiExplorer country="CO" path="/trade/checkout/create" body={{merchantOrderNo:"CHECKOUT202609170001",transactionAmount:"100",paymentType:"PSE",description:"Test checkout",paymentCallbackUrl:"https://merchant.example/callback"}} />
+<ApiExplorer country="CO" path="/trade/checkout/create" body={{merchantOrderNo:"CHECKOUT202609170001",transactionAmount:"100",paymentType:"PSE",userPhone:"3000000000",description:"Test checkout",paymentCallbackUrl:"https://merchant.example/callback"}} />
 
 
 
@@ -38,7 +38,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `idType` | String | 否 | 32 | 证件类型：`CC`、`CE`、`NIT`、`PA` |
 | `userIdCard` | String | 否 | 50 | 证件号码。`CC`、`CE` 为 6～10 位数字；`NIT` 为 9 位数字；`PA` 为 9 位字母或数字 |
 | `userName` | String | 否 | 64 | 用户姓名 |
-| `userPhone` | String | 否 | 20 | 用户手机号 |
+| `userPhone` | String | 否 | 10 | 用户手机号码，10 位数字，以 `3` 开头 |
 | `userEmail` | String | 否 | 50 | 用户邮箱 |
 | `expireTime` | String | 否 | - | 订单过期时间（国家当地时间） |
 | `description` | String | 否 | 100 | 说明 |
@@ -51,6 +51,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
   "merchantOrderNo": "CHECKOUT202609170001",
   "transactionAmount": "100.00",
   "paymentType": "PSE",
+  "userPhone": "3000000000",
   "description": "Test checkout",
   "paymentCallbackUrl": "https://merchant.example/callback"
 }

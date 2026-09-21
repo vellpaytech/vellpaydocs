@@ -9,14 +9,14 @@ description: KYC 认证状态发生变化时，VellPay 向 kycCallbackUrl 推送
 
 | 字段 | 类型 | 必填 | 最大长度 | 说明 |
 |---|---|---|---:|---|
-| `userPhone` | String | 是 | 8～9 | 柬埔寨本地手机号，不含国家区号 |
+| `userPhone` | String | 是 | 8～9 | 用户手机号码，8～9 位数字 |
 | `authenticationStatus` | String | 是 | 32 | [KYC 状态](/zh/guides/order-status/#kyc-状态) |
 
 ## 请求示例
 
 ```json
 {
-  "userPhone": "010123456",
+  "userPhone": "12345678",
   "authenticationStatus": "APPROVED"
 }
 ```
