@@ -42,7 +42,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | 字段 | 类型 | 必填 | 最大长度 | 说明 |
 |---|---|---|---:|---|
 | `merchantOrderNo` | String | 是 | 32 | 商户订单号 |
-| `transactionAmount` | String | 是 | 20 | 收款金额 |
+| `transactionAmount` | String | 是 | 20 | 收款金额，仅支持整数 |
 | `paymentType` | String | 是 | 24 | [支付方式](#payment-methods) |
 | `idType` | String | 否 | 32 | 可选的证件类型；当前接口没有固定枚举，无业务或渠道要求时可不传 |
 | `userIdCard` | String | 否 | 50 | 证件号码。无固定格式，无业务或渠道要求时可不传 |
@@ -62,7 +62,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 ```json
 {
   "merchantOrderNo": "ORDER202609170001",
-  "transactionAmount": "100.00",
+  "transactionAmount": "100",
   "paymentType": "WALLET",
   "userName": "TEST USER",
   "userPhone": "081234567890",

@@ -32,8 +32,8 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `idType` | String | No | 32 | Optional ID type. For South Korean pay-ins, `userIdCard` is the merchant platform’s user ID, not a resident-registration ID. |
 | `userIdCard` | String | Yes | 50 | Merchant platform user ID, not a resident registration number (RRN). Required for all payment methods; maximum 50 characters. |
 | `userName` | String | Yes | 64 | User name |
-| `userPhone` | String | Yes | 11 | User mobile number, 11 digits; starts with `010`  |
-| `userEmail` | String | Yes | 50 | User email |
+| `userPhone` | String | Conditionally required | 11 | User mobile number, 11 digits; starts with `010`. Required when `paymentType` is `TOSSPAY`. |
+| `userEmail` | String | Conditionally required | 50 | User email. Required when `paymentType` is `KAKAOPAY`. |
 | `bankCode` | String | No | 64 | Bank codes |
 | `bankAccountNo` | String | No | 64 | Bank account number |
 | `merchantName` | String | Yes | 64 | Merchant name |

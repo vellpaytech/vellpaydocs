@@ -4,7 +4,7 @@ description: 创建一笔 VellPay 代收订单。
 ---
 import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 
-<ApiExplorer country="CO" path="/trade/payment/create" body={{merchantOrderNo:"ORDER202609170001",transactionAmount:"10000",paymentType:"PSE",idType:"CC",userIdCard:"1234567890",userName:"TEST USER",userPhone:"3001234567",userEmail:"user@example.com",paymentCallbackUrl:"https://merchant.example/callback"}} />
+<ApiExplorer country="CO" path="/trade/payment/create" body={{merchantOrderNo:"ORDER202609170001",transactionAmount:"10000",paymentType:"PSE",idType:"CC",userIdCard:"1234567890",userName:"TEST USER",userPhone:"3001234567",userEmail:"user@example.com",bankCode:"1040",paymentCallbackUrl:"https://merchant.example/callback"}} />
 
 
 
@@ -41,7 +41,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `userName` | String | 是 | 64 | 用户姓名 |
 | `userPhone` | String | 是 | 10 | 用户手机号码，10 位数字，以 `3` 开头 |
 | `userEmail` | String | 是 | 50 | 用户邮箱 |
-| `bankCode` | String | 否 | 64 | 银行编码 |
+| `bankCode` | String | 条件必填 | 64 | 银行编码；`paymentType` 为 `PSE` 时必填 |
 | `bankAccountNo` | String | 否 | 64 | 银行账户号 |
 | `merchantName` | String | 否 | 64 | 商户名称 |
 | `description` | String | 否 | 100 | 说明 |
@@ -60,6 +60,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
   "userName": "TEST USER",
   "userPhone": "3001234567",
   "userEmail": "user@example.com",
+  "bankCode": "1040",
   "paymentCallbackUrl": "https://merchant.example/callback"
 }
 ```

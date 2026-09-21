@@ -33,7 +33,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `userEmail` | String | No | 50 | User email |
 | `bankCode` | String | Conditionally required | 20 | Required when `payoutType` is `BANK_TRANSFER`. Enter the beneficiary bank’s IFSC; see [Bank codes](../banks/). |
 | `bankName` | String | No | - | Bank name, see [Bank code description](../banks/) |
-| `bankAccountNo` | String | Yes | 50 | Beneficiary account |
+| `bankAccountNo` | String | Yes | 50 | Beneficiary account. When `payoutType` is `UPI`, the account must contain `@`. |
 | `description` | String | No | 100 | Description |
 | `payoutCallbackUrl` | String | No | 200 | Payout callback URL |
 

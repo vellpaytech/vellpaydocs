@@ -35,7 +35,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `userEmail` | String | 是 | 50 | 用户邮箱 |
 | `bankCode` | String | 是 | 20 | [银行编码](../banks/) |
 | `bankName` | String | 是 | 50 | [银行名称](../banks/) |
-| `bankAccountNo` | String | 是 | 50 | 收款账户 |
+| `bankAccountNo` | String | 是 | 255 | 收款账户。`payoutType` 为 `BREB` 时按键类型传值：`PHONE` 为无前缀、以 `3` 开头的固定 10 位数字；`EMAIL` 为 6～255 位标准邮箱；`DOCUMENT` 为 6～12 位数字；`NIT` 为 9～10 位数字；`ALIAS` 以 `@` 开头，后接 3～30 位字母或数字 |
 | `description` | String | 否 | 100 | 说明 |
 | `payoutCallbackUrl` | String | 否 | 200 | 代付回调地址 |
 

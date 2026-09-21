@@ -32,8 +32,8 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `idType` | String | 否 | 32 | 可选的证件类型；韩国代收的 `userIdCard` 是商户平台用户 ID，不要求传居民登记证件类型 |
 | `userIdCard` | String | 是 | 50 | 证件号码（商户平台用户 ID，非居民登记号码 RRN）。所有支付方式均必填，最长 50 位 |
 | `userName` | String | 是 | 64 | 用户姓名 |
-| `userPhone` | String | 是 | 11 | 用户手机号码，11 位数字，以 `010` 开头 |
-| `userEmail` | String | 是 | 50 | 用户邮箱 |
+| `userPhone` | String | 条件必填 | 11 | 用户手机号码，11 位数字，以 `010` 开头；`paymentType` 为 `TOSSPAY` 时必填 |
+| `userEmail` | String | 条件必填 | 50 | 用户邮箱；`paymentType` 为 `KAKAOPAY` 时必填 |
 | `bankCode` | String | 否 | 64 | 银行编码 |
 | `bankAccountNo` | String | 否 | 64 | 银行账户号 |
 | `merchantName` | String | 是 | 64 | 商户名称 |

@@ -4,7 +4,7 @@ description: Create a VellPay pay-in order.
 ---
 import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 
-<ApiExplorer country="CO" path="/trade/payment/create" body={{merchantOrderNo:"ORDER202609170001",transactionAmount:"10000",paymentType:"PSE",idType:"CC",userIdCard:"1234567890",userName:"TEST USER",userPhone:"3001234567",userEmail:"user@example.com",paymentCallbackUrl:"https://merchant.example/callback"}} />
+<ApiExplorer country="CO" path="/trade/payment/create" body={{merchantOrderNo:"ORDER202609170001",transactionAmount:"10000",paymentType:"PSE",idType:"CC",userIdCard:"1234567890",userName:"TEST USER",userPhone:"3001234567",userEmail:"user@example.com",bankCode:"1040",paymentCallbackUrl:"https://merchant.example/callback"}} />
 
 
 
@@ -41,7 +41,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `userName` | String | Yes | 64 | User name |
 | `userPhone` | String | Yes | 10 | User mobile number, 10 digits; starts with `3`  |
 | `userEmail` | String | Yes | 50 | User email |
-| `bankCode` | String | No | 64 | Bank codes |
+| `bankCode` | String | Conditionally required | 64 | Bank code. Required when `paymentType` is `PSE`. |
 | `bankAccountNo` | String | No | 64 | Bank account number |
 | `merchantName` | String | No | 64 | Merchant name |
 | `description` | String | No | 100 | Description |
@@ -60,6 +60,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
   "userName": "TEST USER",
   "userPhone": "3001234567",
   "userEmail": "user@example.com",
+  "bankCode": "1040",
   "paymentCallbackUrl": "https://merchant.example/callback"
 }
 ```

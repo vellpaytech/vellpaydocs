@@ -42,12 +42,12 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | Field | Type | Required | Maximum length | Description |
 |---|---|---|---:|---|
 | `merchantOrderNo` | String | Yes | 32 | Merchant order number |
-| `transactionAmount` | String | Yes | 20 | Pay-in amount |
+| `transactionAmount` | String | Yes | 20 | Pay-in amount; integers only |
 | `paymentType` | String | Yes | 24 | [Payment method](#payment-methods) |
 | `idType` | String | No | 32 | Optional ID type. This endpoint has no fixed enum; omit this field unless required by your business or payment channel. |
 | `userIdCard` | String | No | 50 | ID number. No fixed format; omit this field unless required by your business or payment channel. |
 | `userName` | String | Yes | 64 | User name |
-| `userPhone` | String | Yes | 10–13 | User mobile number, 10–13 digits; starts with `08`  |
+| `userPhone` | String | Yes | 10–13 | User mobile number, 10–13 digits; starts with `08` |
 | `userEmail` | String | Yes | 50 | User email |
 | `bankCode` | String | No | 64 | Bank codes |
 | `bankAccountNo` | String | No | 64 | Bank account number |
@@ -62,7 +62,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 ```json
 {
   "merchantOrderNo": "ORDER202609170001",
-  "transactionAmount": "100.00",
+  "transactionAmount": "100",
   "paymentType": "WALLET",
   "userName": "TEST USER",
   "userPhone": "081234567890",
