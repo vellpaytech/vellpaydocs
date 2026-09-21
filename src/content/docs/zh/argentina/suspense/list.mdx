@@ -33,7 +33,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `data` | Object | 是 | - | 响应体 |
 | `data.pageIndex` | String | 否 | - | 下一页查询点位 |
 | `data.records` | List | 是 | - | 悬账记录集合 |
-| `data.records.voucherId` | String | 是 | - | 凭证 ID |
+| `data.records.bankId` | String | 是 | - | 银行凭证 ID |
 | `data.records.suspenseAmount` | String | 是 | - | 悬账金额 |
 | `data.records.theoreticalAmount` | String | 是 | - | 理论到账金额 |
 | `data.records.userIdCard` | String | 否 | - | 用户证件号 |
@@ -52,7 +52,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
     "pageIndex": null,
     "records": [
       {
-        "voucherId": "VOUCHER_ID",
+        "bankId": "BANK_ID",
         "suspenseAmount": "100.00",
         "theoreticalAmount": "100.00",
         "userIdCard": "ID_NUMBER",

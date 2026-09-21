@@ -1,10 +1,10 @@
 ---
 title: 阿根廷凭证查询
-description: 根据凭证 ID 查询阿根廷悬账流水。
+description: 根据银行凭证 ID 查询阿根廷悬账流水。
 ---
 import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 
-<ApiExplorer country="AR" path="/trade/query/suspenseAccount/order" body={{voucherId:"VOUCHER_ID"}} />
+<ApiExplorer country="AR" path="/trade/query/suspenseAccount/order" body={{bankId:"BANK_ID"}} />
 
 
 
@@ -13,13 +13,13 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 ## 请求参数
 | 字段 | 类型 | 必填 | 说明 |
 |---|---|---|---|
-| `voucherId` | String | 是 | 凭证 ID |
+| `bankId` | String | 是 | 银行凭证 ID |
 
 ## 请求示例
 
 ```json
 {
-  "voucherId": "VOUCHER_ID"
+  "bankId": "BANK_ID"
 }
 ```
 

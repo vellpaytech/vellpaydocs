@@ -1,24 +1,24 @@
 ---
 title: 阿根廷悬账补单
-description: 使用凭证 ID 为阿根廷代收订单补单。
+description: 使用银行凭证 ID 为阿根廷代收订单补单。
 ---
 import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 
-<ApiExplorer country="AR" path="/trade/suspenseAccount/reorder" body={{voucherId:"VOUCHER_ID",merchantOrderNo:"ORDER202609170001"}} />
+<ApiExplorer country="AR" path="/trade/suspenseAccount/reorder" body={{bankId:"BANK_ID",merchantOrderNo:"ORDER202609170001"}} />
 
 <div class="method-path"><strong>POST</strong><code>/trade/suspenseAccount/reorder</code></div>
 
 ## 请求参数
 | 字段 | 类型 | 必填 | 说明 |
 |---|---|---|---|
-| `voucherId` | String | 是 | 凭证 ID |
+| `bankId` | String | 是 | 银行凭证 ID |
 | `merchantOrderNo` | String | 是 | 商户订单号 |
 
 ## 请求示例
 
 ```json
 {
-  "voucherId": "VOUCHER_ID",
+  "bankId": "BANK_ID",
   "merchantOrderNo": "ORDER202609170001"
 }
 ```
@@ -30,7 +30,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `data` | Object | 是 | - | 响应体 |
 | `data.amount` | String | 是 | - | 补单金额 |
 | `data.tradeNo` | String | 是 | - | 平台订单号 |
-| `data.voucherId` | String | 是 | - | 凭证 ID |
+| `data.bankId` | String | 是 | - | 银行凭证 ID |
 | `data.merchantOrderNo` | String | 是 | - | 商户订单号 |
 | `data.callbackTime` | String | 否 | - | 回调时间（阿根廷当地时间） |
 | `data.status` | String | 是 | - | 补单结果状态 |
@@ -45,7 +45,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
   "data": {
     "amount": "100.00",
     "tradeNo": "VP20260917000004",
-    "voucherId": "VOUCHER_ID",
+    "bankId": "BANK_ID",
     "merchantOrderNo": "ORDER202609170001",
     "callbackTime": "2026-09-17 12:00:00",
     "status": "SUCCESS"
