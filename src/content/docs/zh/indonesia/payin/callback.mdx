@@ -17,6 +17,7 @@ description: VellPay 向商户推送代收订单状态通知。
 | `paymentStatus` | String | 是 | 24 | [订单状态](/zh/guides/order-status/) |
 | `failMsg` | String | 否 | 200 | 订单失败原因 |
 | `paymentInfo` | String | 否 | 200 | 支付信息 |
+| `channel` | String | 否 | 200 | [支付渠道](../create/#channels)，取值与订单创建时使用的 `paymentType` 对应 |
 | `serviceAmount` | String | 否 | - | 服务费用 |
 | `completeTime` | String | 是 | - | 完成时间（国家当地时间，格式 `yyyy-MM-dd HH:mm:ss`） |
 
@@ -50,6 +51,5 @@ description: VellPay 向商户推送代收订单状态通知。
   "msg": "OK"
 }
 ```
-
 
 

@@ -4,7 +4,7 @@ description: 创建一笔 VellPay 代付订单。
 ---
 import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 
-<ApiExplorer country="KH" path="/trade/payout/create" body={{merchantOrderNo:"PAYOUT202609170001",transactionAmount:"10000",payoutType:"BANK_TRANSFER",userIdCard:"USER123456",userName:"TEST USER",userPhone:"12345678",userEmail:"user@example.com",bankCode:"0001",bankName:"ABA Bank",bankAccountNo:"1234567890"}} />
+<ApiExplorer country="KH" path="/trade/payout/create" body={{merchantOrderNo:"PAYOUT202609170001",transactionAmount:"10000",payoutType:"BANK_TRANSFER",idType:"NONE_KYC",userIdCard:"USER123456",userName:"TEST USER",userPhone:"12345678",userEmail:"user@example.com",bankCode:"0001",bankName:"ABA Bank",bankAccountNo:"1234567890"}} />
 
 <p class="endpoint-lead"></p>
 
@@ -26,7 +26,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `merchantOrderNo` | String | 是 | 32 | 商户订单号 |
 | `transactionAmount` | String | 是 | 20 | 付款金额，整数（保留 2 位小数）；[额度说明](/zh/cambodia/limits/) |
 | `payoutType` | String | 是 | 20 | [代付方式](#payment-methods) |
-| `idType` | String | 否 | 50 | 用户证件类型 |
+| `idType` | String | 否 | 50 | 身份识别类型：`NONE_KYC`（未认证用户）或 `KYC`（已通过 KYC 认证的用户） |
 | `userIdCard` | String | 是 | 32 | 用户证件号码 |
 | `userName` | String | 是 | 64 | 用户姓名 |
 | `userPhone` | String | 是 | 20 | 用户手机号 |
@@ -46,6 +46,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
   "merchantOrderNo": "PAYOUT202609170001",
   "transactionAmount": "100.00",
   "payoutType": "BANK_TRANSFER",
+  "idType": "NONE_KYC",
   "userIdCard": "USER123456",
   "userName": "TEST USER",
   "userPhone": "12345678",
