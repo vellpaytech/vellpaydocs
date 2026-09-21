@@ -20,7 +20,7 @@ const paymentUrl = `${base}/zh/brazil/payin/create/`;
         <b><i>V</i>ELLPAY</b><span>开发者文档</span>
       </a>
       <nav aria-label="主导航">
-        <a href={docsUrl}>开发指南</a><a href={paymentUrl}>API 文档</a>
+        <a href={docsUrl}>开发指南</a><a href={paymentUrl}>API 文档</a><a class="language-switch" href={`${base}/en/`} lang="en">English</a>
         <a class="nav-button" href={docsUrl}>开始接入 <span>→</span></a>
       </nav>
     </header>
@@ -45,8 +45,7 @@ const paymentUrl = `${base}/zh/brazil/payin/create/`;
           <div class="endpoint"><b>POST</b><code>/trade/payment/create</code></div>
           <pre><code><span class="muted">&#123;</span>
   <span class="key">"merchantOrderNo"</span>: <span class="value">"ORDER_20260917"</span>,
-  <span class="key">"amount"</span>: <span class="number">10000</span>,
-  <span class="key">"currency"</span>: <span class="value">"BRL"</span>,
+  <span class="key">"transactionAmount"</span>: <span class="value">"100.00"</span>,
   <span class="key">"paymentType"</span>: <span class="value">"PIX"</span>
 <span class="muted">&#125;</span></code></pre>
           <div class="response-line"><span><i></i> 200 Success</span><small>238 ms</small></div>
@@ -84,7 +83,7 @@ const paymentUrl = `${base}/zh/brazil/payin/create/`;
   * { box-sizing:border-box; } body { background:#f7faf8; color:#11231b; margin:0; min-width:320px; } a { color:inherit; text-decoration:none; }
   header { align-items:center; backdrop-filter:blur(18px); background:rgba(247,250,248,.9); border-bottom:1px solid #dfe9e3; display:flex; height:76px; justify-content:space-between; padding:0 max(5vw,24px); position:sticky; top:0; z-index:20; }
   .brand { align-items:center; display:flex; gap:16px; } .brand b { color:#11231b; font-size:20px; font-weight:900; letter-spacing:.08em; } .brand b i { background:#087a48; border-radius:7px; color:#fff; display:inline-grid; font-style:normal; height:30px; margin-right:2px; place-items:center; width:30px; } .brand span { border-left:1px solid #cbd8d0; color:#60746a; font-size:14px; padding-left:16px; }
-  nav { align-items:center; display:flex; gap:30px; } nav>a:not(.nav-button) { color:#455c51; font-size:14px; font-weight:600; }
+  nav { align-items:center; display:flex; gap:30px; } nav>a:not(.nav-button) { color:#455c51; font-size:14px; font-weight:600; }.language-switch { border:1px solid #cbd8d0; border-radius:999px; padding:7px 12px; }
   .nav-button,.primary { align-items:center; background:#087a48; border-radius:8px; color:#fff; display:inline-flex; font-size:14px; font-weight:750; gap:18px; padding:12px 18px; }
   .hero { display:grid; gap:7vw; grid-template-columns:minmax(0,1.05fr) minmax(380px,.95fr); margin:0 auto; max-width:1280px; min-height:650px; overflow:hidden; padding:112px 40px 92px; position:relative; }
   .hero::before { background:radial-gradient(circle,rgba(19,160,96,.15),transparent 68%); content:""; height:520px; position:absolute; right:-180px; top:-150px; width:520px; }
@@ -109,6 +108,6 @@ const paymentUrl = `${base}/zh/brazil/payin/create/`;
   .coverage { align-items:center; display:grid; gap:70px; grid-template-columns:.8fr 1.2fr; margin:0 auto; max-width:1200px; padding:92px 24px; } .countries { display:grid; gap:12px; grid-template-columns:repeat(2,1fr); }
   .countries span { background:#fff; border:1px solid #dde8e1; border-radius:10px; color:#3e584b; font-size:14px; font-weight:650; padding:17px 19px; }
   footer { border-top:1px solid #dfe9e3; color:#7a8d83; display:flex; font-size:12px; justify-content:space-between; margin:0 auto; max-width:1200px; padding:28px 24px; }
-  @media(max-width:900px) { nav>a:not(.nav-button){display:none}.hero{grid-template-columns:1fr;padding-top:72px}.code-card{max-width:620px;transform:none}.cards{grid-template-columns:repeat(2,1fr)}.coverage{grid-template-columns:1fr;gap:32px} }
+  @media(max-width:900px) { nav>a:not(.nav-button):not(.language-switch){display:none}.hero{grid-template-columns:1fr;padding-top:72px}.code-card{max-width:620px;transform:none}.cards{grid-template-columns:repeat(2,1fr)}.coverage{grid-template-columns:1fr;gap:32px} }
   @media(max-width:560px) { header{height:66px}.brand b{font-size:16px}.brand b i{height:26px;width:26px}.brand span{display:none}.nav-button{padding:10px 13px}.hero{padding:62px 20px}.hero-text{font-size:16px}.trust-row{align-items:flex-start;flex-direction:column;gap:9px}.trust-row i{display:none}.cards{grid-template-columns:1fr}.capabilities{padding:70px 20px}.countries{grid-template-columns:1fr}.hero-actions{align-items:stretch;flex-direction:column}.hero-actions a{justify-content:center}footer{gap:8px;flex-direction:column} }
 </style>

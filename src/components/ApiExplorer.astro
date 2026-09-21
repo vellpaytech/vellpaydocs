@@ -8,12 +8,25 @@ interface Props {
   body?: Record<string, unknown>;
   title?: string;
 }
-const { method = "POST", path, country = "ID", body = {}, title = "模拟请求" } = Astro.props;
-const initialBody = JSON.stringify(body, null, 2);
-const countryNames: Record<string, string> = {
-  AR: "阿根廷", BR: "巴西", CO: "哥伦比亚", ID: "印度尼西亚",
-  IN: "印度", KH: "柬埔寨", KR: "韩国", VN: "越南",
+const isEnglish = Astro.url.pathname.startsWith("/en/");
+const ui = isEnglish ? {
+  title: "Test request", copyPath: "Copy endpoint path", tryIt: "Try it", subtitle: "Configure parameters and send a request to the test environment", close: "Close",
+  country: "Country", environment: "Test environment", unavailable: "The test domain is not configured for this country", authentication: "Authentication", pending: "Not configured",
+  authNotice: "The private key is used only in your browser to generate authorization. It is never sent or stored.", privateKey: "Merchant private key", keyPlaceholder: "PEM or Base64 PKCS#8 private key, or mock", toggleKey: "Show or hide private key", keyMemory: "Kept only in this page's memory and cleared when the dialog closes.",
+  headers: "Request headers", local: "generated locally", waitKey: "Enter the merchant private key first", parameters: "Request body", result: "Response", resultHint: "After you send the request, the status, duration, and JSON response appear here.", security: "Authentication details remain only in this page's memory and are not written to local storage.",
+  copyNote: "Copying cURL does not send a request", regenerate: "Regenerate credentials", copyCurl: "Generate and copy cURL", send: "Send test request", domainPending: "Test domain pending",
+} : {
+  title: "模拟请求", copyPath: "复制接口路径", tryIt: "Try it · 模拟请求", subtitle: "测试环境下配置参数并发送请求", close: "关闭",
+  country: "国家", environment: "测试环境", unavailable: "该国家测试域名暂未配置", authentication: "请求鉴权", pending: "待配置",
+  authNotice: "私钥仅在浏览器内用于生成 authorization，不会随请求发送或保存", privateKey: "商户私钥", keyPlaceholder: "PEM、Base64 PKCS#8 私钥或 mock", toggleKey: "显示或隐藏私钥", keyMemory: "仅保留在当前页面内存，关闭弹窗后自动清空",
+  headers: "请求头", local: "本地生成", waitKey: "等待填写商户私钥", parameters: "请求参数", result: "响应结果", resultHint: "发送请求后，响应状态、耗时和 JSON 将显示在这里。", security: "认证信息仅保留在当前页面内存中，不会写入本地存储。",
+  copyNote: "复制 cURL 不会发送请求", regenerate: "重新生成凭证", copyCurl: "生成并复制 cURL", send: "发送测试请求", domainPending: "测试域名待配置",
 };
+const { method = "POST", path, country = "ID", body = {}, title = ui.title } = Astro.props;
+const initialBody = JSON.stringify(body, null, 2);
+const countryNames: Record<string, string> = isEnglish
+  ? { AR: "Argentina", BR: "Brazil", CO: "Colombia", ID: "Indonesia", IN: "India", KH: "Cambodia", KR: "South Korea", VN: "Vietnam" }
+  : { AR: "阿根廷", BR: "巴西", CO: "哥伦比亚", ID: "印度尼西亚", IN: "印度", KH: "柬埔寨", KR: "韩国", VN: "越南" };
 const testEnvironments: Record<string, string> = {
   AR: "https://ar-test-gateway.vellpay.com",
   BR: "https://br-test-gateway.vellpay.com",
@@ -27,47 +40,47 @@ const countryName = `${countryNames[country] ?? country} · ${country}`;
 const testEnvironment = testEnvironments[country] ?? "";
 ---
 
-<vell-api-explorer data-method={method} data-path={path} data-country={country} data-base-url={testEnvironment}>
-  <div class="endpoint-actions"><button class="copy-path" data-copy-path title="复制接口路径" aria-label="复制接口路径"><Copy size={16} stroke-width={1.8} aria-hidden="true" /></button><button class="try-trigger" data-open><Send size={16} stroke-width={1.8} aria-hidden="true" />Try it · 模拟请求</button></div>
+<vell-api-explorer data-method={method} data-path={path} data-country={country} data-base-url={testEnvironment} data-locale={isEnglish ? "en" : "zh"}>
+  <div class="endpoint-actions"><button class="copy-path" data-copy-path title={ui.copyPath} aria-label={ui.copyPath}><Copy size={16} stroke-width={1.8} aria-hidden="true" /></button><button class="try-trigger" data-open><Send size={16} stroke-width={1.8} aria-hidden="true" />{ui.tryIt}</button></div>
   <dialog>
     <form method="dialog" class="dialog-shell">
       <header>
-        <div><span class="eyebrow">API TEST CONSOLE</span><div class="console-title"><h2>{title}</h2><span class="test-badge">TEST ONLY</span></div><p>测试环境下配置参数并发送请求</p></div>
-        <button class="close" value="cancel" formnovalidate aria-label="关闭">×</button>
+        <div><span class="eyebrow">API TEST CONSOLE</span><div class="console-title"><h2>{title}</h2><span class="test-badge">TEST ONLY</span></div><p>{ui.subtitle}</p></div>
+        <button class="close" value="cancel" formnovalidate aria-label={ui.close}>×</button>
       </header>
       <div class="workspace">
         <section class="request-pane">
           <div class="request-line"><span>{method}</span><code>{path}</code></div>
           <div class="control-row">
-            <label>国家<input value={countryName} disabled /></label>
-            <label>测试环境<input data-base-url value={testEnvironment} placeholder="该国家测试域名暂未配置" disabled /></label>
+            <label>{ui.country}<input value={countryName} disabled /></label>
+            <label>{ui.environment}<input data-base-url value={testEnvironment} placeholder={ui.unavailable} disabled /></label>
           </div>
-          <div class="auth-heading"><h3>请求鉴权</h3><span data-auth-state>待配置</span></div>
-          <p class="auth-notice"><ShieldCheck size={16} />私钥仅在浏览器内用于生成 authorization，不会随请求发送或保存</p>
+          <div class="auth-heading"><h3>{ui.authentication}</h3><span data-auth-state>{ui.pending}</span></div>
+          <p class="auth-notice"><ShieldCheck size={16} />{ui.authNotice}</p>
           <div class="auth-row">
             <label>appId <b>*</b><input data-header="appId" autocomplete="off" placeholder="TEST_APP_ID" /></label>
-            <label>商户私钥 <b>*</b><span class="secret-input"><input data-private-key type="password" autocomplete="off" required placeholder="PEM、Base64 PKCS#8 私钥或 mock" /><button type="button" data-toggle-key aria-label="显示或隐藏私钥"><Eye size={17} /></button></span><small>仅保留在当前页面内存，关闭弹窗后自动清空</small></label>
+            <label>{ui.privateKey} <b>*</b><span class="secret-input"><input data-private-key type="password" autocomplete="off" required placeholder={ui.keyPlaceholder} /><button type="button" data-toggle-key aria-label={ui.toggleKey}><Eye size={17} /></button></span><small>{ui.keyMemory}</small></label>
           </div>
-          <h3>请求头</h3>
+          <h3>{ui.headers}</h3>
           <div class="header-grid">
             <label>nonce<input data-header="nonce" autocomplete="off" /></label>
             <label>timestamp<input data-header="timestamp" autocomplete="off" /></label>
-            <label class="authorization-field">authorization（本地生成）<input data-header="authorization" type="password" autocomplete="off" readonly placeholder="等待填写商户私钥" /></label>
+            <label class="authorization-field">authorization ({ui.local})<input data-header="authorization" type="password" autocomplete="off" readonly placeholder={ui.waitKey} /></label>
           </div>
-          <h3>请求参数 <small>application/json</small></h3>
+          <h3>{ui.parameters} <small>application/json</small></h3>
           <textarea data-body spellcheck="false">{initialBody}</textarea>
         </section>
         <section class="response-pane">
-          <div class="response-heading"><h3>响应结果</h3><span class="response-hint">Response</span></div>
-          <pre data-output><code>{testEnvironment ? "发送请求后，响应状态、耗时和 JSON 将显示在这里。" : "该国家测试域名暂未配置。"}</code></pre>
-          <p class="security">认证信息仅保留在当前页面内存中，不会写入本地存储。</p>
+          <div class="response-heading"><h3>{ui.result}</h3><span class="response-hint">Response</span></div>
+          <pre data-output><code>{testEnvironment ? ui.resultHint : ui.unavailable}</code></pre>
+          <p class="security">{ui.security}</p>
         </section>
       </div>
       <footer>
-        <p class="action-note" data-action-note>复制 cURL 不会发送请求</p>
-        <button type="button" class="secondary" data-regenerate><RefreshCw size={16} />重新生成凭证</button>
-        <button type="button" class="secondary" data-copy><Copy size={16} />生成并复制 cURL</button>
-        <button type="button" data-send disabled={!testEnvironment}><Send size={16} />{testEnvironment ? "发送测试请求" : "测试域名待配置"}</button>
+        <p class="action-note" data-action-note>{ui.copyNote}</p>
+        <button type="button" class="secondary" data-regenerate><RefreshCw size={16} />{ui.regenerate}</button>
+        <button type="button" class="secondary" data-copy><Copy size={16} />{ui.copyCurl}</button>
+        <button type="button" data-send disabled={!testEnvironment}><Send size={16} />{testEnvironment ? ui.send : ui.domainPending}</button>
       </footer>
     </form>
   </dialog>
@@ -75,6 +88,13 @@ const testEnvironment = testEnvironments[country] ?? "";
 
 <script>
   class VellApiExplorer extends HTMLElement {
+    message(key) {
+      const messages = {
+        en: { waitKey: "Enter the merchant private key first", pending: "Not configured", stale: "Regeneration required", requiredKey: "Merchant private key is required.", mockPlaceholder: "Mock mode (authorization is empty)", mock: "Mock mode", invalidJson: "Invalid JSON: the request body must contain valid JSON.", signed: "Signed", invalidKey: "Invalid private-key format or algorithm. Use a PEM or Base64 PKCS#8 RSA private key.", copied: "cURL copied; no network request was sent", copyNote: "Copying cURL does not send a request", pathCopied: "Copied", copyPath: "Copy endpoint path", sending: "Sending request to the test gateway…", sent: "Test request sent" },
+        zh: { waitKey: "等待填写商户私钥", pending: "待配置", stale: "待重新生成", requiredKey: "商户私钥为必填项。", mockPlaceholder: "mock 模式（authorization 为空）", mock: "mock 模式", invalidJson: "JSON 格式错误：请求体必须是合法 JSON。", signed: "已签名", invalidKey: "私钥格式或算法不正确，请使用 PEM 或 Base64 格式的 PKCS#8 RSA 私钥。", copied: "cURL 已复制，未发送网络请求", copyNote: "复制 cURL 不会发送请求", pathCopied: "已复制", copyPath: "复制接口路径", sending: "正在向测试网关发送请求…", sent: "测试请求已发送" },
+      };
+      return messages[this.dataset.locale === "en" ? "en" : "zh"][key];
+    }
     connectedCallback() {
       this.refreshRequestMeta();
       this.querySelector("[data-open]")?.addEventListener("click", () => {
@@ -90,8 +110,8 @@ const testEnvironment = testEnvironments[country] ?? "";
         const authorization = this.querySelector('[data-header="authorization"]');
         const state = this.querySelector("[data-auth-state]");
         if (key instanceof HTMLInputElement) key.value = "";
-        if (authorization instanceof HTMLInputElement) { authorization.value = ""; authorization.placeholder = "等待填写商户私钥"; }
-        if (state) state.textContent = "待配置";
+        if (authorization instanceof HTMLInputElement) { authorization.value = ""; authorization.placeholder = this.message("waitKey"); }
+        if (state) state.textContent = this.message("pending");
       });
       this.querySelector("[data-copy]")?.addEventListener("click", () => this.copyCurl());
       this.querySelector("[data-regenerate]")?.addEventListener("click", () => this.regenerateCredentials());
@@ -131,7 +151,7 @@ const testEnvironment = testEnvironments[country] ?? "";
     }
     markAuthorizationStale() {
       const state = this.querySelector("[data-auth-state]");
-      if (state) state.textContent = "待重新生成";
+      if (state) state.textContent = this.message("stale");
     }
     async regenerateCredentials() {
       const nonce = this.querySelector('[data-header="nonce"]');
@@ -148,19 +168,19 @@ const testEnvironment = testEnvironments[country] ?? "";
       const privateKey = keyInput.value.trim();
       if (!privateKey) {
         authorization.value = "";
-        authorization.placeholder = "等待填写商户私钥";
-        if (state) state.textContent = "待配置";
-        throw new Error("商户私钥为必填项；");
+        authorization.placeholder = this.message("waitKey");
+        if (state) state.textContent = this.message("pending");
+        throw new Error(this.message("requiredKey"));
       }
       if (privateKey === "mock") {
         authorization.value = "";
-        authorization.placeholder = "mock 模式（authorization 为空）";
-        if (state) state.textContent = "mock 模式";
+        authorization.placeholder = this.message("mockPlaceholder");
+        if (state) state.textContent = this.message("mock");
         return;
       }
       let body;
       try { body = JSON.parse(this.querySelector("[data-body]")?.value || "{}"); }
-      catch { throw new Error("JSON 格式错误：请求体必须是合法 JSON。"); }
+      catch { throw new Error(this.message("invalidJson")); }
       const nonce = this.querySelector('[data-header="nonce"]')?.value || "";
       const raw = Object.entries(body).filter(([name, value]) => name !== "sign" && value != null && !(typeof value === "string" && !value.trim())).sort(([a], [b]) => a.localeCompare(b)).map(([name, value]) => `${name}=${typeof value === "object" ? JSON.stringify(value) : value}`).concat(`nonce=${nonce}`).join("&");
       try {
@@ -169,8 +189,8 @@ const testEnvironment = testEnvironments[country] ?? "";
         const importedKey = await crypto.subtle.importKey("pkcs8", bytes, { name: "RSASSA-PKCS1-v1_5", hash: "SHA-1" }, false, ["sign"]);
         const signature = await crypto.subtle.sign("RSASSA-PKCS1-v1_5", importedKey, new TextEncoder().encode(raw));
         authorization.value = btoa(String.fromCharCode(...new Uint8Array(signature)));
-        if (state) state.textContent = "已签名";
-      } catch { throw new Error("私钥格式或算法不正确，请使用 PEM 或 Base64 格式的 PKCS#8 RSA 私钥。"); }
+        if (state) state.textContent = this.message("signed");
+      } catch { throw new Error(this.message("invalidKey")); }
     }
     requestData() {
       const value = (selector) => this.querySelector(selector)?.value || "";
@@ -195,9 +215,9 @@ const testEnvironment = testEnvironments[country] ?? "";
       }
       const button = this.querySelector("[data-copy]");
       const note = this.querySelector("[data-action-note]");
-      if (note) note.textContent = "cURL 已复制，未发送网络请求";
+      if (note) note.textContent = this.message("copied");
       if (button) button.classList.add("copied");
-      setTimeout(() => { if (note) note.textContent = "复制 cURL 不会发送请求"; if (button) button.classList.remove("copied"); }, 1600);
+      setTimeout(() => { if (note) note.textContent = this.message("copyNote"); if (button) button.classList.remove("copied"); }, 1600);
     }
     async copyPath() {
       const path = this.getAttribute("data-path") || "";
@@ -207,7 +227,7 @@ const testEnvironment = testEnvironments[country] ?? "";
         textarea.value = path; document.body.append(textarea); textarea.select(); document.execCommand("copy"); textarea.remove();
       }
       const button = this.querySelector("[data-copy-path]");
-      if (button) { button.setAttribute("title", "已复制"); setTimeout(() => button.setAttribute("title", "复制接口路径"), 1200); }
+      if (button) { button.setAttribute("title", this.message("pathCopied")); setTimeout(() => button.setAttribute("title", this.message("copyPath")), 1200); }
     }
     async send() {
       try { await this.regenerateCredentials(); }
@@ -217,14 +237,14 @@ const testEnvironment = testEnvironments[country] ?? "";
       const output = this.querySelector("[data-output] code");
       try {
         const note = this.querySelector("[data-action-note]");
-        if (note) note.textContent = "正在向测试网关发送请求…";
+        if (note) note.textContent = this.message("sending");
         const started = performance.now();
         const response = await fetch(`${req.base}${req.path}`, { method: req.method, headers: req.headers, body: req.body });
         const text = await response.text();
         let content = text;
         try { content = JSON.stringify(JSON.parse(text), null, 2); } catch {}
         if (output) output.textContent = `${response.status} · ${Math.round(performance.now() - started)}ms\n${content}`;
-        if (note) note.textContent = "测试请求已发送";
+        if (note) note.textContent = this.message("sent");
       } catch (error) { this.showMessage(error instanceof Error ? error.message : String(error)); }
     }
     showMessage(message) {

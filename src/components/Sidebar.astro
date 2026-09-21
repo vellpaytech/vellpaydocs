@@ -25,47 +25,51 @@ import { countryGroups } from "../data/countries";
 const { slug } = Astro.props as Props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const parts = slug.split("/").filter(Boolean);
-const localizedParts = parts[0] === "zh" ? parts.slice(1) : parts;
+const locale = parts[0] === "en" ? "en" : "zh";
+const isEnglish = locale === "en";
+const localizedParts = ["zh", "en"].includes(parts[0]) ? parts.slice(1) : parts;
 const currentCountry = localizedParts[0] ?? "";
 const currentPath = `/${localizedParts.join("/")}`;
-const href = (path: string) => `${base}/zh${path}/`;
+const href = (path: string) => `${base}/${locale}${path}/`;
+const label = (zh: string, en: string) => isEnglish ? en : zh;
+const englishCountryNames: Record<string, string> = { argentina: "Argentina", brazil: "Brazil", cambodia: "Cambodia", colombia: "Colombia", india: "India", indonesia: "Indonesia", korea: "South Korea", vietnam: "Vietnam" };
 
 const guideSections = [
-  { label: "开始接入", icon: Rocket, links: [{ label: "快速开始", path: "/guides/quick-start" }, { label: "接入指引", path: "/guides/getting-started" }] },
-  { label: "API 安全", icon: ShieldCheck, links: [{ label: "创建密钥", path: "/guides/create-keys" }, { label: "接口鉴权", path: "/guides/authentication" }] },
-  { label: "公共参数", icon: Layers3, links: [
-    { label: "公共请求头", path: "/guides/request-headers" },
-    { label: "公共响应", path: "/guides/common-response" },
-    { label: "订单状态", path: "/guides/order-status" },
-    { label: "公共错误码", path: "/guides/error-codes" },
+  { label: isEnglish ? "Get started" : "开始接入", icon: Rocket, links: [{ label: isEnglish ? "Quick start" : "快速开始", path: "/guides/quick-start" }, { label: isEnglish ? "Integration guide" : "接入指引", path: "/guides/getting-started" }] },
+  { label: isEnglish ? "API security" : "API 安全", icon: ShieldCheck, links: [{ label: isEnglish ? "Create keys" : "创建密钥", path: "/guides/create-keys" }, { label: isEnglish ? "Authentication" : "接口鉴权", path: "/guides/authentication" }] },
+  { label: isEnglish ? "Common reference" : "公共参数", icon: Layers3, links: [
+    { label: isEnglish ? "Request headers" : "公共请求头", path: "/guides/request-headers" },
+    { label: isEnglish ? "Responses" : "公共响应", path: "/guides/common-response" },
+    { label: isEnglish ? "Order statuses" : "订单状态", path: "/guides/order-status" },
+    { label: isEnglish ? "Error codes" : "公共错误码", path: "/guides/error-codes" },
   ] },
 ];
 
 const countryLinks = (country: (typeof countryGroups)[number]["countries"][number]) => [
-  ...(["argentina", "colombia"].includes(country.slug) ? [{ label: "创建收银台", icon: CreditCard, path: `/${country.slug}/checkout/create` }] : []),
-  { label: "创建代收", icon: ArrowDownLeft, path: `/${country.slug}/payin/create` },
-  { label: "查询代收", icon: Search, path: `/${country.slug}/payin/query` },
-  { label: "代收回调", icon: BellRing, path: `/${country.slug}/payin/callback` },
-  { label: "创建代付", icon: ArrowUpRight, path: `/${country.slug}/payout/create` },
-  { label: "银行编码", icon: ListFilter, path: `/${country.slug}/payout/banks` },
-  { label: "查询代付", icon: Search, path: `/${country.slug}/payout/query` },
-  { label: "代付回调", icon: BellRing, path: `/${country.slug}/payout/callback` },
-  { label: "余额查询", icon: WalletCards, path: `/${country.slug}/inquire/balance` },
+  ...(["argentina", "colombia"].includes(country.slug) ? [{ label: label("创建收银台", "Create checkout"), icon: CreditCard, path: `/${country.slug}/checkout/create` }] : []),
+  { label: label("创建代收", "Create pay-in"), icon: ArrowDownLeft, path: `/${country.slug}/payin/create` },
+  { label: label("查询代收", "Query pay-in"), icon: Search, path: `/${country.slug}/payin/query` },
+  { label: label("代收回调", "Pay-in callback"), icon: BellRing, path: `/${country.slug}/payin/callback` },
+  { label: label("创建代付", "Create payout"), icon: ArrowUpRight, path: `/${country.slug}/payout/create` },
+  { label: label("银行编码", "Bank codes"), icon: ListFilter, path: `/${country.slug}/payout/banks` },
+  { label: label("查询代付", "Query payout"), icon: Search, path: `/${country.slug}/payout/query` },
+  { label: label("代付回调", "Payout callback"), icon: BellRing, path: `/${country.slug}/payout/callback` },
+  { label: label("余额查询", "Balance query"), icon: WalletCards, path: `/${country.slug}/inquire/balance` },
   ...(country.slug === "cambodia" ? [
-    { label: "创建 KYC", icon: UserRoundCheck, path: "/cambodia/kyc/create" },
-    { label: "查询 KYC", icon: Search, path: "/cambodia/kyc/query" },
-    { label: "KYC 回调", icon: BellRing, path: "/cambodia/kyc/callback" },
-    { label: "额度说明", icon: ShieldCheck, path: "/cambodia/limits" },
+    { label: label("创建 KYC", "Create KYC"), icon: UserRoundCheck, path: "/cambodia/kyc/create" },
+    { label: label("查询 KYC", "Query KYC"), icon: Search, path: "/cambodia/kyc/query" },
+    { label: label("KYC 回调", "KYC callback"), icon: BellRing, path: "/cambodia/kyc/callback" },
+    { label: label("额度说明", "Limits"), icon: ShieldCheck, path: "/cambodia/limits" },
   ] : []),
   ...(country.slug === "argentina" ? [
-    { label: "悬账列表", icon: ListFilter, path: "/argentina/suspense/list" },
-    { label: "凭证查询", icon: FileSearch, path: "/argentina/suspense/query" },
-    { label: "悬账补单", icon: RefreshCw, path: "/argentina/suspense/reorder" },
+    { label: label("悬账列表", "Suspense list"), icon: ListFilter, path: "/argentina/suspense/list" },
+    { label: label("凭证查询", "Receipt query"), icon: FileSearch, path: "/argentina/suspense/query" },
+    { label: label("悬账补单", "Reconcile order"), icon: RefreshCw, path: "/argentina/suspense/reorder" },
   ] : []),
 ];
 ---
 
-<nav class="vp-sidebar" aria-label="文档导航">
+<nav class="vp-sidebar" aria-label={isEnglish ? "Documentation navigation" : "文档导航"}>
   <div class="guide-sections">
     {guideSections.map((section) => {
       const active = section.links.some((link) => currentPath === link.path);
@@ -77,17 +81,17 @@ const countryLinks = (country: (typeof countryGroups)[number]["countries"][numbe
     })}
   </div>
 
-  <div class="countries-heading"><Globe2 size={18} stroke-width={1.8} aria-hidden="true" />国家与地区</div>
+  <div class="countries-heading"><Globe2 size={18} stroke-width={1.8} aria-hidden="true" />{isEnglish ? "Countries and regions" : "国家与地区"}</div>
   {countryGroups.map((group) => {
     const regionActive = group.countries.some((country) => country.slug === currentCountry);
     return <details class:list={{ region: true, active: regionActive }} open={regionActive}>
-      <summary class="region-label">{group.id === "asia" ? <Map size={18} stroke-width={1.8} aria-hidden="true" /> : <MapPinned size={18} stroke-width={1.8} aria-hidden="true" />}<b>{group.label}</b><small>{group.countries.length} 个国家</small><span class="chevrons"><ChevronRight size={18} stroke-width={1.8} /><ChevronDown size={18} stroke-width={1.8} /></span></summary>
+      <summary class="region-label">{group.id === "asia" ? <Map size={18} stroke-width={1.8} aria-hidden="true" /> : <MapPinned size={18} stroke-width={1.8} aria-hidden="true" />}<b>{isEnglish ? (group.id === "asia" ? "Asia" : "Latin America") : group.label}</b><small>{group.countries.length} {isEnglish ? "countries" : "个国家"}</small><span class="chevrons"><ChevronRight size={18} stroke-width={1.8} /><ChevronDown size={18} stroke-width={1.8} /></span></summary>
       <div class="country-list">
         {group.countries.map((country) => {
           const countryActive = country.slug === currentCountry;
           return <details class="vp-country" data-country={country.slug} open={countryActive}>
             <summary class:list={{ active: countryActive }}>
-              <img class="flag" src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`} alt={`${country.name}国旗`} width="24" height="18" loading="lazy" /><span class="country-name">{country.name}</span><small>{country.code}</small><span class="chevrons"><ChevronRight size={18} stroke-width={1.8} /><ChevronDown size={18} stroke-width={1.8} /></span>
+              <img class="flag" src={`https://flagcdn.com/w40/${country.code.toLowerCase()}.png`} alt={`${isEnglish ? englishCountryNames[country.slug] : country.name} flag`} width="24" height="18" loading="lazy" /><span class="country-name">{isEnglish ? englishCountryNames[country.slug] : country.name}</span><small>{country.code}</small><span class="chevrons"><ChevronRight size={18} stroke-width={1.8} /><ChevronDown size={18} stroke-width={1.8} /></span>
             </summary>
             <div class="country-pages">
               {countryLinks(country).map((link) => {

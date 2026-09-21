@@ -6,6 +6,7 @@ export interface CountryCapability {
 }
 
 export interface CountryConfig {
+  locale?: "zh" | "en";
   slug: string;
   name: string;
   flag: string;

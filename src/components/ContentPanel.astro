@@ -2,15 +2,17 @@
 import type { Props } from "@astrojs/starlight/props";
 
 const { slug, entry } = Astro.props as Props;
-const countryNames: Record<string, string> = { indonesia: "印度尼西亚", vietnam: "越南", korea: "韩国", cambodia: "柬埔寨", india: "印度", colombia: "哥伦比亚", argentina: "阿根廷", brazil: "巴西" };
+const zhCountryNames: Record<string, string> = { indonesia: "印度尼西亚", vietnam: "越南", korea: "韩国", cambodia: "柬埔寨", india: "印度", colombia: "哥伦比亚", argentina: "阿根廷", brazil: "巴西" };
+const enCountryNames: Record<string, string> = { indonesia: "Indonesia", vietnam: "Vietnam", korea: "South Korea", cambodia: "Cambodia", india: "India", colombia: "Colombia", argentina: "Argentina", brazil: "Brazil" };
 const parts = slug.split("/").filter(Boolean);
-const localizedParts = parts[0] === "zh" ? parts.slice(1) : parts;
-const country = countryNames[localizedParts[0]];
-const breadcrumb = country ? ["API 文档", country, entry.data.title] : ["开发指南", entry.data.title];
+const isEnglish = parts[0] === "en";
+const localizedParts = ["zh", "en"].includes(parts[0]) ? parts.slice(1) : parts;
+const country = (isEnglish ? enCountryNames : zhCountryNames)[localizedParts[0]];
+const breadcrumb = country ? [isEnglish ? "API documentation" : "API 文档", country, entry.data.title] : [isEnglish ? "Developer guides" : "开发指南", entry.data.title];
 ---
 
 <div class="content-panel">
-  <div class="sl-container"><nav class="breadcrumb" aria-label="面包屑">{breadcrumb.map((item, index) => <span>{index > 0 && <i>/</i>}{item}</span>)}</nav><slot /></div>
+  <div class="sl-container"><nav class="breadcrumb" aria-label={isEnglish ? "Breadcrumb" : "面包屑"}>{breadcrumb.map((item, index) => <span>{index > 0 && <i>/</i>}{item}</span>)}</nav><slot /></div>
 </div>
 
 <style>

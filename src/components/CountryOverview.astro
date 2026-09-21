@@ -6,8 +6,9 @@ interface Props {
 }
 
 const { country } = Astro.props;
+const isEnglish = country.locale === "en";
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
-const href = (path: string) => `${base}/zh${path}/`;
+const href = (path: string) => `${base}/${isEnglish ? "en" : "zh"}${path}/`;
 const capabilityIcon = { payin: "↓", payout: "↑", checkout: "▭" };
 const [timezoneName, timezoneOffset = country.timezone] = country.timezone.split(" (");
 ---
@@ -21,28 +22,28 @@ const [timezoneName, timezoneOffset = country.timezone] = country.timezone.split
     </div>
   </header>
 
-  <section class="facts" aria-label={`${country.name}接入信息`}>
-    <div><span class="fact-icon">◉</span><small>币种</small><strong>{country.currency}</strong><p>{country.currencyName}</p></div>
-    <div><span class="fact-icon">◷</span><small>时区</small><strong>{timezoneName}</strong><p>{timezoneOffset.replace(")", "")}</p></div>
-    <div><span class="fact-icon">▤</span><small>支持能力</small><strong>{country.capabilities.map((item) => item.label.split(" ")[0]).join(" · ")}</strong><p>覆盖本地主要支付场景</p></div>
+  <section class="facts" aria-label={isEnglish ? `${country.name} integration details` : `${country.name}接入信息`}>
+    <div><span class="fact-icon">◉</span><small>{isEnglish ? "Currency" : "币种"}</small><strong>{country.currency}</strong><p>{country.currencyName}</p></div>
+    <div><span class="fact-icon">◷</span><small>{isEnglish ? "Time zone" : "时区"}</small><strong>{timezoneName}</strong><p>{timezoneOffset.replace(")", "")}</p></div>
+    <div><span class="fact-icon">▤</span><small>{isEnglish ? "Capabilities" : "支持能力"}</small><strong>{country.capabilities.map((item) => item.label.split(" ")[0]).join(" · ")}</strong><p>{isEnglish ? "Covers major local payment scenarios" : "覆盖本地主要支付场景"}</p></div>
   </section>
 
   <div class="capability-grid">
     {country.capabilities.map((item) => (
       <a class:list={["capability", item.tone]} href={href(item.href)}>
         <span class="capability-icon">{capabilityIcon[item.tone]}</span>
-        <div><strong>{item.label}</strong><p>{item.description}</p><span>查看接口 <b>→</b></span></div>
+        <div><strong>{item.label}</strong><p>{item.description}</p><span>{isEnglish ? "View API" : "查看接口"} <b>→</b></span></div>
       </a>
     ))}
   </div>
 
-  <h2 id="payment-methods">支持的支付方式</h2>
+  <h2 id="payment-methods">{isEnglish ? "Supported payment methods" : "支持的支付方式"}</h2>
   <div class="payment-methods">
     {country.paymentMethods.map((method) => <span>{method}</span>)}
   </div>
 
-  <h2 id="integration-notes">接入注意事项</h2>
-  <div class="notice-table" role="table" aria-label={`${country.name}接入注意事项`}>
+  <h2 id="integration-notes">{isEnglish ? "Integration notes" : "接入注意事项"}</h2>
+  <div class="notice-table" role="table" aria-label={isEnglish ? `${country.name} integration notes` : `${country.name}接入注意事项`}>
     {country.notices.map((notice) => (
       <div class="notice-row" role="row"><strong role="cell">{notice.label}</strong><span role="cell">{notice.description}</span></div>
     ))}
