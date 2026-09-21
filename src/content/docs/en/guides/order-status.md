@@ -13,29 +13,29 @@ VellPay uses string statuses to represent the current order stage. A processing 
 |-----------|----------------|------|
 | `INIT`    | Order accepted; waiting for the payment flow | No    |
 | `PAYING`  | Payment processing          | No    |
-| `SUCCESS` | pay-insuccess           | Yes    |
-| `FAIL`    | pay-infailure           | Yes    |
+| `SUCCESS` | Pay-in completed successfully | Yes    |
+| `FAIL`    | Pay-in failed           | Yes    |
 | `REFUND`  | Pay-in funds refunded        | Yes    |
 
-## payoutStatus
+## Payout statuses
 
 | Status            | Description        | Final status |
 |---------------|-----------|------|
 | `INIT`        | Payout accepted     | No    |
 | `PAYING`      | Payout processing     | No    |
-| `SUCCESS`     | payoutsuccess      | Yes    |
-| `FAIL`        | payoutfailure      | Yes    |
+| `SUCCESS`     | Payout completed successfully | Yes    |
+| `FAIL`        | Payout failed      | Yes    |
 | `REFUND`      | Payout funds fully returned | Yes    |
 | `PART_REFUND` | Payout funds partially returned | No    |
 
 ## Integration recommendations
 
 - Do not determine the transaction result from only the HTTP status code or response `code`.
-- `INIT`, `PAYING` are non-final statuses; continue receiving callbacks or querying proactively.
+- `INIT` and `PAYING` are non-final statuses; continue receiving callbacks or querying the order.
 - Handle duplicate callbacks idempotently using `tradeNo` and status.
 - If query and callback results differ, use the platform final status and contact technical support to investigate an abnormal status reversal.
 
-## KYC Status
+## KYC statuses
 
 | Status          | Description     | Final status |
 |-------------|--------|------|

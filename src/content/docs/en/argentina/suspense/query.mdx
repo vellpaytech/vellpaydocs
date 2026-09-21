@@ -1,5 +1,5 @@
 ---
-title: Argentina receipt query
+title: Argentina bank receipt query
 description: Query an Argentine suspense transaction by bank receipt ID.
 ---
 import ApiExplorer from '../../../../../components/ApiExplorer.astro';
@@ -13,7 +13,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 ## Request parameters
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `bankId` | String | Yes | bank receipt ID |
+| `bankId` | String | Yes | Bank receipt ID |
 
 ## Request example
 
@@ -31,8 +31,8 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `data.suspenseAmount` | String | Yes | - | Suspense amount |
 | `data.theoreticalAmount` | String | Yes | - | Expected credited amount |
 | `data.suspenseStatus` | String | Yes | - | Suspense status |
-| `data.suspenseIdCardNumber` | String | No | - | suspenseuser ID number |
-| `data.suspenseRealName` | String | No | - | User name associated with the suspense transaction |
+| `data.suspenseIdCardNumber` | String | No | - | Identification number associated with the suspense transaction |
+| `data.suspenseRealName` | String | No | - | Full name associated with the suspense transaction |
 | `data.suspenseCallbackTime` | String | No | - | Suspense callback time (Argentina local time) |
 | `msg` | String | No | - | Error message |
 | `tid` | String | Yes | - | Trace ID |

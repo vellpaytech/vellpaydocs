@@ -1,5 +1,5 @@
 ---
-title: Reconcile Argentina suspense order
+title: Reconcile an Argentina suspense transaction
 description: Reconcile an Argentine pay-in order using the bank receipt ID.
 ---
 import ApiExplorer from '../../../../../components/ApiExplorer.astro';
@@ -11,7 +11,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 ## Request parameters
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `bankId` | String | Yes | bank receipt ID |
+| `bankId` | String | Yes | Bank receipt ID |
 | `merchantOrderNo` | String | Yes | Merchant order number |
 
 ## Request example
@@ -30,9 +30,9 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `data` | Object | Yes | - | Response body |
 | `data.amount` | String | Yes | - | Reconciliation amount |
 | `data.tradeNo` | String | Yes | - | Platform order number |
-| `data.bankId` | String | Yes | - | bank receipt ID |
+| `data.bankId` | String | Yes | - | Bank receipt ID |
 | `data.merchantOrderNo` | String | Yes | - | Merchant order number |
-| `data.callbackTime` | String | No | - | callback time (Argentinalocal time) |
+| `data.callbackTime` | String | No | - | Callback time (Argentina local time) |
 | `data.status` | String | Yes | - | Reconciliation result status |
 | `msg` | String | No | - | Error message |
 | `tid` | String | Yes | - | Trace ID |

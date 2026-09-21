@@ -1,6 +1,6 @@
 ---
-title: Argentina suspense-order list
-description: Query a merchant’s unprocessed Argentine suspense transactions from the last 30 days.
+title: Argentina suspense transaction list
+description: Query a merchant's unprocessed suspense transactions in Argentina from the past 30 days.
 ---
 import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 
@@ -11,10 +11,10 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 ## Request parameters
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `pageIndex` | String | No | next-page cursor, not required on the first pageprovide |
-| `pageSize` | Integer | No | default 500, maximum 1000 |
-| `beginTime` | String | Yes | start time, format `yyyy-MM-dd HH:mm:ss` |
-| `endTime` | String | Yes | end time, format `yyyy-MM-dd HH:mm:ss` |
+| `pageIndex` | String | No | Next-page cursor; omit it for the first page |
+| `pageSize` | Integer | No | Defaults to 500; maximum 1,000 |
+| `beginTime` | String | Yes | Start time in `yyyy-MM-dd HH:mm:ss` format |
+| `endTime` | String | Yes | End time in `yyyy-MM-dd HH:mm:ss` format |
 
 ## Request example
 
@@ -31,13 +31,13 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 |---|---|---|---:|---|
 | `code` | int | Yes | - | Status code; a value other than 200 indicates an error |
 | `data` | Object | Yes | - | Response body |
-| `data.pageIndex` | String | No | - | next-page query cursor |
-| `data.records` | List | Yes | - | Suspense-transaction list |
-| `data.records.bankId` | String | Yes | - | bank receipt ID |
+| `data.pageIndex` | String | No | - | Next-page cursor |
+| `data.records` | List | Yes | - | Suspense transaction list |
+| `data.records.bankId` | String | Yes | - | Bank receipt ID |
 | `data.records.suspenseAmount` | String | Yes | - | Suspense amount |
 | `data.records.theoreticalAmount` | String | Yes | - | Expected credited amount |
-| `data.records.userIdCard` | String | No | - | user ID number |
-| `data.records.userName` | String | No | - | User name |
+| `data.records.userIdCard` | String | No | - | User identification number |
+| `data.records.userName` | String | No | - | User's full name |
 | `data.records.suspenseCallbackTime` | String | No | - | Suspense callback time (Argentina local time) |
 | `data.records.cvu` | String | No | - | CVU |
 | `msg` | String | No | - | Error message |

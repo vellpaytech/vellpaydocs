@@ -5,8 +5,8 @@ description: VellPay API calls, order processing, and launch checks.
 
 ## API conventions
 
-- allendpointuses `POST`, request bodyformatis `application/json`.
-- Every request must include[Common request headers](/en/guides/request-headers/).
+- All endpoints use `POST`, with an `application/json` request body.
+- Every request must include the [common request headers](/en/guides/request-headers/).
 - `merchantOrderNo` must be unique within the merchant.
 - Request parameters, payment methods, and amount rules are defined on each country-specific endpoint page.
 - An endpoint returning `code=200` means only that the request was processed successfully; it does not mean that the transaction succeeded.
@@ -31,9 +31,9 @@ The Vietnam test domain will be added after configuration.
 ## Create an order
 
 1. The merchant generates a unique `merchantOrderNo`.
-2. Select according to the country and business scenario `paymentType` or `payoutType`.
+2. Select the appropriate `paymentType` or `payoutType` for the country and business scenario.
 3. Complete required parameters according to the endpoint documentation and generate `authorization`.
-4. Store the returned `tradeNo`, for troubleshooting and order tracking.
+4. Store the returned `tradeNo` for troubleshooting and order tracking.
 5. If a create request times out or the response is uncertain, query using the original merchant order number before creating another order.
 
 ## Queries and callbacks
@@ -46,7 +46,7 @@ The Vietnam test domain will be added after configuration.
 
 ## Time and time zones
 
-Business time uses the local time of the order country; the text format is `yyyy-MM-dd HH:mm:ss`.`timestamp` is the 13-digit millisecond timestamp used for authentication and does not use this text format.
+Business time uses the local time of the order country; the text format is `yyyy-MM-dd HH:mm:ss`. The `timestamp` request header is a 13-digit Unix timestamp in milliseconds and does not use this text format.
 
 | Country | Time zone |
 |---|---|
@@ -67,4 +67,4 @@ Business time uses the local time of the order country; the text format is `yyyy
 - Insufficient balance, unconfigured payment methods, and merchant configuration errors must not be retried automatically.
 - If the issue cannot be resolved, provide request time, environment, country, `appId`, merchant order number, platform order number, and `tid`.
 
-See full error descriptions in[Common error codes](/en/guides/error-codes/).
+See [Common error codes](/en/guides/error-codes/) for full descriptions.

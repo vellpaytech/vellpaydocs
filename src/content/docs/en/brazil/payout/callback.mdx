@@ -42,7 +42,7 @@ description: VellPay sends Brazilian payout status and refund notifications to t
 
 | Field | Type | Required | Example | Description |
 |---|---|---|---|---|
-| `result` | String | Yes | `SUCCESS` | Return `SUCCESS` means the callback was received successfully; treat any other value as a failure |
+| `result` | String | Yes | `SUCCESS` | Return `SUCCESS` to acknowledge successful receipt; any other value is treated as a failure |
 | `msg` | String | No | `OK` | Processing result description |
 
 ## Response example

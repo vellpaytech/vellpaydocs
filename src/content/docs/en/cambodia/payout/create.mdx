@@ -26,7 +26,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `merchantOrderNo` | String | Yes | 32 | Merchant order number |
 | `transactionAmount` | String | Yes | 20 | Payout amount. KHR payout methods support integers only; USD payout methods support up to two decimal places. See [Limits](/en/cambodia/limits/). |
 | `payoutType` | String | Yes | 20 | [Payout method](#payment-methods) |
-| `idType` | String | No | 50 | Identity type: `NONE_KYC` (unverified user)or `KYC` (KYC-approved user) |
+| `idType` | String | No | 50 | Identity type: `NONE_KYC` (unverified user) or `KYC` (KYC-approved user) |
 | `userIdCard` | String | Yes | 50 | Merchant-side user identifier containing 1–50 letters or digits. When `idType` is `KYC`, it must match the approved KYC record. |
 | `userName` | String | Yes | 64 | User name |
 | `userPhone` | String | Yes | 8–9 | User mobile number, 8–9 digits |

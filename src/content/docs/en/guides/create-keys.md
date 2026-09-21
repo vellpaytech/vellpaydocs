@@ -21,7 +21,7 @@ openssl rsa -pubout -in merchant_private_key.pem -out merchant_public_key.pem
 
 Windows users can run the same commands in Command Prompt or PowerShell. On macOS, run `brew install openssl` first if OpenSSL is not installed.
 
-The following files are generated: 
+The following files are generated:
 
 - `merchant_private_key`: merchant private key, store only on merchant servers.
 - `merchant_public_key`: merchant public key, used to configure the VellPay application.
@@ -36,7 +36,7 @@ Format: PKCS8
 
 ![online RSA key generator](https://image.xiwu.me/2024/812b469da11fd34b0ccc5357893a4917.png)
 
-This produces: a public key and a private key (remove spaces and line breaks before use, store the private key securely, the public key is used in Step 2)
+This produces a public key and a private key. Remove spaces and line breaks before use, store the private key securely, and use the public key in Step 2.
 
 :::caution
 Never send the private key to VellPay or commit it to Git, frontend code, documentation, or logs.
@@ -52,7 +52,7 @@ The merchant security team should generate keys in a trusted environment. Do not
 4. Enter the generated key content in Merchant Public Key.
 5. Copy and securely store the Platform Public Key for callback verification.
 
-When entering the public key, remove the following header/footer lines, spaces, and line breaks: 
+When entering the public key, remove the following header and footer lines, spaces, and line breaks:
 
 ```text
 -----BEGIN PUBLIC KEY-----
@@ -67,4 +67,4 @@ Test and production applications and keys are isolated. Do not use a test applic
 
 ## Step 3: Integrate authentication
 
-After exchanging keys, Follow [API authentication](/en/guides/authentication/)generate request-header `authorization`, and verify responses and callback signatures with the platform public key.
+After exchanging keys, follow [API authentication](/en/guides/authentication/) to generate the `authorization` request header and verify callback signatures with the platform public key.

@@ -51,6 +51,132 @@ description=test order&merchantOrderNo=ORDER202609170001&paymentType=QR&transact
 
 Arrays and objects use the string representation produced from the actual JSON request. Ensure that the signed content exactly matches the content sent to VellPay.
 
+`null` values and empty strings are excluded from the signature.
+
+## Java signing example
+
+```java
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+
+import java.nio.charset.StandardCharsets;
+import java.security.KeyFactory;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.Signature;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
+import java.util.Base64;
+import java.util.Map;
+import java.util.Objects;
+import java.util.TreeMap;
+import java.util.UUID;
+
+@Slf4j
+public class SignUtils {
+
+    public static void main(String[] args) throws Exception {
+        // Replace this value with the merchant private key.
+        String privateKey = "privateKey";
+        String nonce = UUID.randomUUID().toString().replace("-", "");
+
+        // Build the request body.
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("merchantOrderNo", "TEST1234567890");
+        requestBody.put("idCardNumber", "1234567890");
+        requestBody.put("realName", "VellPay");
+        requestBody.put("amount", "1000");
+        requestBody.put("callbackUrl", "https://merchant.example/callback");
+        requestBody.put("paymentType", 1);
+        requestBody.put("email", "test@example.com");
+        requestBody.put("phone", "3000000000");
+
+        // Generate the request signature. Send this value in the
+        // authorization header; do not add it to the JSON request body.
+        String authorization = signature(requestBody, nonce, privateKey);
+
+        log.info("nonce={}, timestamp={}, authorization={}, requestBody={}",
+                nonce, System.currentTimeMillis(), authorization,
+                requestBody.toJSONString());
+    }
+
+    public static String signature(Map<String, Object> params, String nonce,
+                                   String privateKey) throws Exception {
+        String stringToSign = buildStringToSign(params, nonce);
+        log.debug("stringToSign={}", stringToSign);
+        return sign(stringToSign.getBytes(StandardCharsets.UTF_8),
+                privateKey, "SHA1WithRSA");
+    }
+
+    public static String sign(byte[] data, String privateKey,
+                              String algorithm) throws Exception {
+        byte[] keyBytes = Base64.getDecoder().decode(privateKey);
+        PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyBytes);
+        PrivateKey key = KeyFactory.getInstance("RSA").generatePrivate(keySpec);
+        Signature signer = Signature.getInstance(algorithm);
+        signer.initSign(key);
+        signer.update(data);
+        return Base64.getEncoder().encodeToString(signer.sign());
+    }
+
+    private static String buildStringToSign(Map<String, Object> params,
+                                            String nonce) {
+        Map<String, Object> sortedParams = new TreeMap<>(params);
+        StringBuilder result = new StringBuilder();
+        for (Map.Entry<String, Object> entry : sortedParams.entrySet()) {
+            if ("sign".equals(entry.getKey())) {
+                continue;
+            }
+            Object value = entry.getValue();
+            if (Objects.isNull(value)
+                    || (value instanceof String
+                    && StringUtils.isBlank((String) value))) {
+                continue;
+            }
+            result.append(entry.getKey()).append("=")
+                    .append(value).append("&");
+        }
+        return result.append("nonce=").append(nonce).toString();
+    }
+
+    // Use this method to verify a VellPay callback signature.
+    public static boolean verifySignature(Map<String, Object> params,
+                                          String nonce, String publicKey) {
+        String signature = (String) params.get("sign");
+        if (StringUtils.isBlank(signature)) {
+            log.error("Callback is missing sign: {}", JSON.toJSONString(params));
+            return false;
+        }
+        try {
+            return verifySha1(
+                    buildStringToSign(params, nonce)
+                            .getBytes(StandardCharsets.UTF_8),
+                    publicKey,
+                    signature);
+        } catch (Exception exception) {
+            log.error("RSA signature verification failed: {}",
+                    JSON.toJSONString(params), exception);
+            return false;
+        }
+    }
+
+    public static boolean verifySha1(byte[] data, String publicKey,
+                                     String signature) throws Exception {
+        byte[] keyBytes = Base64.getDecoder().decode(publicKey);
+        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
+        PublicKey key = KeyFactory.getInstance("RSA").generatePublic(keySpec);
+        Signature verifier = Signature.getInstance("SHA1WithRSA");
+        verifier.initVerify(key);
+        verifier.update(data);
+        return verifier.verify(Base64.getDecoder().decode(signature));
+    }
+}
+```
+
+Remove PEM header and footer lines, spaces, and line breaks from the private key before passing it to the example.
+
 ## Complete request-header example
 
 ```http
@@ -73,7 +199,7 @@ The country is normally identified from the request domain. Merchants do not nee
 ## Common verification failures
 
 - A key from the wrong environment or application was used.
-- The private key still contains PEM headers, spaces, or line breaks.
+- The private key still contains PEM header or footer lines, spaces, or line breaks.
 - Fields were not sorted in ascending ASCII order.
 - Empty fields were included in the signature.
 - The signed `nonce` differs from the request-header value.

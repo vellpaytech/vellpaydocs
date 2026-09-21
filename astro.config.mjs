@@ -44,7 +44,7 @@ export default defineConfig({
           navItem("接口鉴权", "Authentication", { slug: "guides/authentication" }),
           navItem("公共请求头", "Request headers", { slug: "guides/request-headers" }),
           navItem("公共响应", "Common responses", { slug: "guides/common-response" }),
-          navItem("订单状态", "Order statuses", { slug: "guides/order-status" }),
+          navItem("订单状态", "Order status", { slug: "guides/order-status" }),
           navItem("公共错误码", "Error codes", { slug: "guides/error-codes" }),
         ]},
         { label: "亚洲", translations: { en: "Asia" }, items: [

@@ -25,7 +25,7 @@ description: VellPay sends a notification to `kycCallbackUrl` when KYC status ch
 
 | Field | Type | Required | Example | Description |
 |---|---|---|---|---|
-| `result` | String | Yes | `SUCCESS` | `SUCCESS` / `FAIL`; `SUCCESS` means the merchant received the notification successfully |
+| `result` | String | Yes | `SUCCESS` | Return `SUCCESS` to acknowledge successful receipt; return `FAIL` if processing failed |
 | `msg` | String | No | `OK` | error reason |
 
 ## Response example
