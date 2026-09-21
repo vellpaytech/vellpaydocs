@@ -25,8 +25,8 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `merchantOrderNo` | String | 是 | 32 | 商户订单号 |
 | `transactionAmount` | String | 是 | 20 | 付款金额，整数（保留 2 位小数） |
 | `payoutType` | String | 是 | 20 | [代付方式](#payment-methods) |
-| `idType` | String | 否 | 50 | 用户证件类型用户证件类型 |
-| `userIdCard` | String | 否 | 32 | 用户证件号码 |
+| `idType` | String | 否 | 32 | 可选的证件类型；当前接口没有固定枚举，无业务或渠道要求时可不传 |
+| `userIdCard` | String | 否 | 50 | 证件号码。无固定格式，无业务或渠道要求时可不传 |
 | `userName` | String | 是 | 64 | 用户姓名 |
 | `userPhone` | String | 是 | 20 | 用户手机号 |
 | `userEmail` | String | 是 | 50 | 用户邮箱 |

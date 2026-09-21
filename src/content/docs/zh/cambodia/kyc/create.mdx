@@ -13,7 +13,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 ## 请求参数
 | 字段 | 类型 | 必填 | 最大长度 | 说明 |
 |---|---|---|---:|---|
-| `userIdCard` | String | 是 | 50 | 用户证件号 |
+| `userIdCard` | String | 是 | 50 | 证件号码（商户侧用户标识）。传 1～50 位字母或数字；同一用户在 KYC、代收和代付接口中必须保持一致 |
 | `userName` | String | 是 | 64 | 用户姓名 |
 | `userPhone` | String | 是 | 8～9 | 柬埔寨本地手机号，不含国家区号 |
 | `kycCallbackUrl` | String | 是 | 200 | KYC 状态回调地址 |

@@ -27,7 +27,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `transactionAmount` | String | 是 | 20 | 付款金额，整数（保留 2 位小数）；[额度说明](/zh/cambodia/limits/) |
 | `payoutType` | String | 是 | 20 | [代付方式](#payment-methods) |
 | `idType` | String | 否 | 50 | 身份识别类型：`NONE_KYC`（未认证用户）或 `KYC`（已通过 KYC 认证的用户） |
-| `userIdCard` | String | 是 | 32 | 用户证件号码 |
+| `userIdCard` | String | 是 | 50 | 证件号码（商户侧用户标识）。传 1～50 位字母或数字；如传 `idType: KYC`，必须与 KYC 审核通过记录中的值一致 |
 | `userName` | String | 是 | 64 | 用户姓名 |
 | `userPhone` | String | 是 | 20 | 用户手机号 |
 | `userEmail` | String | 是 | 50 | 用户邮箱 |

@@ -4,7 +4,7 @@ description: 创建一笔 VellPay 代收订单。
 ---
 import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 
-<ApiExplorer country="CO" path="/trade/payment/create" body={{merchantOrderNo:"ORDER202609170001",transactionAmount:"10000",paymentType:"PSE",userName:"TEST USER",userPhone:"3001234567",userEmail:"user@example.com",paymentCallbackUrl:"https://merchant.example/callback"}} />
+<ApiExplorer country="CO" path="/trade/payment/create" body={{merchantOrderNo:"ORDER202609170001",transactionAmount:"10000",paymentType:"PSE",idType:"CC",userIdCard:"1234567890",userName:"TEST USER",userPhone:"3001234567",userEmail:"user@example.com",paymentCallbackUrl:"https://merchant.example/callback"}} />
 
 
 
@@ -36,8 +36,8 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `merchantOrderNo` | String | 是 | 32 | 商户订单号 |
 | `transactionAmount` | String | 是 | 20 | 收款金额 |
 | `paymentType` | String | 是 | 24 | [支付方式](#payment-methods) |
-| `idType` | String | 否 | 32 | 证件类型：`CC`、`CE`、`NIT`、`PA` |
-| `userIdCard` | String | 否 | 50 | `CC` 为 6–10 位数字；`CE` 为 6–10 位数字；`NIT` 为 9 位数字；`PA` 可包含数字和字母 |
+| `idType` | String | 条件必填 | 32 | `paymentType` 为 `PSE` 或 `NEQUI_PSE` 时必填；可选值：`CC`、`CE`、`NIT`、`PA` |
+| `userIdCard` | String | 条件必填 | 50 | 证件号码。`paymentType` 为 `PSE` 或 `NEQUI_PSE` 时必填；`CC`、`CE` 为 6～10 位数字；`NIT` 为 9 位数字；`PA` 为 9 位字母或数字 |
 | `userName` | String | 是 | 64 | 用户姓名 |
 | `userPhone` | String | 是 | 50 | 用户手机号 |
 | `userEmail` | String | 是 | 50 | 用户邮箱 |
@@ -55,6 +55,8 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
   "merchantOrderNo": "ORDER202609170001",
   "transactionAmount": "100.00",
   "paymentType": "PSE",
+  "idType": "CC",
+  "userIdCard": "1234567890",
   "userName": "TEST USER",
   "userPhone": "6123456789",
   "userEmail": "user@example.com",

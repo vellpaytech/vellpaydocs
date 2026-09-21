@@ -29,8 +29,8 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `merchantOrderNo` | String | 是 | 32 | 商户订单号 |
 | `transactionAmount` | String | 是 | 20 | 收款金额 |
 | `paymentType` | String | 是 | 24 | [支付方式](#payment-methods) |
-| `idType` | String | 否 | 32 | 用户证件类型 |
-| `userIdCard` | String | 是 | 50 | 用户在商户平台的唯一用户 ID，最长 50 位；不是韩国居民登记号码 |
+| `idType` | String | 否 | 32 | 可选的证件类型；韩国代收的 `userIdCard` 是商户平台用户 ID，不要求传居民登记证件类型 |
+| `userIdCard` | String | 是 | 50 | 证件号码（商户平台用户 ID，非居民登记号码 RRN）。所有支付方式均必填，最长 50 位 |
 | `userName` | String | 是 | 64 | 用户姓名 |
 | `userPhone` | String | 是 | 50 | 用户手机号 |
 | `userEmail` | String | 是 | 50 | 用户邮箱 |
