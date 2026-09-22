@@ -20,9 +20,9 @@ The merchant signs requests with its private key, and VellPay verifies them with
 1. Generate a 13-digit millisecond `timestamp`. The request time must be within five minutes of the VellPay platform time.
 2. Generate a random `nonce` for every request. The same `appId` must not reuse a `nonce` within 24 hours.
 3. Sort non-empty request-body fields by field name in ascending ASCII order and join them as `a=1&b=2`. Exclude `null`, empty strings, and the `sign` field.
-4. Append `nonce=<value>` to the sorted string.
+4. Append `nonce=<value>` to the sorted string. Do not include `appId` or `timestamp` in the string to sign.
 5. Sign the resulting UTF-8 string with the merchant PKCS8 private key and `SHA1WithRSA`, then Base64-encode the signature.
-6. Put the signature in the `authorization` request header.
+6. Put the signature in the `authorization` request header; do not add it to the request body.
 
 ## Signing example
 
@@ -31,9 +31,13 @@ Request body:
 ```json
 {
   "merchantOrderNo": "ORDER202609170001",
-  "transactionAmount": "100",
-  "paymentType": "QR",
-  "description": "test order"
+  "transactionAmount": "60000",
+  "paymentType": "WALLET",
+  "userName": "TEST USER",
+  "userPhone": "081234567890",
+  "userEmail": "user@example.com",
+  "channel": "DANA",
+  "paymentCallbackUrl": "https://merchant.example/callback"
 }
 ```
 
@@ -46,7 +50,7 @@ Request body:
 String to sign:
 
 ```text
-description=test order&merchantOrderNo=ORDER202609170001&paymentType=QR&transactionAmount=100&nonce=7db2b04d77ad4315a7650ef3b31a82f1
+channel=DANA&merchantOrderNo=ORDER202609170001&paymentCallbackUrl=https://merchant.example/callback&paymentType=WALLET&transactionAmount=60000&userEmail=user@example.com&userName=TEST USER&userPhone=081234567890&nonce=7db2b04d77ad4315a7650ef3b31a82f1
 ```
 
 Arrays and objects use the string representation produced from the actual JSON request. Ensure that the signed content exactly matches the content sent to VellPay.
@@ -58,55 +62,54 @@ Arrays and objects use the string representation produced from the actual JSON r
 ```java
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 
 import java.nio.charset.StandardCharsets;
-import java.security.KeyFactory;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.Signature;
+import java.security.*;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
 import java.util.UUID;
 
-@Slf4j
 public class SignUtils {
 
     public static void main(String[] args) throws Exception {
-        // Replace this value with the merchant private key.
-        String privateKey = "privateKey";
+        String appId = "YOUR_APP_ID";
+        String privateKey = "YOUR_PKCS8_PRIVATE_KEY";
+        String timestamp = String.valueOf(System.currentTimeMillis());
         String nonce = UUID.randomUUID().toString().replace("-", "");
 
-        // Build the request body.
+        // VellPay Indonesia pay-in creation request body.
         JSONObject requestBody = new JSONObject();
-        requestBody.put("merchantOrderNo", "TEST1234567890");
-        requestBody.put("idCardNumber", "1234567890");
-        requestBody.put("realName", "VellPay");
-        requestBody.put("amount", "1000");
-        requestBody.put("callbackUrl", "https://merchant.example/callback");
-        requestBody.put("paymentType", 1);
-        requestBody.put("email", "test@example.com");
-        requestBody.put("phone", "3000000000");
+        requestBody.put("merchantOrderNo", "ORDER202609170001");
+        requestBody.put("transactionAmount", "60000");
+        requestBody.put("paymentType", "WALLET");
+        requestBody.put("userName", "TEST USER");
+        requestBody.put("userPhone", "081234567890");
+        requestBody.put("userEmail", "user@example.com");
+        requestBody.put("channel", "DANA");
+        requestBody.put("paymentCallbackUrl", "https://merchant.example/callback");
 
-        // Generate the request signature. Send this value in the
-        // authorization header; do not add it to the JSON request body.
         String authorization = signature(requestBody, nonce, privateKey);
 
-        log.info("nonce={}, timestamp={}, authorization={}, requestBody={}",
-                nonce, System.currentTimeMillis(), authorization,
-                requestBody.toJSONString());
+        Map<String, String> headers = new LinkedHashMap<>();
+        headers.put("Content-Type", "application/json");
+        headers.put("appId", appId);
+        headers.put("timestamp", timestamp);
+        headers.put("nonce", nonce);
+        headers.put("authorization", authorization);
+
+        System.out.println("headers=" + JSON.toJSONString(headers));
+        System.out.println("requestBody=" + requestBody.toJSONString());
     }
 
-    public static String signature(Map<String, Object> params, String nonce,
+    public static String signature(Map<String, Object> param, String nonce,
                                    String privateKey) throws Exception {
-        String stringToSign = buildStringToSign(params, nonce);
-        log.debug("stringToSign={}", stringToSign);
-        return sign(stringToSign.getBytes(StandardCharsets.UTF_8),
+        String signatureStr = paramHandler(param, nonce);
+        return sign(signatureStr.getBytes(StandardCharsets.UTF_8),
                 privateKey, "SHA1WithRSA");
     }
 
@@ -121,61 +124,43 @@ public class SignUtils {
         return Base64.getEncoder().encodeToString(signer.sign());
     }
 
-    private static String buildStringToSign(Map<String, Object> params,
-                                            String nonce) {
-        Map<String, Object> sortedParams = new TreeMap<>(params);
+    private static String paramHandler(Map<String, Object> param,
+                                       String nonce) {
         StringBuilder result = new StringBuilder();
-        for (Map.Entry<String, Object> entry : sortedParams.entrySet()) {
+        for (Map.Entry<String, Object> entry : new TreeMap<>(param).entrySet()) {
             if ("sign".equals(entry.getKey())) {
                 continue;
             }
             Object value = entry.getValue();
             if (Objects.isNull(value)
-                    || (value instanceof String
-                    && StringUtils.isBlank((String) value))) {
+                    || (value instanceof String && ((String) value).trim().isEmpty())) {
                 continue;
             }
-            result.append(entry.getKey()).append("=")
-                    .append(value).append("&");
+            result.append(entry.getKey()).append("=").append(value).append("&");
         }
         return result.append("nonce=").append(nonce).toString();
     }
 
-    // Use this method to verify a VellPay callback signature.
-    public static boolean verifySignature(Map<String, Object> params,
-                                          String nonce, String publicKey) {
-        String signature = (String) params.get("sign");
-        if (StringUtils.isBlank(signature)) {
-            log.error("Callback is missing sign: {}", JSON.toJSONString(params));
-            return false;
-        }
-        try {
-            return verifySha1(
-                    buildStringToSign(params, nonce)
-                            .getBytes(StandardCharsets.UTF_8),
-                    publicKey,
-                    signature);
-        } catch (Exception exception) {
-            log.error("RSA signature verification failed: {}",
-                    JSON.toJSONString(params), exception);
-            return false;
-        }
+    // VellPay supplies the signature in the authorization request header.
+    public static boolean verifySign(Map<String, Object> param, String nonce,
+                                     String publicKey, String authorization) throws Exception {
+        return verifySha1(paramHandler(param, nonce).getBytes(StandardCharsets.UTF_8), publicKey, authorization);
     }
 
     public static boolean verifySha1(byte[] data, String publicKey,
-                                     String signature) throws Exception {
+                                     String authorization) throws Exception {
         byte[] keyBytes = Base64.getDecoder().decode(publicKey);
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
         PublicKey key = KeyFactory.getInstance("RSA").generatePublic(keySpec);
         Signature verifier = Signature.getInstance("SHA1WithRSA");
         verifier.initVerify(key);
         verifier.update(data);
-        return verifier.verify(Base64.getDecoder().decode(signature));
+        return verifier.verify(Base64.getDecoder().decode(authorization));
     }
 }
 ```
 
-Remove PEM header and footer lines, spaces, and line breaks from the private key before passing it to the example.
+The example keeps the original signing scheme and changes only the request parameters and headers for VellPay. Remove PEM headers, footers, spaces, and line breaks from keys, and do not modify the request body after signing.
 
 ## Complete request-header example
 
@@ -190,7 +175,7 @@ The country is normally identified from the request domain. Merchants do not nee
 
 ## Callback verification and idempotency
 
-- Verify callback signatures with the VellPay platform public key.
+- Read `nonce` and `authorization` from the callback headers and verify the signature with the VellPay platform public key.
 - Use the same sorting and signature rules as request authentication.
 - Callback request headers include `country` to identify the order country.
 - After successful verification and business processing, return the success value defined by the callback endpoint.
