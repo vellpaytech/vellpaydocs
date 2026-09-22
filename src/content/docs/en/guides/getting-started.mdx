@@ -46,18 +46,18 @@ The Vietnam test domain will be added after configuration.
 
 ## Time and time zones
 
-Business time uses the local time of the order country; the text format is `yyyy-MM-dd HH:mm:ss`. The `timestamp` request header is a 13-digit Unix timestamp in milliseconds and does not use this text format.
+Business time uses the fixed GMT offset of the order country without daylight saving time; the text format is `yyyy-MM-dd HH:mm:ss`. The `timestamp` request header is a 13-digit Unix timestamp in milliseconds and does not use this text format.
 
 | Country | Time zone |
 |---|---|
-| Indonesia | See the country service configuration |
-| Vietnam | `Asia/Ho_Chi_Minh` (GMT+7) |
-| South Korea | `Asia/Seoul` |
-| Cambodia | `Asia/Phnom_Penh` |
-| India | `Asia/Kolkata` |
-| Colombia | `America/Bogota` |
-| Argentina | `America/Argentina/Buenos_Aires` |
-| Brazil | See the country service configuration |
+| Indonesia | `GMT+7` |
+| Vietnam | `GMT+7` |
+| South Korea | `GMT+9` |
+| Cambodia | `GMT+7` |
+| India | `GMT+5:30` |
+| Colombia | `GMT-5` |
+| Argentina | `GMT-3` |
+| Brazil | `GMT-3` |
 
 ## Error handling
 

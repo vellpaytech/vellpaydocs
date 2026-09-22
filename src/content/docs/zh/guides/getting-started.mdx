@@ -46,18 +46,18 @@ description: VellPay API 调用、订单处理和上线检查说明。
 
 ## 时间与时区
 
-业务时间使用订单所属国家的当地时间，文本格式统一为 `yyyy-MM-dd HH:mm:ss`。`timestamp` 是鉴权使用的 13 位毫秒时间戳，不使用该文本格式。
+业务时间使用订单所属国家的固定 GMT 时区，不使用冬夏令时，文本格式统一为 `yyyy-MM-dd HH:mm:ss`。`timestamp` 是鉴权使用的 13 位毫秒时间戳，不使用该文本格式。
 
 | 国家 | 时区 |
 |---|---|
-| 印度尼西亚 | 以国家服务配置为准 |
-| 越南 | `Asia/Ho_Chi_Minh`（GMT+7） |
-| 韩国 | `Asia/Seoul` |
-| 柬埔寨 | `Asia/Phnom_Penh` |
-| 印度 | `Asia/Kolkata` |
-| 哥伦比亚 | `America/Bogota` |
-| 阿根廷 | `America/Argentina/Buenos_Aires` |
-| 巴西 | 以国家服务配置为准 |
+| 印度尼西亚 | `GMT+7` |
+| 越南 | `GMT+7` |
+| 韩国 | `GMT+9` |
+| 柬埔寨 | `GMT+7` |
+| 印度 | `GMT+5:30` |
+| 哥伦比亚 | `GMT-5` |
+| 阿根廷 | `GMT-3` |
+| 巴西 | `GMT-3` |
 
 ## 异常处理
 
