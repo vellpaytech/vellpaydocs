@@ -32,12 +32,12 @@ import { Aside } from '@astrojs/starlight/components';
 
 单笔限额适用于所有付款用户。通过 KYC 认证不会提高或取消单笔交易的上限和下限。
 
-| `paymentType` | 币种 | 最低金额 | 最高金额 |
+| 币种 | `paymentType` | 最低金额 | 最高金额 |
 |---|---|---:|---:|
-| `KHQR_USD` | USD | `0.01 USD` | `20,000 USD` |
-| `VA_USD` | USD | `0.01 USD` | `50,000 USD` |
-| `KHQR` | KHR | `100 KHR` | `80,000,000 KHR` |
-| `VA_KHR` | KHR | `100 KHR` | `200,000,000 KHR` |
+| USD | `KHQR_USD` | `0.01 USD` | `20,000 USD` |
+| USD | `VA_USD` | `0.01 USD` | `50,000 USD` |
+| KHR | `KHQR` | `100 KHR` | `80,000,000 KHR` |
+| KHR | `VA_KHR` | `100 KHR` | `200,000,000 KHR` |
 
 ### 代收校验规则
 
@@ -50,10 +50,10 @@ import { Aside } from '@astrojs/starlight/components';
 
 代付仅校验单笔限额，额度固定且不受收款用户 KYC 状态影响。
 
-| 币种 | 最低金额 | 最高金额 |
-|---|---:|---:|
-| USD | `0.01 USD` | `50,000 USD` |
-| KHR | `100 KHR` | `200,000,000 KHR` |
+| 币种 | `payoutType` | 最低金额 | 最高金额 |
+|---|---|---:|---:|
+| USD | `BANK_TRANSFER_USD` | `0.01 USD` | `50,000 USD` |
+| KHR | `BANK_TRANSFER` | `100 KHR` | `200,000,000 KHR` |
 
 ## 补充说明
 

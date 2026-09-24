@@ -32,12 +32,12 @@ The payer mobile number is the unique aggregation key for the daily credited pay
 
 Per-transaction limits apply to all payers. KYC approval does not raise or remove per-transaction minimums or maximums.
 
-| `paymentType` | Currency | Minimum amount | Maximum amount |
+| Currency | `paymentType` | Minimum amount | Maximum amount |
 |---|---|---:|---:|
-| `KHQR_USD` | USD | `0.01 USD` | `20,000 USD` |
-| `VA_USD` | USD | `0.01 USD` | `50,000 USD` |
-| `KHQR` | KHR | `100 KHR` | `80,000,000 KHR` |
-| `VA_KHR` | KHR | `100 KHR` | `200,000,000 KHR` |
+| USD | `KHQR_USD` | `0.01 USD` | `20,000 USD` |
+| USD | `VA_USD` | `0.01 USD` | `50,000 USD` |
+| KHR | `KHQR` | `100 KHR` | `80,000,000 KHR` |
+| KHR | `VA_KHR` | `100 KHR` | `200,000,000 KHR` |
 
 ### Pay-in validation rules
 
@@ -50,10 +50,10 @@ Per-transaction limits apply to all payers. KYC approval does not raise or remov
 
 Payout checks only fixed per-transaction limits and is not affected by beneficiary KYC status.
 
-| Currency | Minimum amount | Maximum amount |
-|---|---:|---:|
-| USD | `0.01 USD` | `50,000 USD` |
-| KHR | `100 KHR` | `200,000,000 KHR` |
+| Currency | `payoutType` | Minimum amount | Maximum amount |
+|---|---|---:|---:|
+| USD | `BANK_TRANSFER_USD` | `0.01 USD` | `50,000 USD` |
+| KHR | `BANK_TRANSFER` | `100 KHR` | `200,000,000 KHR` |
 
 ## Additional notes
 
