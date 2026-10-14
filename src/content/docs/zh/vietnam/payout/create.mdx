@@ -2,7 +2,6 @@
 title: 代付创建
 description: 创建一笔 VellPay 代付订单。
 ---
-<div class="country-note">越南当前没有已配置的 VellPay 代付方式，因此暂不提供模拟请求。开通后请使用商务确认的实际 <code>payoutType</code> 和银行编码。</div>
 
 <p class="endpoint-lead"></p>
 
@@ -13,7 +12,11 @@ description: 创建一笔 VellPay 代付订单。
 
 <h2 id="payment-methods">支付方式参数</h2>
 
-当前暂无已配置的支付方式。
+| payoutType |
+|---|
+| `BANK` |
+| `Wallet` |
+
 
 ## 请求参数
 | 字段 | 类型 | 必填 | 最大长度 | 说明 |
@@ -26,8 +29,8 @@ description: 创建一笔 VellPay 代付订单。
 | `userName` | String | 否 | 64 | 用户姓名 |
 | `userPhone` | String | 否 | 10 | 用户手机号码，10 位数字，以 `03`、`05`、`07`、`08` 或 `09` 开头 |
 | `userEmail` | String | 否 | 50 | 用户邮箱 |
-| `bankCode` | String | 否 | 20 | [银行编码](../banks/) |
-| `bankName` | String | 否 | - | 银行名称，参见[银行编码说明](../banks/) |
+| `bankCode` | String | 否 | 20 | [银行编码](/zh/vietnam/bank/) |
+| `bankName` | String | 否 | - | 银行名称，参见[银行编码说明](/zh/vietnam/bank/) |
 | `bankAccountNo` | String | 是 | 50 | 收款账户 |
 | `description` | String | 否 | 100 | 说明 |
 | `payoutCallbackUrl` | String | 否 | 200 | 代付回调地址 |
@@ -42,14 +45,14 @@ description: 创建一笔 VellPay 代付订单。
 {
   "merchantOrderNo": "PAYOUT202609170001",
   "transactionAmount": "100000.00",
-  "payoutType": "PAYOUT_TYPE",
+  "payoutType": "BANK",
   "idType": "NATIONAL_ID",
   "userIdCard": "012345678901",
   "userName": "TEST USER",
   "userPhone": "0912345678",
   "userEmail": "user@example.com",
-  "bankCode": "970436",
-  "bankName": "Vietcombank",
+  "bankCode": "1043",
+  "bankName": "VCB",
   "bankAccountNo": "1234567890",
   "description": "Payout order",
   "payoutCallbackUrl": "https://merchant.example/payout-callback"
@@ -79,7 +82,7 @@ description: 创建一笔 VellPay 代付订单。
     "tradeNo": "VF2405220001VN0000508467743993",
     "transactionAmount": "100.00",
     "status": "PAYING",
-    "payoutType": "PAYOUT_TYPE"
+    "payoutType": "BANK"
   },
   "msg": "success",
   "tid": "747bbf80261844ed85b809212aab0d81"

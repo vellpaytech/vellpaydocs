@@ -1,13 +1,25 @@
 ---
-title: 银行编码
-description: 阿根廷代付 bankCode 银行编码。
+title: Bank codes
+description: Argentina pay-in and payout bank codes and entry rules.
 ---
 
-# 银行编码
+<div class="bank-directory">
+  <div class="bank-intro"><span class="bank-intro-badge">AR</span><div><strong>Argentina bank-code directory</strong><p>Browse pay-in and payout bank codes and entry rules.</p></div></div>
+</div>
 
-创建阿根廷代付订单时，`bankCode` 使用以下三位银行编码。CVU 和 CBU 账户均使用相同编码体系。
+<details class="bank-section">
+<summary>Pay-in banks (not currently supported)</summary>
 
-| `bankCode` | 银行名称 |
+Pay-in bank codes are not currently supported.
+
+</details>
+
+<details class="bank-section" open>
+<summary>Payout banks (payoutType)</summary>
+
+When creating an Argentine payout order, `bankCode` uses the following three-digit bank code. CVU and CBU accounts use the same code system.
+
+| `bankCode` | Bank name |
 |---|---|
 | 007      | Banco de Galicia y Buenos Aires S.A.U.       |
 | 011      | Banco de la Nación Argentina                 |
@@ -79,5 +91,6 @@ description: 阿根廷代付 bankCode 银行编码。
 | 448      | Banco Dino                                   |
 | 515      | Bank of China Limited Sucursal Buenos Aires  |
 
-银行编码可能随本地清算网络调整；未列出的银行请向 VellPay 商务或技术支持确认后再提交。
+Bank codes may change with the local clearing network. Confirm unlisted banks with VellPay business or technical support before submitting an order.
 
+</details>

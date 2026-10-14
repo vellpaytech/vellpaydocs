@@ -33,8 +33,8 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `userName` | String | Yes | 64 | User name |
 | `userPhone` | String | Yes | 10 | User mobile number, 10 digits; starts with `3`  |
 | `userEmail` | String | Yes | 50 | User email |
-| `bankCode` | String | Yes | 20 | [Bank codes](../banks/) |
-| `bankName` | String | Yes | 50 | [Bank name](../banks/) |
+| `bankCode` | String | Yes | 20 | [Bank codes](/en/colombia/bank/) |
+| `bankName` | String | Yes | 50 | [Bank name](/en/colombia/bank/) |
 | `bankAccountNo` | String | Yes | 255 | Beneficiary account. When `payoutType` is `BREB`, pass the value according to its key type: `PHONE` is exactly 10 digits starting with `3` (no prefix); `EMAIL` is a valid email address of 6–255 characters; `DOCUMENT` is 6–12 digits; `NIT` is 9–10 digits; `ALIAS` starts with `@`, followed by 3–30 letters or digits. |
 | `description` | String | No | 100 | Description |
 | `payoutCallbackUrl` | String | No | 200 | Payout callback URL |

@@ -37,8 +37,8 @@ export const countries: Record<string, CountryConfig> = {
   vietnam: {
     slug: "vietnam", name: "越南", flag: "🇻🇳", code: "VN", currency: "VND", currencyName: "越南盾",
     timezone: "Asia/Ho_Chi_Minh (UTC+7)", region: "asia", summary: "接入越南本地代收与代付能力。",
-    capabilities: capabilities("vietnam"), paymentMethods: ["以商户已开通的 paymentType 为准"],
-    notices: [{ label: "测试环境", description: "越南测试域名确认后开放在线请求。" }, { label: "时间", description: "业务时间使用越南当地时间。" }],
+    capabilities: capabilities("vietnam"), paymentMethods: ["QR", "VA", "Wallet", "VA_MB", "VA_MSB", "VA_BIDV", "BANK"],
+    notices: [{ label: "代收方式", description: "支持 QR、VA、Wallet、VA_MB、VA_MSB 和 VA_BIDV。" }, { label: "代付方式", description: "支持 BANK 和 Wallet。" }, { label: "时间", description: "业务时间使用越南当地时间。" }],
   },
   korea: {
     slug: "korea", name: "韩国", flag: "🇰🇷", code: "KR", currency: "KRW", currencyName: "韩元",

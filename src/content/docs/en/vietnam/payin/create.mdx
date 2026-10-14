@@ -2,7 +2,6 @@
 title: Create pay-in
 description: Create a VellPay pay-in order.
 ---
-<div class="country-note">No VellPay pay-in method is currently configured for Vietnam, so an executable sample request is not yet available. After activation, use the actual value confirmed by your VellPay representative for <code>paymentType</code>.</div>
 
 
 
@@ -13,7 +12,15 @@ description: Create a VellPay pay-in order.
 
 <h2 id="payment-methods">Payment method values</h2>
 
-No payment method is currently configured.
+| paymentType |
+|---|
+| `QR` |
+| `VA` |
+| `Wallet` |
+| `VA_MB` |
+| `VA_MSB` |
+| `VA_BIDV` |
+
 
 ## Request parameters
 
@@ -27,7 +34,7 @@ No payment method is currently configured.
 | `userName` | String | No | 64 | User name |
 | `userPhone` | String | No | 10 | User mobile number, 10 digits; starts with `03`, `05`, `07`, `08` or `09`  |
 | `userEmail` | String | No | 50 | User email |
-| `bankCode` | String | No | 64 | Bank codes |
+| `bankCode` | String | No | 64 | [Bank codes](/en/vietnam/bank/) |
 | `bankAccountNo` | String | No | 64 | Bank account number |
 | `merchantName` | String | No | 64 | Merchant name |
 | `description` | String | No | 100 | Description |
@@ -42,13 +49,13 @@ The following example shows the field structure. Before submitting, replace `pay
 {
   "merchantOrderNo": "ORDER202609170001",
   "transactionAmount": "100000.00",
-  "paymentType": "PAYMENT_TYPE",
+  "paymentType": "QR",
   "idType": "NATIONAL_ID",
   "userIdCard": "012345678901",
   "userName": "TEST USER",
   "userPhone": "0912345678",
   "userEmail": "user@example.com",
-  "bankCode": "970436",
+  "bankCode": "1001",
   "bankAccountNo": "1234567890",
   "merchantName": "TEST MERCHANT",
   "description": "Payment order",
@@ -84,7 +91,7 @@ The following example shows the field structure. Before submitting, replace `pay
     "tradeNo": "VS2608270002VN0000000000040059",
     "transactionAmount": "100.00",
     "status": "PAYING",
-    "paymentType": "PAYMENT_TYPE",
+    "paymentType": "QR",
     "paymentInfo": "PAYMENT_INFORMATION"
   },
   "msg": "success",

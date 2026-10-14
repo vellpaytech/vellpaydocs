@@ -2,7 +2,6 @@
 title: 代收创建
 description: 创建一笔 VellPay 代收订单。
 ---
-<div class="country-note">越南当前没有已配置的 VellPay 代收方式，因此暂不提供模拟请求。开通后请使用商务确认的实际 <code>paymentType</code>。</div>
 
 
 
@@ -13,7 +12,15 @@ description: 创建一笔 VellPay 代收订单。
 
 <h2 id="payment-methods">支付方式参数</h2>
 
-当前暂无已配置的支付方式。
+| paymentType |
+|---|
+| `QR` |
+| `VA` |
+| `Wallet` |
+| `VA_MB` |
+| `VA_MSB` |
+| `VA_BIDV` |
+
 
 ## 请求参数
 
@@ -27,7 +34,7 @@ description: 创建一笔 VellPay 代收订单。
 | `userName` | String | 否 | 64 | 用户姓名 |
 | `userPhone` | String | 否 | 10 | 用户手机号码，10 位数字，以 `03`、`05`、`07`、`08` 或 `09` 开头 |
 | `userEmail` | String | 否 | 50 | 用户邮箱 |
-| `bankCode` | String | 否 | 64 | 银行编码 |
+| `bankCode` | String | 否 | 64 | [银行编码](/zh/vietnam/bank/) |
 | `bankAccountNo` | String | 否 | 64 | 银行账户号 |
 | `merchantName` | String | 否 | 64 | 商户名称 |
 | `description` | String | 否 | 100 | 说明 |
@@ -42,13 +49,13 @@ description: 创建一笔 VellPay 代收订单。
 {
   "merchantOrderNo": "ORDER202609170001",
   "transactionAmount": "100000.00",
-  "paymentType": "PAYMENT_TYPE",
+  "paymentType": "QR",
   "idType": "NATIONAL_ID",
   "userIdCard": "012345678901",
   "userName": "TEST USER",
   "userPhone": "0912345678",
   "userEmail": "user@example.com",
-  "bankCode": "970436",
+  "bankCode": "1001",
   "bankAccountNo": "1234567890",
   "merchantName": "TEST MERCHANT",
   "description": "Payment order",
@@ -84,7 +91,7 @@ description: 创建一笔 VellPay 代收订单。
     "tradeNo": "VS2608270002VN0000000000040059",
     "transactionAmount": "100.00",
     "status": "PAYING",
-    "paymentType": "PAYMENT_TYPE",
+    "paymentType": "QR",
     "paymentInfo": "PAYMENT_INFORMATION"
   },
   "msg": "success",

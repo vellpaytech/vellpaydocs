@@ -31,8 +31,8 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `userName` | String | 是 | 64 | 用户姓名 |
 | `userPhone` | String | 是 | 10 | 用户手机号码，10 位数字，以 `6`、`7`、`8` 或 `9` 开头 |
 | `userEmail` | String | 否 | 50 | 用户邮箱 |
-| `bankCode` | String | 条件必填 | 20 | `payoutType` 为 `BANK_TRANSFER` 时必填，填写收款银行 IFSC；[银行编码说明](../banks/) |
-| `bankName` | String | 否 | - | 银行名称，参见[银行编码说明](../banks/) |
+| `bankCode` | String | 条件必填 | 20 | `payoutType` 为 `BANK_TRANSFER` 时必填，填写收款银行 IFSC；[银行编码说明](/zh/india/bank/) |
+| `bankName` | String | 否 | - | 银行名称，参见[银行编码说明](/zh/india/bank/) |
 | `bankAccountNo` | String | 是 | 50 | 收款账户；`payoutType` 为 `UPI` 时，账号必须包含 `@` 符号 |
 | `description` | String | 否 | 100 | 说明 |
 | `payoutCallbackUrl` | String | 否 | 200 | 代付回调地址 |

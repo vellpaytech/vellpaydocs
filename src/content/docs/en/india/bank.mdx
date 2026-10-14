@@ -1,9 +1,21 @@
 ---
 title: Bank codes
-description: IFSC entry rules for Indian payout APIs.
+description: India pay-in and payout bank codes and entry rules.
 ---
 
-# Bank codes
+<div class="bank-directory">
+  <div class="bank-intro"><span class="bank-intro-badge">IN</span><div><strong>India bank-code directory</strong><p>Browse pay-in and payout bank codes and entry rules.</p></div></div>
+</div>
+
+<details class="bank-section">
+<summary>Pay-in banks (not currently supported)</summary>
+
+Pay-in bank codes are not currently supported.
+
+</details>
+
+<details class="bank-section" open>
+<summary>Payout banks (payoutType)</summary>
 
 Indian bank transfers do not use a fixed short bank list. `bankCode` must contain the beneficiary branch IFSC.
 
@@ -13,3 +25,5 @@ Indian bank transfers do not use a fixed short bank list. `bankCode` must contai
 - Use the actual IFSC supplied by the beneficiary and confirmed by the bank; do not construct it from the bank name.
 
 UPI payouts must follow the requirements of the enabled channel. If no bank code is required, confirm the expected value with VellPay.
+
+</details>
