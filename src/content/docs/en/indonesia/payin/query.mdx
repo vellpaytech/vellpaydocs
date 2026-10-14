@@ -40,6 +40,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `data.failMsg` | String | No | 200 | Order failure reason |
 | `data.paymentInfo` | String | No | 200 | Payment information |
 | `data.serviceAmount` | String | No | 24 | Service fee |
+| `data.voucherAddress` | String | No | - | Voucher URL |
 | `data.paymentStatements` | List | No | - | Pay-in transaction list |
 | `data.paymentStatements.paymentSingleOrderNo` | String | No | 32 | Pay-in transaction number |
 | `data.paymentStatements.paymentAmount` | String | No | - | Actual received amount |
@@ -73,6 +74,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
     "status": "SUCCESS",
     "paymentType": "PAYMENTLINK",
     "serviceAmount": "1.00",
+    "voucherAddress": "https://merchant.example/vouchers/ORDER202609170001.pdf",
     "completeTime": "2026-09-17 15:30:00"
   },
   "msg": "success",

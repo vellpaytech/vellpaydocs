@@ -20,3 +20,27 @@ header.header { backdrop-filter:none; background:var(--sl-color-bg-nav); border-
 .sl-markdown-content code:not(pre code) { background:#f1f5f9; border:1px solid var(--color-border); border-radius:5px; color:#42566c; font-size:.84em; padding:.12rem .32rem; }:root[data-theme="dark"] .sl-markdown-content code:not(pre code) { background:#172634; color:#bdd0dc; }
 .endpoint-lead { color:var(--color-text-secondary); font-size:1rem; margin-bottom:1rem; max-width:52rem; }.method-path { align-items:center; background:var(--color-background); border:1px solid #b9e6df; border-radius:8px; display:flex; gap:.8rem; margin:1rem 0 1.6rem; min-height:64px; padding:.65rem .8rem; }.method-path strong { background:var(--color-primary); border-radius:5px; color:#fff; font-size:.72rem; letter-spacing:.07em; padding:.42rem .6rem; }.method-path code { background:transparent!important; border:0!important; color:var(--color-text)!important; font-family:var(--sl-font-mono); font-size:.93rem; padding:0!important; }.country-note { background:var(--color-selected); border:1px solid #b9e6df; border-radius:8px; padding:1rem 1.1rem; }
 @media(min-width:72rem) { :root { --sl-content-width:72rem; --sl-sidebar-width:18.25rem; } } @media(max-width:50rem) { :root { --sl-content-pad-x:1.1rem; } .sl-markdown-content h1 { font-size:2rem; } .sl-markdown-content table { min-width:40rem; } }
+
+
+/* Vietnam bank directory */
+.bank-directory { margin: 1.4rem 0 1rem; }
+.bank-intro { align-items: center; background: linear-gradient(135deg, color-mix(in srgb, var(--color-selected) 88%, transparent), var(--color-background)); border: 1px solid #b9e6df; border-radius: 12px; display: flex; gap: .95rem; padding: 1rem 1.15rem; }
+.bank-intro-badge { align-items: center; background: var(--color-primary); border-radius: 8px; color: #fff; display: inline-flex; flex: 0 0 auto; font-size: .72rem; font-weight: 800; letter-spacing: .04em; min-height: 2.35rem; padding: 0 .7rem; }
+.bank-intro strong { color: var(--color-text); display: block; font-size: 1rem; }
+.bank-intro p { color: var(--color-text-secondary); font-size: .82rem; margin: .22rem 0 0; }
+.bank-section { background: var(--color-background); border: 1px solid var(--color-border); border-radius: 12px; margin: .85rem 0; overflow: hidden; }
+.bank-section > summary { align-items: center; background: color-mix(in srgb, var(--color-selected) 46%, var(--color-background)); color: var(--color-text); display: flex; font-size: 1rem; font-weight: 750; gap: .55rem; list-style: none; padding: .95rem 1.05rem; }
+.bank-section > summary::-webkit-details-marker { display: none; }
+.bank-section > summary::before { border: 2px solid var(--color-primary); border-radius: 50%; content: ""; flex: 0 0 .55rem; height: .55rem; width: .55rem; }
+.bank-section > summary::after { border-bottom: 1.5px solid var(--color-primary); border-right: 1.5px solid var(--color-primary); content: ""; height: .45rem; margin-left: auto; transform: rotate(45deg) translateY(-2px); transition: transform .16s ease; width: .45rem; }
+.bank-section[open] > summary { border-bottom: 1px solid var(--color-border); }
+.bank-section[open] > summary::after { transform: rotate(225deg) translate(-1px, -1px); }
+.bank-section > h3 { border-top: 1px solid var(--color-border); color: var(--color-text); font-size: .95rem; margin: 1rem 1rem .45rem; padding-top: 1rem; }
+.bank-section > p { font-size: .82rem; margin: .35rem 1rem .7rem; }
+.bank-section > table { margin: .75rem 1rem 1rem; width: calc(100% - 2rem); }
+.bank-section > table + h3 { margin-top: .2rem; }
+@media (max-width: 50rem) {
+  .bank-intro { align-items: flex-start; }
+  .bank-section { overflow-x: auto; }
+  .bank-section > table { min-width: 34rem; }
+}

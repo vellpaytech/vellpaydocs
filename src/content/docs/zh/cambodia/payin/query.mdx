@@ -40,6 +40,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `data.failMsg` | String | 否 | 200 | 订单失败原因 |
 | `data.paymentInfo` | String | 否 | 200 | 支付信息 |
 | `data.serviceAmount` | String | 否 | 24 | 服务费用 |
+| `data.voucherAddress` | String | 否 | - | 凭证地址 |
 | `data.paymentStatements` | List | 否 | - | 代收流水集合 |
 | `data.paymentStatements.paymentSingleOrderNo` | String | 否 | 32 | 代收单次支付流水号 |
 | `data.paymentStatements.paymentAmount` | String | 否 | - | 实际收款金额 |
@@ -73,6 +74,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
     "status": "SUCCESS",
     "paymentType": "KHQR",
     "serviceAmount": "1.00",
+    "voucherAddress": "https://merchant.example/vouchers/ORDER202609170001.pdf",
     "completeTime": "2026-09-17 15:30:00"
   },
   "msg": "success",
