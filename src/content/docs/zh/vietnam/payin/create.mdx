@@ -2,6 +2,9 @@
 title: 代收创建
 description: 创建一笔 VellPay 代收订单。
 ---
+import ApiExplorer from '../../../../../components/ApiExplorer.astro';
+
+<ApiExplorer country="VN" path="/trade/payment/create" body={{merchantOrderNo:"ORDER202609170001",transactionAmount:"100000.00",paymentType:"QR",userName:"TEST USER",userPhone:"0912345678",userEmail:"user@example.com",paymentCallbackUrl:"https://merchant.example/callback"}} />
 
 
 

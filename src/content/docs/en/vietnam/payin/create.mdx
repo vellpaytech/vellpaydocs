@@ -2,6 +2,9 @@
 title: Create pay-in
 description: Create a VellPay pay-in order.
 ---
+import ApiExplorer from '../../../../../components/ApiExplorer.astro';
+
+<ApiExplorer country="VN" path="/trade/payment/create" body={{merchantOrderNo:"ORDER202609170001",transactionAmount:"100000.00",paymentType:"QR",userName:"TEST USER",userPhone:"0912345678",userEmail:"user@example.com",paymentCallbackUrl:"https://merchant.example/callback"}} />
 
 
 
