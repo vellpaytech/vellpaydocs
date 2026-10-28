@@ -2,6 +2,9 @@
 title: 代付创建
 description: 创建一笔 VellPay 代付订单。
 ---
+import ApiExplorer from '../../../../../components/ApiExplorer.astro';
+
+<ApiExplorer country="VN" path="/trade/payout/create" body={{merchantOrderNo:"PAYOUT202609170001",transactionAmount:"100000",payoutType:"BANK",idType:"BRBANK",userIdCard:"012345678901",userName:"Nguyen Van A",userPhone:"0912345678",userEmail:"user@example.com",bankCode:"1043",bankName:"VCB",bankAccountNo:"1234567890",description:"Payout order",payoutCallbackUrl:"https://merchant.example/payout-callback"}} />
 
 <p class="endpoint-lead"></p>
 
