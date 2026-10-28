@@ -4,7 +4,7 @@ description: Create a VellPay pay-in order.
 ---
 import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 
-<ApiExplorer country="VN" path="/trade/payment/create" body={{merchantOrderNo:"ORDER202609170001",transactionAmount:"100000.00",paymentType:"QR",userName:"TEST USER",userPhone:"0912345678",userEmail:"user@example.com",paymentCallbackUrl:"https://merchant.example/callback"}} />
+<ApiExplorer country="VN" path="/trade/payment/create" body={{merchantOrderNo:"ORDER202609170001",transactionAmount:"100000",paymentType:"QR",userName:"TEST USER",userPhone:"0912345678",userEmail:"user@example.com",paymentCallbackUrl:"https://merchant.example/callback"}} />
 
 
 
@@ -30,16 +30,16 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | Field | Type | Required | Maximum length | Description |
 |---|---|---|---:|---|
 | `merchantOrderNo` | String | Yes | 32 | Merchant order number |
-| `transactionAmount` | String | Yes | 20 | Pay-in amount |
+| `transactionAmount` | String | Yes | 20 | Pay-in amount in VND, integers only |
 | `paymentType` | String | Yes | 24 | [Payment method](#payment-methods) |
 | `idType` | String | No | 32 | Optional ID type. This endpoint has no fixed enum; omit this field unless required by your business or payment channel. |
 | `userIdCard` | String | No | 50 | ID number. No fixed format; omit this field unless required by your business or payment channel. |
-| `userName` | String | No | 64 | User name |
-| `userPhone` | String | No | 10 | User mobile number, 10 digits; starts with `0`  |
-| `userEmail` | String | No | 50 | User email |
-| `bankCode` | String | No | 64 | [Bank codes](/en/vietnam/bank/) |
+| `userName` | String | Yes | 64 | Payer name |
+| `userPhone` | String | Yes | 50 | Phone number: 10 digits starting with `0` |
+| `userEmail` | String | Yes | 50 | Payer email; must match a valid email address format |
+| `bankCode` | String | Conditional | 50 | Bank code; see the [bank list](/en/vietnam/bank/); required when `paymentType` is `VA` |
 | `bankAccountNo` | String | No | 64 | Bank account number |
-| `merchantName` | String | No | 64 | Merchant name |
+| `merchantName` | String | No | 64 | Payee name |
 | `description` | String | No | 100 | Description |
 | `expireTime` | String | No | - | Order expiration time (local time, format `yyyy-MM-dd HH:mm:ss`) |
 | `paymentCallbackUrl` | String | No | 200 | Pay-in callback URL |
@@ -51,7 +51,7 @@ The following example shows the field structure. Before submitting, replace `pay
 ```json
 {
   "merchantOrderNo": "ORDER202609170001",
-  "transactionAmount": "100000.00",
+  "transactionAmount": "100000",
   "paymentType": "QR",
   "idType": "NATIONAL_ID",
   "userIdCard": "012345678901",
@@ -67,20 +67,35 @@ The following example shows the field structure. Before submitting, replace `pay
 }
 ```
 
+`VA` request example (`bankCode` is required):
+
+```json
+{
+  "merchantOrderNo": "ORDER202609170002",
+  "transactionAmount": "100000",
+  "paymentType": "VA",
+  "userName": "TEST USER",
+  "userPhone": "0912345678",
+  "userEmail": "user@example.com",
+  "bankCode": "1001",
+  "paymentCallbackUrl": "https://merchant.example/callback"
+}
+```
+
 ## Response parameters
 
 | Field | Type | Required | Maximum length | Description |
 |---|---|---|---:|---|
 | `code` | int | Yes | - | Status code; a value other than 200 indicates an error |
 | `data` | Object | Yes | - | Response body |
-| `data.merchantOrderNo` | String | Yes | 24 | Merchant order number |
+| `data.merchantOrderNo` | String | Yes | 32 | Merchant order number |
 | `data.tradeNo` | String | Yes | 32 | Platform order number |
-| `data.transactionAmount` | String | Yes | - | Pay-in amount, an integer or up to two decimal places |
-| `data.status` | String | Yes | 24 | [Order status](/en/guides/order-status/) |
+| `data.transactionAmount` | String | Yes | - | Pay-in amount in VND, integers only |
+| `data.status` | String | Yes | 24 | [Order status](/en/guides/order-status/): `PAYING` (paying) or `FAIL` (failed) when created |
 | `data.paymentType` | String | Yes | 24 | [Payment method](#payment-methods) |
-| `data.failMsg` | String | No | 200 | Order failure reason |
-| `data.paymentInfo` | String | No | 200 | Payment information |
-| `data.additional` | Object | No | - | Additional information |
+| `data.failMsg` | String | No | 200 | Order failure reason; returned on failure |
+| `data.paymentInfo` | String | Yes | 200 | Primary payment information: `QR` returns the QR code string; `VA` returns the VA account number |
+| `data.additional` | Object | No | - | Additional payment information: `paymentLink` (String, required) is the payment link; `qrString` (String, required) is the QR code string for `QR`; `va` (String, required) is the VA account number for `VA` |
 | `msg` | String | No | - | Error message |
 | `tid` | String | Yes | - | Trace ID |
 
@@ -92,10 +107,15 @@ The following example shows the field structure. Before submitting, replace `pay
   "data": {
     "merchantOrderNo": "ORDER202609170001",
     "tradeNo": "VS2608270002VN0000000000040059",
-    "transactionAmount": "100.00",
+    "transactionAmount": "100000",
     "status": "PAYING",
     "paymentType": "QR",
-    "paymentInfo": "PAYMENT_INFORMATION"
+    "paymentInfo": "QR_CODE_STRING_EXAMPLE",
+    "additional": {
+      "paymentLink": "https://example.com/pay",
+      "qrString": "QR_CODE_STRING_EXAMPLE",
+      "va": "1234567890123"
+    }
   },
   "msg": "success",
   "tid": "747bbf80261844ed85b809212aab0d81"

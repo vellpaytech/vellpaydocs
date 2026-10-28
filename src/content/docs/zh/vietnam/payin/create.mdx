@@ -4,7 +4,7 @@ description: 创建一笔 VellPay 代收订单。
 ---
 import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 
-<ApiExplorer country="VN" path="/trade/payment/create" body={{merchantOrderNo:"ORDER202609170001",transactionAmount:"100000.00",paymentType:"QR",userName:"TEST USER",userPhone:"0912345678",userEmail:"user@example.com",paymentCallbackUrl:"https://merchant.example/callback"}} />
+<ApiExplorer country="VN" path="/trade/payment/create" body={{merchantOrderNo:"ORDER202609170001",transactionAmount:"100000",paymentType:"QR",userName:"TEST USER",userPhone:"0912345678",userEmail:"user@example.com",paymentCallbackUrl:"https://merchant.example/callback"}} />
 
 
 
@@ -30,16 +30,16 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | 字段 | 类型 | 必填 | 最大长度 | 说明 |
 |---|---|---|---:|---|
 | `merchantOrderNo` | String | 是 | 32 | 商户订单号 |
-| `transactionAmount` | String | 是 | 20 | 收款金额 |
+| `transactionAmount` | String | 是 | 20 | 代收金额（VND），仅支持整数 |
 | `paymentType` | String | 是 | 24 | [支付方式](#payment-methods) |
 | `idType` | String | 否 | 32 | 可选的证件类型；当前接口没有固定枚举，无业务或渠道要求时可不传 |
 | `userIdCard` | String | 否 | 50 | 证件号码。无固定格式，无业务或渠道要求时可不传 |
-| `userName` | String | 否 | 64 | 用户姓名 |
-| `userPhone` | String | 否 | 10 | 用户手机号码，10位数字; 以 `0` 开头 |
-| `userEmail` | String | 否 | 50 | 用户邮箱 |
-| `bankCode` | String | 否 | 64 | [银行编码](/zh/vietnam/bank/) |
+| `userName` | String | 是 | 64 | 付款人姓名 |
+| `userPhone` | String | 是 | 50 | 电话号码，以 `0` 开头的 10 位数字 |
+| `userEmail` | String | 是 | 50 | 付款人邮箱，须符合有效邮箱的正则格式 |
+| `bankCode` | String | 条件必填 | 50 | 银行编码，参考[银行列表](/zh/vietnam/bank/)；`paymentType` 为 `VA` 时必填 |
 | `bankAccountNo` | String | 否 | 64 | 银行账户号 |
-| `merchantName` | String | 否 | 64 | 商户名称 |
+| `merchantName` | String | 否 | 64 | 收款人名称 |
 | `description` | String | 否 | 100 | 说明 |
 | `expireTime` | String | 否 | - | 订单过期时间（国家当地时间，格式 `yyyy-MM-dd HH:mm:ss`） |
 | `paymentCallbackUrl` | String | 否 | 200 | 代收回调地址 |
@@ -51,7 +51,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 ```json
 {
   "merchantOrderNo": "ORDER202609170001",
-  "transactionAmount": "100000.00",
+  "transactionAmount": "100000",
   "paymentType": "QR",
   "idType": "NATIONAL_ID",
   "userIdCard": "012345678901",
@@ -67,20 +67,35 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 }
 ```
 
+`VA` 请求示例（必须传入 `bankCode`）：
+
+```json
+{
+  "merchantOrderNo": "ORDER202609170002",
+  "transactionAmount": "100000",
+  "paymentType": "VA",
+  "userName": "TEST USER",
+  "userPhone": "0912345678",
+  "userEmail": "user@example.com",
+  "bankCode": "1001",
+  "paymentCallbackUrl": "https://merchant.example/callback"
+}
+```
+
 ## 响应参数
 
 | 字段 | 类型 | 必填 | 最大长度 | 说明 |
 |---|---|---|---:|---|
 | `code` | int | 是 | - | 状态码，非 200 代表异常 |
 | `data` | Object | 是 | - | 响应体 |
-| `data.merchantOrderNo` | String | 是 | 24 | 商户订单号 |
+| `data.merchantOrderNo` | String | 是 | 32 | 商户订单号 |
 | `data.tradeNo` | String | 是 | 32 | 平台单号 |
-| `data.transactionAmount` | String | 是 | - | 收款金额，整数或保留 2 位小数 |
-| `data.status` | String | 是 | 24 | [订单状态](/zh/guides/order-status/) |
+| `data.transactionAmount` | String | 是 | - | 代收金额（VND），仅支持整数 |
+| `data.status` | String | 是 | 24 | [订单状态](/zh/guides/order-status/)，创建时为 `PAYING`（支付中）或 `FAIL`（已失败） |
 | `data.paymentType` | String | 是 | 24 | [支付方式](#payment-methods) |
-| `data.failMsg` | String | 否 | 200 | 订单失败原因 |
-| `data.paymentInfo` | String | 否 | 200 | 支付信息 |
-| `data.additional` | Object | 否 | - | 附加信息 |
+| `data.failMsg` | String | 否 | 200 | 订单失败原因，失败时返回 |
+| `data.paymentInfo` | String | 是 | 200 | 主要付款信息：`QR` 返回二维码支付 QrCode 串；`VA` 返回 VA 账号 |
+| `data.additional` | Object | 否 | - | 附加付款信息：`paymentLink`（String，必填）为支付链接；`qrString`（String，必填）为 `QR` 的二维码支付 QrCode 串；`va`（String，必填）为 `VA` 账号 |
 | `msg` | String | 否 | - | 异常信息 |
 | `tid` | String | 是 | - | traceId |
 
@@ -92,10 +107,15 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
   "data": {
     "merchantOrderNo": "ORDER202609170001",
     "tradeNo": "VS2608270002VN0000000000040059",
-    "transactionAmount": "100.00",
+    "transactionAmount": "100000",
     "status": "PAYING",
     "paymentType": "QR",
-    "paymentInfo": "PAYMENT_INFORMATION"
+    "paymentInfo": "QR_CODE_STRING_EXAMPLE",
+    "additional": {
+      "paymentLink": "https://example.com/pay",
+      "qrString": "QR_CODE_STRING_EXAMPLE",
+      "va": "1234567890123"
+    }
   },
   "msg": "success",
   "tid": "747bbf80261844ed85b809212aab0d81"

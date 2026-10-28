@@ -22,16 +22,16 @@ description: 创建一笔 VellPay 代付订单。
 | 字段 | 类型 | 必填 | 最大长度 | 说明 |
 |---|---|---|---:|---|
 | `merchantOrderNo` | String | 是 | 32 | 商户订单号 |
-| `transactionAmount` | String | 是 | 20 | 付款金额，整数（保留 2 位小数） |
+| `transactionAmount` | String | 是 | 20 | 代付金额（VND），仅支持整数 |
 | `payoutType` | String | 是 | 20 | [代付方式](#payment-methods) |
-| `idType` | String | 否 | 32 | 可选的证件类型；当前接口没有固定枚举，无业务或渠道要求时可不传 |
-| `userIdCard` | String | 否 | 50 | 证件号码。无固定格式，无业务或渠道要求时可不传 |
-| `userName` | String | 否 | 64 | 用户姓名 |
-| `userPhone` | String | 否 | 10 | 用户手机号码，10位数字; 以 `0` 开头 |
-| `userEmail` | String | 否 | 50 | 用户邮箱 |
-| `bankCode` | String | 否 | 20 | [银行编码](/zh/vietnam/bank/) |
-| `bankName` | String | 否 | - | 银行名称，参见[银行编码说明](/zh/vietnam/bank/) |
-| `bankAccountNo` | String | 是 | 50 | 收款账户 |
+| `idType` | String | 是 | 32 | 证件类型：`BRBANK` |
+| `userIdCard` | String | 是 | 32 | 证件号码 |
+| `userName` | String | 是 | 255 | 用户姓名：传用户的真实姓与名 |
+| `userPhone` | String | 是 | 50 | 电话号码，以 `0` 开头的 10 位数字 |
+| `userEmail` | String | 是 | 50 | 收款人邮箱，传用户的真实邮箱 |
+| `bankCode` | String | 是 | 50 | 银行编码，参考[银行列表](/zh/vietnam/bank/) |
+| `bankName` | String | 是 | 50 | 银行名称，参考[银行列表](/zh/vietnam/bank/) |
+| `bankAccountNo` | String | 是 | 32 | 收款账号：传输用户真实收款账号信息 |
 | `description` | String | 否 | 100 | 说明 |
 | `payoutCallbackUrl` | String | 否 | 200 | 代付回调地址 |
 
@@ -44,11 +44,11 @@ description: 创建一笔 VellPay 代付订单。
 ```json
 {
   "merchantOrderNo": "PAYOUT202609170001",
-  "transactionAmount": "100000.00",
+  "transactionAmount": "100000",
   "payoutType": "BANK",
-  "idType": "NATIONAL_ID",
+  "idType": "BRBANK",
   "userIdCard": "012345678901",
-  "userName": "TEST USER",
+  "userName": "Nguyen Van A",
   "userPhone": "0912345678",
   "userEmail": "user@example.com",
   "bankCode": "1043",
@@ -66,8 +66,8 @@ description: 创建一笔 VellPay 代付订单。
 | `data` | Object | 是 | - | 响应体 |
 | `data.merchantOrderNo` | String | 是 | 32 | 商户订单号 |
 | `data.tradeNo` | String | 是 | 32 | 平台单号 |
-| `data.transactionAmount` | String | 是 | - | 付款金额 |
-| `data.status` | String | 是 | 24 | [订单状态](/zh/guides/order-status/) |
+| `data.transactionAmount` | String | 是 | - | 代付金额（VND），仅支持整数 |
+| `data.status` | String | 是 | 24 | [订单状态](/zh/guides/order-status/)，创建时为 `PAYING`（支付中）或 `FAIL`（已失败） |
 | `data.payoutType` | String | 是 | 24 | [代付方式](#payment-methods) |
 | `msg` | String | 否 | - | 异常信息 |
 | `tid` | String | 是 | - | traceId |
@@ -80,7 +80,7 @@ description: 创建一笔 VellPay 代付订单。
   "data": {
     "merchantOrderNo": "PAYOUT202609170001",
     "tradeNo": "VF2405220001VN0000508467743993",
-    "transactionAmount": "100.00",
+    "transactionAmount": "100000",
     "status": "PAYING",
     "payoutType": "BANK"
   },

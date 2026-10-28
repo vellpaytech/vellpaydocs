@@ -22,16 +22,16 @@ description: Create a VellPay payout order.
 | Field | Type | Required | Maximum length | Description |
 |---|---|---|---:|---|
 | `merchantOrderNo` | String | Yes | 32 | Merchant order number |
-| `transactionAmount` | String | Yes | 20 | Payout amount, an integer or up to two decimal places |
+| `transactionAmount` | String | Yes | 20 | Payout amount in VND, integers only |
 | `payoutType` | String | Yes | 20 | [Payout method](#payment-methods) |
-| `idType` | String | No | 32 | Optional ID type. This endpoint has no fixed enum; omit this field unless required by your business or payment channel. |
-| `userIdCard` | String | No | 50 | ID number. No fixed format; omit this field unless required by your business or payment channel. |
-| `userName` | String | No | 64 | User name |
-| `userPhone` | String | No | 10 | User mobile number, 10 digits; starts with `0`  |
-| `userEmail` | String | No | 50 | User email |
-| `bankCode` | String | No | 20 | [Bank codes](/en/vietnam/bank/) |
-| `bankName` | String | No | - | Bank name, see [Bank code description](/en/vietnam/bank/) |
-| `bankAccountNo` | String | Yes | 50 | Beneficiary account |
+| `idType` | String | Yes | 32 | Document type: `BRBANK` |
+| `userIdCard` | String | Yes | 32 | Identity document number |
+| `userName` | String | Yes | 255 | User name: provide the user's real first and last name |
+| `userPhone` | String | Yes | 50 | Phone number: 10 digits starting with `0` |
+| `userEmail` | String | Yes | 50 | Recipient email: provide the user's real email address |
+| `bankCode` | String | Yes | 50 | Bank code; see the [bank list](/en/vietnam/bank/) |
+| `bankName` | String | Yes | 50 | Bank name; see the [bank list](/en/vietnam/bank/) |
+| `bankAccountNo` | String | Yes | 32 | Recipient account: provide the user's real receiving account information |
 | `description` | String | No | 100 | Description |
 | `payoutCallbackUrl` | String | No | 200 | Payout callback URL |
 
@@ -44,11 +44,11 @@ The following example shows the field structure. Before submitting, replace `pay
 ```json
 {
   "merchantOrderNo": "PAYOUT202609170001",
-  "transactionAmount": "100000.00",
+  "transactionAmount": "100000",
   "payoutType": "BANK",
-  "idType": "NATIONAL_ID",
+  "idType": "BRBANK",
   "userIdCard": "012345678901",
-  "userName": "TEST USER",
+  "userName": "Nguyen Van A",
   "userPhone": "0912345678",
   "userEmail": "user@example.com",
   "bankCode": "1043",
@@ -66,8 +66,8 @@ The following example shows the field structure. Before submitting, replace `pay
 | `data` | Object | Yes | - | Response body |
 | `data.merchantOrderNo` | String | Yes | 32 | Merchant order number |
 | `data.tradeNo` | String | Yes | 32 | Platform order number |
-| `data.transactionAmount` | String | Yes | - | Payout amount |
-| `data.status` | String | Yes | 24 | [Order status](/en/guides/order-status/) |
+| `data.transactionAmount` | String | Yes | - | Payout amount in VND, integers only |
+| `data.status` | String | Yes | 24 | [Order status](/en/guides/order-status/): `PAYING` (paying) or `FAIL` (failed) when created |
 | `data.payoutType` | String | Yes | 24 | [Payout method](#payment-methods) |
 | `msg` | String | No | - | Error message |
 | `tid` | String | Yes | - | Trace ID |
@@ -80,7 +80,7 @@ The following example shows the field structure. Before submitting, replace `pay
   "data": {
     "merchantOrderNo": "PAYOUT202609170001",
     "tradeNo": "VF2405220001VN0000508467743993",
-    "transactionAmount": "100.00",
+    "transactionAmount": "100000",
     "status": "PAYING",
     "payoutType": "BANK"
   },
