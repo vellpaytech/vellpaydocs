@@ -38,7 +38,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `bankAccountNo` | String | No | 64 | Bank account number |
 | `merchantName` | String | Yes | 64 | Merchant name |
 | `description` | String | No | 100 | Description |
-| `accountHolderNumber` | String | Conditionally required | 20 | Required when the merchant enables account-holder identity validation. For an individual, enter the first 6 digits of the resident registration number (`YYMMDD`); for a business, enter the 10-digit business registration number. |
+| `accountHolderNumber` | String | Yes | 20 |  For an individual, enter the first 6 digits of the resident registration number (`YYMMDD`); for a business, enter the 10-digit business registration number. |
 | `ipAddress` | String | Conditionally required | 64 | Required when `paymentType` is `KAKAOPAY` or `TOSSPAY`. |
 | `channel` | String | No | 24 | Payment methodextension field |
 | `expireTime` | String | No | - | Order expiration time (local time, format `yyyy-MM-dd HH:mm:ss`) |
