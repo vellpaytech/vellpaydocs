@@ -33,7 +33,7 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `userIdCard` | String | Yes | 50 | Merchant platform user ID, not a resident registration number (RRN). Required for all payment methods; maximum 50 characters. |
 | `userName` | String | Yes | 64 | User name |
 | `userPhone` | String | Yes | 11 | User mobile number, 11 digits; starts with `010`. |
-| `userEmail` | String | Conditionally required | 50 | User email. Required when `paymentType` is `KAKAOPAY`. |
+| `userEmail` | String | Yes | 50 | User email. |
 | `bankCode` | String | No | 64 | [Bank codes](/en/korea/bank/) |
 | `bankAccountNo` | String | No | 64 | Bank account number |
 | `merchantName` | String | Yes | 64 | Merchant name |
