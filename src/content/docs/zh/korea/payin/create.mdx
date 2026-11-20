@@ -4,7 +4,7 @@ description: 创建一笔 VellPay 代收订单。
 ---
 import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 
-<ApiExplorer country="KR" path="/trade/payment/create" body={{merchantOrderNo:"ORDER202609170001",transactionAmount:"1000",paymentType:"VA",userIdCard:"USER123456",userName:"TEST USER",userPhone:"01012345678",userEmail:"user@example.com",merchantName:"TEST MERCHANT",paymentCallbackUrl:"https://merchant.example/callback"}} />
+<ApiExplorer country="KR" path="/trade/payment/create" body={{merchantOrderNo:"ORDER202609170001",transactionAmount:"1000",paymentType:"VA",userIdCard:"USER123456",userName:"TEST USER",userPhone:"01012345678",userEmail:"user@example.com",userDepositCount:5,userFirstDepositTime:1732929200000,merchantName:"TEST MERCHANT",paymentCallbackUrl:"https://merchant.example/callback"}} />
 
 
 
@@ -34,6 +34,8 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `userName` | String | 是 | 64 | 用户姓名 |
 | `userPhone` | String | 是 | 11 | 用户手机号码，11 位数字，以 `010` 开头； |
 | `userEmail` | String | 是 | 50 | 用户邮箱； |
+| `userDepositCount` | Integer | 否 | - | 用户在商户侧的历史成功入金总笔数，非负整数，例如 `0`、`1`、`5`。详见[用户历史交易信息](#merchant-history) |
+| `userFirstDepositTime` | Long | 否 | - | 用户在商户侧首次成功入金的时间，13 位毫秒级时间戳，例如 `1732929200000`。详见[用户历史交易信息](#merchant-history) |
 | `bankCode` | String | 否 | 64 | [银行编码](/zh/korea/bank/) |
 | `bankAccountNo` | String | 否 | 64 | 银行账户号 |
 | `merchantName` | String | 是 | 64 | 商户名称 |
@@ -43,6 +45,20 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `channel` | String | 否 | 24 | 支付方式扩展字段 |
 | `expireTime` | String | 否 | - | 订单过期时间（国家当地时间，格式 `yyyy-MM-dd HH:mm:ss`） |
 | `paymentCallbackUrl` | String | 否 | 200 | 代收回调地址 |
+
+<h3 id="merchant-history">用户历史交易信息</h3>
+
+`userDepositCount`：
+
+1. 统计口径：仅统计该用户在商户侧已入金成功（终态成功）的入金订单总笔数，不含待支付、已取消、失败或退款/冲正订单。
+2. 边界说明：`0` 或不传代表该用户在商户侧暂无历史成功入金记录（或尚未完成首次入金）。
+3. 使用说明：作为收款风控评估与路由分流的参考因子之一，平台将结合自身历史交易记录综合判定。
+
+`userFirstDepositTime`：
+
+1. 统计口径：取该用户在商户侧第一笔已入金成功订单的完成/入账时间，非用户注册时间或当前请求时间。
+2. 边界说明：当 `userDepositCount` 为 `0` 或无历史成功入金记录时，本字段无需传递。时间戳须为合法的 13 位毫秒级时间戳，且不晚于当前请求时间；若数值异常或与入金次数逻辑冲突，平台将不采纳该参考值。
+3. 使用说明：作为收款风控评估与路由分流的参考因子之一，平台将结合自身历史交易记录综合判定。
 
 ## 请求示例
 
@@ -55,6 +71,8 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
   "userName": "TEST USER",
   "userPhone": "01012345678",
   "userEmail": "user@example.com",
+  "userDepositCount": 5,
+  "userFirstDepositTime": 1732929200000,
   "merchantName": "TEST MERCHANT",
   "paymentCallbackUrl": "https://merchant.example/callback"
 }

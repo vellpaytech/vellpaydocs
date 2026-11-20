@@ -4,7 +4,7 @@ description: Create a VellPay payout order.
 ---
 import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 
-<ApiExplorer country="KR" path="/trade/payout/create" body={{merchantOrderNo:"PAYOUT202609170001",transactionAmount:"1000",payoutType:"BANK_TRANSFER",idType:"RRN",userIdCard:"9001011234567",userName:"TEST USER",userPhone:"01012345678",userEmail:"user@example.com",bankCode:"088",bankName:"Shinhan Bank",bankAccountNo:"1234567890",description:"Payout order",payoutCallbackUrl:"https://merchant.example/payout-callback"}} />
+<ApiExplorer country="KR" path="/trade/payout/create" body={{merchantOrderNo:"PAYOUT202609170001",transactionAmount:"1000",payoutType:"BANK_TRANSFER",idType:"RRN",userIdCard:"9001011234567",userName:"TEST USER",userPhone:"01012345678",userEmail:"user@example.com",userDepositCount:5,userFirstDepositTime:1732929200000,bankCode:"088",bankName:"Shinhan Bank",bankAccountNo:"1234567890",description:"Payout order",payoutCallbackUrl:"https://merchant.example/payout-callback"}} />
 
 <p class="endpoint-lead"></p>
 
@@ -31,6 +31,8 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `userName` | String | Yes | 64 | User name |
 | `userPhone` | String | Yes | 11 | User mobile number, 11 digits; starts with `010`  |
 | `userEmail` | String | No | 50 | User email |
+| `userDepositCount` | Integer | No | - | Total historical successful payouts for this user on the merchant platform. A non-negative integer, such as `0`, `1`, or `5`. See [User transaction history](#merchant-history). |
+| `userFirstDepositTime` | Long | No | - | Time of this user’s first successful payout on the merchant platform, as a 13-digit millisecond timestamp, for example `1732929200000`. See [User transaction history](#merchant-history). |
 | `bankCode` | String | Yes | 20 | [Bank codes](/en/korea/bank/) |
 | `bankName` | String | Yes | 50 | [Bank name](/en/korea/bank/) |
 | `bankAccountNo` | String | Yes | 50 | Beneficiary account |
@@ -38,6 +40,20 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
 | `payoutCallbackUrl` | String | No | 200 | Payout callback URL |
 
 
+
+<h3 id="merchant-history">User transaction history</h3>
+
+`userDepositCount`:
+
+1. Counting rules: Count only this user’s payout orders on the merchant platform that have reached a final successful status. Exclude orders that are pending payment, canceled, failed, refunded, or reversed.
+2. Boundary rules: `0` or omission means the user has no historical successful payouts on the merchant platform, or has not yet completed their first payout.
+3. Usage: This is one reference factor for payout risk assessment and routing. The platform combines it with its own transaction history to make an overall decision.
+
+`userFirstDepositTime`:
+
+1. Counting rules: Use the completion or crediting time of the user’s first successful payout order on the merchant platform, rather than the user’s registration time or the current request time.
+2. Boundary rules: Omit this field when `userDepositCount` is `0` or there are no historical successful payouts. Supply a valid 13-digit millisecond timestamp no later than the current request time. The platform will disregard this reference value if it is invalid or inconsistent with the payout count.
+3. Usage: This is one reference factor for payout risk assessment and routing. The platform combines it with its own transaction history to make an overall decision.
 
 ## Request example
 
@@ -51,6 +67,8 @@ import ApiExplorer from '../../../../../components/ApiExplorer.astro';
   "userName": "TEST USER",
   "userPhone": "01012345678",
   "userEmail": "user@example.com",
+  "userDepositCount": 5,
+  "userFirstDepositTime": 1732929200000,
   "bankCode": "088",
   "bankName": "Shinhan Bank",
   "bankAccountNo": "1234567890",
